@@ -87,19 +87,19 @@
         {%- endif -%}
 
         {%- liquid
-          # Amazon link: prefer the per-product metafield, fall back to a handle map.
+          # Amazon link: prefer the per-product metafield, fall back to matching the product title.
           assign amazon_url = product.metafields.custom.amazon_url
           unless amazon_url != blank
-            case product.handle
-              when 'amazon-product-1'
-                assign amazon_url = 'https://a.co/d/03XQ6sWz'
-              when 'amazon-product-2'
-                assign amazon_url = 'https://a.co/d/0gqs75dv'
-              when 'amazon-product-3'
-                assign amazon_url = 'https://a.co/d/0hs6P791'
-              when 'amazon-product-4'
-                assign amazon_url = 'https://a.co/d/0aWj05kn'
-            endcase
+            assign amazon_title = product.title | downcase
+            if amazon_title contains 'snow mushroom' and amazon_title contains 'night'
+              assign amazon_url = 'https://a.co/d/0hs6P791'
+            elsif amazon_title contains 'snow mushroom' and amazon_title contains 'day'
+              assign amazon_url = 'https://a.co/d/0aWj05kn'
+            elsif amazon_title contains '72 hydrocolloid'
+              assign amazon_url = 'https://a.co/d/03XQ6sWz'
+            elsif amazon_title contains '36 hydrocolloid'
+              assign amazon_url = 'https://a.co/d/0gqs75dv'
+            endif
           endunless
         -%}
 
