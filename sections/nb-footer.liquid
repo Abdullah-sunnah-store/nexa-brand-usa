@@ -34,20 +34,32 @@
     </div>
 
     <div class="nb-footer-custom__col">
-      <div class="nb-footer-custom__nav-title">Navigate</div>
-      <a href="/" class="nb-footer-custom__nav-link">Home</a>
-      <a href="/pages/nexabeauty" class="nb-footer-custom__nav-link">NexaBeauty™</a>
-      <a href="/collections/all" class="nb-footer-custom__nav-link">Shop</a>
-      <a href="/pages/wholesale" class="nb-footer-custom__nav-link">Wholesale</a>
-      <a href="/pages/contact" class="nb-footer-custom__nav-link">Contact</a>
+      <div class="nb-footer-custom__nav-title">{{ section.settings.title_navigate | default: 'Navigate' }}</div>
+      {%- if section.settings.menu_navigate != blank -%}
+        {%- for link in linklists[section.settings.menu_navigate].links -%}
+          <a href="{{ link.url }}" class="nb-footer-custom__nav-link"{% if link.current %} aria-current="page"{% endif %}>{{ link.title }}</a>
+        {%- endfor -%}
+      {%- else -%}
+        <a href="{{ routes.root_url }}" class="nb-footer-custom__nav-link">Home</a>
+        <a href="/pages/nexabeauty" class="nb-footer-custom__nav-link">NexaBeauty™</a>
+        <a href="{{ routes.all_products_collection_url }}" class="nb-footer-custom__nav-link">Shop</a>
+        <a href="/pages/wholesale" class="nb-footer-custom__nav-link">Wholesale</a>
+        <a href="/pages/contact" class="nb-footer-custom__nav-link">Contact</a>
+      {%- endif -%}
     </div>
 
     <div class="nb-footer-custom__col">
-      <div class="nb-footer-custom__nav-title">Policies</div>
-      <a href="/pages/shipping" class="nb-footer-custom__nav-link">Shipping Policy</a>
-      <a href="/pages/returns" class="nb-footer-custom__nav-link">Return Policy</a>
-      <a href="/policies/privacy-policy" class="nb-footer-custom__nav-link">Privacy Policy</a>
-      <a href="/pages/terms-of-service" class="nb-footer-custom__nav-link">Terms of Service</a>
+      <div class="nb-footer-custom__nav-title">{{ section.settings.title_policies | default: 'Policies' }}</div>
+      {%- if section.settings.menu_policies != blank -%}
+        {%- for link in linklists[section.settings.menu_policies].links -%}
+          <a href="{{ link.url }}" class="nb-footer-custom__nav-link"{% if link.current %} aria-current="page"{% endif %}>{{ link.title }}</a>
+        {%- endfor -%}
+      {%- else -%}
+        <a href="/pages/shipping" class="nb-footer-custom__nav-link">Shipping Policy</a>
+        <a href="/pages/returns" class="nb-footer-custom__nav-link">Return Policy</a>
+        <a href="/policies/privacy-policy" class="nb-footer-custom__nav-link">Privacy Policy</a>
+        <a href="/pages/terms-of-service" class="nb-footer-custom__nav-link">Terms of Service</a>
+      {%- endif -%}
     </div>
 
     <div class="nb-footer-custom__col">
@@ -299,7 +311,40 @@
 {
   "name": "NB Footer",
   "tag": "section",
-  "settings": [],
+  "settings": [
+    {
+      "type": "header",
+      "content": "Navigate column"
+    },
+    {
+      "type": "text",
+      "id": "title_navigate",
+      "label": "Navigate title",
+      "default": "Navigate"
+    },
+    {
+      "type": "link_list",
+      "id": "menu_navigate",
+      "label": "Navigate menu",
+      "info": "Pick a menu to control these links. Leave empty to use the built-in default links."
+    },
+    {
+      "type": "header",
+      "content": "Policies column"
+    },
+    {
+      "type": "text",
+      "id": "title_policies",
+      "label": "Policies title",
+      "default": "Policies"
+    },
+    {
+      "type": "link_list",
+      "id": "menu_policies",
+      "label": "Policies menu",
+      "info": "Pick a menu to control these links. Leave empty to use the built-in default links."
+    }
+  ],
   "presets": [{"name": "NB Footer", "category": "NexaBrand"}]
 }
 {% endschema %}
