@@ -18,7 +18,9 @@
       "Bash(git ls-tree *)",
       "Bash(printf \"node_modules/\\\\n.DS_Store\\\\n*.log\\\\n\")",
       "Bash(git add *)",
-      "Bash(git commit *)"
+      "Bash(git commit *)",
+      "Bash(git branch *)",
+      "Bash(git merge *)"
     ]
   }
 }
