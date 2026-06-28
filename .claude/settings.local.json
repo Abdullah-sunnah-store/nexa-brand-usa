@@ -21,7 +21,9 @@
       "Bash(git commit *)",
       "Bash(git branch *)",
       "Bash(git merge *)",
-      "Bash(git push *)"
+      "Bash(git push *)",
+      "Bash(curl -s \"https://nexabrand-usa.myshopify.com/products.json?limit=50\")",
+      "Bash(node -e \"let d='';process.stdin.on\\('data',c=>d+=c\\);process.stdin.on\\('end',\\(\\)=>{try{const j=JSON.parse\\(d\\);console.log\\('Products found:',j.products.length\\);j.products.forEach\\(p=>console.log\\('-',p.handle,'|',p.title\\)\\);}catch\\(e\\){console.log\\('Could not parse \\(store may be password-protected\\):',d.slice\\(0,200\\)\\);}}\\);\")"
     ]
   }
 }
