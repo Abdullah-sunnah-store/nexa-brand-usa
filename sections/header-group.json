@@ -11,6 +11,28 @@
   "type": "header",
   "name": "Header group",
   "sections": {
+    "announcement-bar": {
+      "type": "announcement-bar",
+      "blocks": {
+        "message-1": {
+          "type": "message",
+          "settings": {
+            "text": "FREE U.S. SHIPPING ON ORDERS $50+"
+          }
+        }
+      },
+      "block_order": [
+        "message-1"
+      ],
+      "settings": {
+        "color_scheme": "scheme-3",
+        "enable_sticky": false,
+        "autoplay": true,
+        "cycle_speed": 5,
+        "desktop_font_size": 11,
+        "mobile_font_size": 10
+      }
+    },
     "countdown-timer": {
       "type": "countdown-condensed",
       "disabled": true,
@@ -57,6 +79,7 @@
     }
   },
   "order": [
+    "announcement-bar",
     "countdown-timer",
     "header"
   ]
