@@ -121,7 +121,12 @@
     "nb_footer_mhJcMY": {
       "type": "nb-footer",
       "name": "NB Footer",
-      "settings": {}
+      "settings": {
+        "title_navigate": "Navigate",
+        "menu_navigate": "",
+        "title_policies": "Policies",
+        "menu_policies": "footer"
+      }
     }
   },
   "order": [
