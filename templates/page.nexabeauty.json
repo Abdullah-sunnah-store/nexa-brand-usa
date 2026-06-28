@@ -12,33 +12,201 @@
     "nb-nexabeauty-brand": {
       "type": "nb-nexabeauty-brand",
       "blocks": {
-        "pillar-1": { "type": "pillar", "settings": { "text": "Science-Backed K-Beauty Formulation" } },
-        "pillar-2": { "type": "pillar", "settings": { "text": "GMP Certified Manufacturing Standards" } },
-        "pillar-3": { "type": "pillar", "settings": { "text": "Visible Results You Can Trust" } },
-        "ing-1": { "type": "ingredient", "settings": { "name": "Snail Secretion Filtrate", "desc": "Deep repair", "image_asset": "nb-ing-01.png" } },
-        "ing-2": { "type": "ingredient", "settings": { "name": "Snow Mushroom", "desc": "Deep hydration", "image_asset": "nb-ing-02.png" } },
-        "ing-3": { "type": "ingredient", "settings": { "name": "Ceramide", "desc": "Barrier repair", "image_asset": "nb-ing-03.png" } },
-        "ing-4": { "type": "ingredient", "settings": { "name": "Dual Peptides", "desc": "Anti-aging", "image_asset": "nb-ing-04.png" } },
-        "ing-5": { "type": "ingredient", "settings": { "name": "Hyaluronic Acid", "desc": "Deep hydration", "image_asset": "nb-ing-05.png" } },
-        "ing-6": { "type": "ingredient", "settings": { "name": "Honey Extract", "desc": "Nourish + soothe", "image_asset": "nb-ing-06.png" } },
-        "ing-7": { "type": "ingredient", "settings": { "name": "Centella Asiatica", "desc": "Cica soothing", "image_asset": "nb-ing-07.png" } },
-        "ing-8": { "type": "ingredient", "settings": { "name": "Niacinamide", "desc": "Brightening", "image_asset": "nb-ing-08.png" } },
-        "ing-9": { "type": "ingredient", "settings": { "name": "Beta-Glucan", "desc": "Soothe + nourish", "image_asset": "nb-ing-09.png" } },
-        "ing-10": { "type": "ingredient", "settings": { "name": "Panthenol", "desc": "Skin recovery", "image_asset": "nb-ing-10.png" } },
-        "ing-11": { "type": "ingredient", "settings": { "name": "Allantoin", "desc": "Calming", "image_asset": "nb-ing-17.png" } },
-        "ing-12": { "type": "ingredient", "settings": { "name": "Vitamin C", "desc": "Brightening", "image_asset": "nb-ing-11.png" } },
-        "ing-13": { "type": "ingredient", "settings": { "name": "Tranexamic Acid", "desc": "Even tone", "image_asset": "nb-ing-12.png" } },
-        "ing-14": { "type": "ingredient", "settings": { "name": "Caffeine", "desc": "De-puffing", "image_asset": "nb-ing-13.png" } },
-        "ing-15": { "type": "ingredient", "settings": { "name": "Coenzyme A", "desc": "Cellular energy", "image_asset": "nb-ing-15.png" } },
-        "ing-16": { "type": "ingredient", "settings": { "name": "Biotin", "desc": "Skin renewal", "image_asset": "nb-ing-14.png" } },
-        "ing-17": { "type": "ingredient", "settings": { "name": "Betaine", "desc": "Hydration", "image_asset": "nb-ing-16.png" } },
-        "ing-18": { "type": "ingredient", "settings": { "name": "Hydrolyzed Jojoba Esters", "desc": "Barrier repair", "image_asset": "nb-ing-19.png" } },
-        "ing-19": { "type": "ingredient", "settings": { "name": "Aloe Vera", "desc": "Soothe + cool", "image_asset": "nb-ing-18.png" } }
+        "pillar-1": {
+          "type": "pillar",
+          "settings": {
+            "text": "Science-Backed K-Beauty Formulation"
+          }
+        },
+        "pillar-2": {
+          "type": "pillar",
+          "settings": {
+            "text": "GMP Certified Manufacturing Standards"
+          }
+        },
+        "pillar-3": {
+          "type": "pillar",
+          "settings": {
+            "text": "Visible Results You Can Trust"
+          }
+        },
+        "ing-1": {
+          "type": "ingredient",
+          "settings": {
+            "name": "Snail Secretion Filtrate",
+            "desc": "Deep repair",
+            "image_asset": "nb-ing-01.png"
+          }
+        },
+        "ing-2": {
+          "type": "ingredient",
+          "settings": {
+            "name": "Snow Mushroom",
+            "desc": "Deep hydration",
+            "image_asset": "nb-ing-02.png"
+          }
+        },
+        "ing-3": {
+          "type": "ingredient",
+          "settings": {
+            "name": "Ceramide",
+            "desc": "Barrier repair",
+            "image_asset": "nb-ing-03.png"
+          }
+        },
+        "ing-4": {
+          "type": "ingredient",
+          "settings": {
+            "name": "Dual Peptides",
+            "desc": "Anti-aging",
+            "image_asset": "nb-ing-04.png"
+          }
+        },
+        "ing-5": {
+          "type": "ingredient",
+          "settings": {
+            "name": "Hyaluronic Acid",
+            "desc": "Deep hydration",
+            "image_asset": "nb-ing-05.png"
+          }
+        },
+        "ing-6": {
+          "type": "ingredient",
+          "settings": {
+            "name": "Honey Extract",
+            "desc": "Nourish + soothe",
+            "image_asset": "nb-ing-06.png"
+          }
+        },
+        "ing-7": {
+          "type": "ingredient",
+          "settings": {
+            "name": "Centella Asiatica",
+            "desc": "Cica soothing",
+            "image_asset": "nb-ing-07.png"
+          }
+        },
+        "ing-8": {
+          "type": "ingredient",
+          "settings": {
+            "name": "Niacinamide",
+            "desc": "Brightening",
+            "image_asset": "nb-ing-08.png"
+          }
+        },
+        "ing-9": {
+          "type": "ingredient",
+          "settings": {
+            "name": "Beta-Glucan",
+            "desc": "Soothe + nourish",
+            "image_asset": "nb-ing-09.png"
+          }
+        },
+        "ing-10": {
+          "type": "ingredient",
+          "settings": {
+            "name": "Panthenol",
+            "desc": "Skin recovery",
+            "image": "shopify://shop_images/1-10-01.png",
+            "image_asset": "nb-ing-10.png"
+          }
+        },
+        "ing-11": {
+          "type": "ingredient",
+          "settings": {
+            "name": "Allantoin",
+            "desc": "Calming",
+            "image_asset": "nb-ing-17.png"
+          }
+        },
+        "ing-12": {
+          "type": "ingredient",
+          "settings": {
+            "name": "Vitamin C",
+            "desc": "Brightening",
+            "image_asset": "nb-ing-11.png"
+          }
+        },
+        "ing-13": {
+          "type": "ingredient",
+          "settings": {
+            "name": "Tranexamic Acid",
+            "desc": "Even tone",
+            "image_asset": "nb-ing-12.png"
+          }
+        },
+        "ing-14": {
+          "type": "ingredient",
+          "settings": {
+            "name": "Caffeine",
+            "desc": "De-puffing",
+            "image_asset": "nb-ing-13.png"
+          }
+        },
+        "ing-15": {
+          "type": "ingredient",
+          "settings": {
+            "name": "Coenzyme A",
+            "desc": "Cellular energy",
+            "image_asset": "nb-ing-15.png"
+          }
+        },
+        "ing-16": {
+          "type": "ingredient",
+          "settings": {
+            "name": "Biotin",
+            "desc": "Skin renewal",
+            "image_asset": "nb-ing-14.png"
+          }
+        },
+        "ing-17": {
+          "type": "ingredient",
+          "settings": {
+            "name": "Betaine",
+            "desc": "Hydration",
+            "image_asset": "nb-ing-16.png"
+          }
+        },
+        "ing-18": {
+          "type": "ingredient",
+          "settings": {
+            "name": "Hydrolyzed Jojoba Esters",
+            "desc": "Barrier repair",
+            "image_asset": "nb-ing-19.png"
+          }
+        },
+        "ing-19": {
+          "type": "ingredient",
+          "settings": {
+            "name": "Aloe Vera",
+            "desc": "Soothe + cool",
+            "image_asset": "nb-ing-18.png"
+          }
+        }
       },
       "block_order": [
-        "pillar-1", "pillar-2", "pillar-3",
-        "ing-1", "ing-2", "ing-3", "ing-4", "ing-5", "ing-6", "ing-7", "ing-8", "ing-9", "ing-10",
-        "ing-11", "ing-12", "ing-13", "ing-14", "ing-15", "ing-16", "ing-17", "ing-18", "ing-19"
+        "pillar-1",
+        "pillar-2",
+        "pillar-3",
+        "ing-1",
+        "ing-2",
+        "ing-3",
+        "ing-4",
+        "ing-5",
+        "ing-6",
+        "ing-7",
+        "ing-8",
+        "ing-9",
+        "ing-10",
+        "ing-11",
+        "ing-12",
+        "ing-13",
+        "ing-14",
+        "ing-15",
+        "ing-16",
+        "ing-17",
+        "ing-18",
+        "ing-19"
       ],
       "settings": {
         "hero_badge": "NEXABEAUTY™",
@@ -57,5 +225,7 @@
       }
     }
   },
-  "order": ["nb-nexabeauty-brand"]
+  "order": [
+    "nb-nexabeauty-brand"
+  ]
 }
