@@ -1,0 +1,699 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "slideshow": {
+      "type": "slideshow",
+      "blocks": {
+        "slide-1": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Web_5th_Baneer-01.png",
+            "mobile_image": "shopify://shop_images/5th_mobile_Banner-01_1.png",
+            "subheading": "NexaBrand USA™",
+            "title": "Elevating Everyday Living.",
+            "subtitle_1": "Next-Generation Consumer Brands inspired by innovation, science, and modern design.",
+            "subtitle_2": "Live Better, Shop Nexa.",
+            "title_size_desktop": 64,
+            "title_size_mobile": 26,
+            "subtitle_1_size_desktop": 22,
+            "subtitle_1_size_mobile": 16,
+            "subtitle_2_size_desktop": 18,
+            "subtitle_2_size_mobile": 14,
+            "gap_desktop": 16,
+            "gap_mobile": 8,
+            "mobile_text_position": "place-self-start-center text-center",
+            "desktop_text_position": "sm:place-self-end-start sm:text-start",
+            "content_max_width": 760,
+            "button_1_text": "Explore NexaBeauty™",
+            "button_1_link": "shopify://pages/nexabeauty",
+            "button_1_style": "fill",
+            "button_1_background": "#1a3a42",
+            "button_1_text_color": "#ffffff",
+            "button_2_text": "Wholesale Partnerships",
+            "button_2_link": "shopify://collections",
+            "button_2_style": "outline",
+            "button_2_background": "#1a3a42",
+            "button_2_text_color": "#ffffff",
+            "background": "",
+            "background_opacity": 15,
+            "text_color": "#1a3a42",
+            "border_color": "rgba(0,0,0,0)",
+            "gradient_overlay": "linear-gradient(90deg, rgba(240, 249, 251, 0.65), rgba(240, 249, 251, 0) 65%)"
+          }
+        }
+      },
+      "block_order": [
+        "slide-1"
+      ],
+      "settings": {
+        "allow_transparent_header": false,
+        "show_next_section_button": true,
+        "media_size": "fill",
+        "show_initial_transition": true,
+        "autoplay": false,
+        "autoplay_pause_on_video": true,
+        "cycle_speed": 6,
+        "background": "#f0f9fb",
+        "controls_color": "#1a3a42"
+      }
+    },
+    "nb_hero_zt8X6B": {
+      "type": "nb-hero",
+      "disabled": true,
+      "name": "NB Hero",
+      "settings": {
+        "eyebrow": "NexaBrand USA™",
+        "headline": "Elevating Everyday Living.",
+        "subtext": "Next-Generation Consumer Brands inspired by innovation, science, and modern design.",
+        "tagline": "Live Better, Shop Nexa.",
+        "btn1_text": "Explore NexaBeauty™",
+        "btn1_url": "",
+        "btn2_text": "Wholesale Partnerships",
+        "btn2_url": ""
+      }
+    },
+    "nb_trust_strip_t9DyWU": {
+      "type": "nb-trust-strip",
+      "blocks": {
+        "item_zN9x6q": {
+          "type": "item",
+          "settings": {
+            "label": "GMP Certified Manufacturing Facility"
+          }
+        },
+        "item_XECYqQ": {
+          "type": "item",
+          "settings": {
+            "label": "ISO 13485 Medical-Grade"
+          }
+        },
+        "item_DnFbwM": {
+          "type": "item",
+          "settings": {
+            "label": "K-Beauty Inspired"
+          }
+        },
+        "item_iRmXzw": {
+          "type": "item",
+          "settings": {
+            "label": "Premium Quality"
+          }
+        }
+      },
+      "block_order": [
+        "item_zN9x6q",
+        "item_XECYqQ",
+        "item_DnFbwM",
+        "item_iRmXzw"
+      ],
+      "name": "NB Trust Strip",
+      "settings": {}
+    },
+    "nb_prestige_hero_kQNXfC": {
+      "type": "nb-prestige-hero",
+      "name": "NB Prestige Hero",
+      "settings": {
+        "show_eyebrow": true,
+        "eyebrow": "NEXABEAUTY™",
+        "headline": "Glow Starts Here.",
+        "show_subtext": true,
+        "subtext": "K-beauty inspired skincare for real, visible results",
+        "show_fineprint": false,
+        "fineprint": "Upload lifestyle photo or brand video in Shopify customizer",
+        "show_btn_1": true,
+        "btn1_text": "Shop NexaBeauty™",
+        "btn1_url": "shopify://pages/nexabeauty",
+        "show_btn_2": false,
+        "btn2_text": "Our Story",
+        "btn2_url": "",
+        "btn_shape": "pill",
+        "bg_type": "video",
+        "color_scheme": "scheme-4",
+        "bg_image": "shopify://shop_images/Final_3.png",
+        "bg_video": "shopify://files/videos/5234994-hd_1920_1080_25fps.mp4",
+        "overlay_opacity": 25,
+        "show_scroll": true
+      }
+    },
+    "multi_column_hdBkG8": {
+      "type": "multi-column",
+      "blocks": {
+        "image_with_text_DXqFRK": {
+          "type": "image_with_text",
+          "settings": {
+            "title": "Premium Design Standard",
+            "heading_tag": "h4",
+            "content": "<p>Every product is developed to the highest aesthetic and functional standard — clean, modern, and built for the next generation consumer.</p>",
+            "link_url": "",
+            "link_text": ""
+          }
+        },
+        "image_with_text_pDjPH6": {
+          "type": "image_with_text",
+          "settings": {
+            "title": "Performance-Led Formulas",
+            "heading_tag": "h4",
+            "content": "<p>Our formulas are clinically inspired and crafted with proven K-beauty hero ingredients that deliver real, visible results.</p>",
+            "link_url": "",
+            "link_text": ""
+          }
+        },
+        "image_with_text_7ciVMe": {
+          "type": "image_with_text",
+          "settings": {
+            "title": "Wellness and Lifestyle Expansion",
+            "heading_tag": "h4",
+            "content": "<p>NexaBeauty™ is our first launch. Wellness, lifestyle accessories, home and kitchen categories are coming soon.</p>",
+            "link_url": "",
+            "link_text": ""
+          }
+        },
+        "image_with_text_aTPrBz": {
+          "type": "image_with_text",
+          "settings": {
+            "title": "Wholesale Growth Strategy",
+            "heading_tag": "h4",
+            "content": "<p>We are actively building retailer, distributor, and global partner relationships to grow NexaBrand USA™ internationally.</p>",
+            "link_url": "",
+            "link_text": ""
+          }
+        }
+      },
+      "block_order": [
+        "image_with_text_DXqFRK",
+        "image_with_text_pDjPH6",
+        "image_with_text_7ciVMe",
+        "image_with_text_aTPrBz"
+      ],
+      "settings": {
+        "color_scheme": "scheme-1",
+        "separate_section_with_border": true,
+        "columns_per_row": 4,
+        "stack_on_mobile": false,
+        "overlap_image": false,
+        "content_alignment": "center",
+        "text_alignment": "center",
+        "spacing": "md",
+        "subheading": "ABOUT NEXABRAND USA™",
+        "title": "Next-Generation Consumer Brands",
+        "content": "<p>NexaBrand USA™ is a modern brand company building next-generation consumer products across beauty, wellness, home, and lifestyle categories. Our first launch introduces NexaBeauty™ — a premium skincare line inspired by Korean beauty innovation and performance-driven formulas.</p><p><em>Wellness · Lifestyle & Accessories · Home & Kitchen · Wholesale & Distribution — Coming Soon</em></p>"
+      }
+    },
+    "nexabeauty-intro": {
+      "type": "image-with-text-overlay",
+      "blocks": {
+        "eyebrow-1": {
+          "type": "subheading",
+          "settings": {
+            "text": "NexaBeauty™"
+          }
+        },
+        "heading-1": {
+          "type": "heading",
+          "settings": {
+            "text": "K-Beauty Inspired. Next-Generation Skincare.",
+            "heading_tag": "h2"
+          }
+        },
+        "richtext-1": {
+          "type": "richtext",
+          "settings": {
+            "content": "<p>Performance-led skincare with a clean, refined design standard <br/>inspired by modern K-beauty. 5 Products. GMP Certified<br/> Manufacturing.</p>"
+          }
+        },
+        "button-1": {
+          "type": "button",
+          "settings": {
+            "style": "solid",
+            "text": "Shop NexaBeauty™ Collection",
+            "url": "shopify://collections/all",
+            "background": "#1a3a42",
+            "text_color": "#ffffff"
+          }
+        }
+      },
+      "block_order": [
+        "eyebrow-1",
+        "heading-1",
+        "richtext-1",
+        "button-1"
+      ],
+      "settings": {
+        "color_scheme": "scheme-2",
+        "image_size": "fill",
+        "image": "shopify://shop_images/Final_3.png",
+        "mobile_image": "shopify://shop_images/1-02.png",
+        "allow_transparent_header": false,
+        "reveal_on_scroll": true,
+        "remove_vertical_spacing": true,
+        "content_width": "sm",
+        "mobile_text_position": "place-self-start-center text-center",
+        "desktop_text_position": "sm:place-self-center-start sm:text-start",
+        "overlay_color": "#1a3a42",
+        "overlay_opacity": 20
+      }
+    },
+    "nb_nexabeauty_intro_cgpDLB": {
+      "type": "nb-nexabeauty-intro",
+      "disabled": true,
+      "name": "NB NexaBeauty Intro",
+      "settings": {
+        "title": "NexaBeauty™ — Next-Generation K-Beauty Skincare",
+        "body": "Performance-led skincare. 5 Products. GMP Certified Manufacturing Facility.",
+        "btn_text": "Shop NexaBeauty™ Collection",
+        "btn_url": ""
+      }
+    },
+    "product-preview": {
+      "type": "featured-collections",
+      "blocks": {
+        "collection-1": {
+          "type": "collection",
+          "settings": {
+            "collection": "frontpage",
+            "products_count": 5,
+            "title": "",
+            "link_url": "shopify://collections/all",
+            "link_text": "VIEW ALL PRODUCTS"
+          }
+        }
+      },
+      "block_order": [
+        "collection-1"
+      ],
+      "settings": {
+        "color_scheme": "scheme-1",
+        "separate_section_with_border": true,
+        "hide_product_information": false,
+        "stack_products": false,
+        "products_per_row_mobile": "2",
+        "products_per_row_desktop": 5,
+        "horizontal_spacing_factor": 1,
+        "vertical_spacing_factor": 1,
+        "subheading": "OUR PRODUCTS",
+        "hide_collection_title": false
+      }
+    },
+    "about-nexabrand": {
+      "type": "multi-column",
+      "blocks": {
+        "pillar-1": {
+          "type": "image_with_text",
+          "settings": {
+            "title": "Premium Design Standard",
+            "heading_tag": "h4",
+            "content": "<p>Every product is developed to the highest aesthetic and functional standard — clean, modern, and built for the next generation consumer.</p>",
+            "link_url": "",
+            "link_text": ""
+          }
+        },
+        "pillar-2": {
+          "type": "image_with_text",
+          "settings": {
+            "title": "Performance-Led Formulas",
+            "heading_tag": "h4",
+            "content": "<p>Our formulas are clinically inspired and crafted with proven K-beauty hero ingredients that deliver real, visible results.</p>",
+            "link_url": "",
+            "link_text": ""
+          }
+        },
+        "pillar-3": {
+          "type": "image_with_text",
+          "settings": {
+            "title": "Wellness and Lifestyle Expansion",
+            "heading_tag": "h4",
+            "content": "<p>NexaBeauty™ is our first launch. Wellness, lifestyle accessories, home and kitchen categories are coming soon.</p>",
+            "link_url": "",
+            "link_text": ""
+          }
+        },
+        "pillar-4": {
+          "type": "image_with_text",
+          "settings": {
+            "title": "Wholesale Growth Strategy",
+            "heading_tag": "h4",
+            "content": "<p>We are actively building retailer, distributor, and global partner relationships to grow NexaBrand USA™ internationally.</p>",
+            "link_url": "",
+            "link_text": ""
+          }
+        }
+      },
+      "block_order": [
+        "pillar-1",
+        "pillar-2",
+        "pillar-3",
+        "pillar-4"
+      ],
+      "disabled": true,
+      "settings": {
+        "color_scheme": "scheme-1",
+        "separate_section_with_border": true,
+        "columns_per_row": 4,
+        "stack_on_mobile": false,
+        "overlap_image": false,
+        "content_alignment": "center",
+        "text_alignment": "center",
+        "spacing": "md",
+        "subheading": "ABOUT NEXABRAND USA™",
+        "title": "Next-Generation Consumer Brands",
+        "content": "<p>NexaBrand USA™ is a modern brand company building next-generation consumer products across beauty, wellness, home, and lifestyle categories. Our first launch introduces NexaBeauty™ — a premium skincare line inspired by Korean beauty innovation and performance-driven formulas.</p><p><em>Wellness · Lifestyle & Accessories · Home & Kitchen · Wholesale & Distribution — Coming Soon</em></p>"
+      }
+    },
+    "glow-routine": {
+      "type": "images-with-text-scroll",
+      "blocks": {
+        "step-1": {
+          "type": "image_with_text",
+          "settings": {
+            "image": "shopify://shop_images/6a95f81b-8063-41c9-8ff7-aaff45e1ae71.jpg",
+            "subheading": "STEP 01",
+            "title": "Advanced Snail Repair Essential",
+            "content": "<p>Repair your skin barrier and restore deep hydration. Apply morning and evening to cleansed skin.</p>",
+            "link_text": "View Product",
+            "link_url": "shopify://products/advanced-snail-repair-essential",
+            "link_style": "link"
+          }
+        },
+        "step-2": {
+          "type": "image_with_text",
+          "settings": {
+            "image": "shopify://shop_images/Daypouch.png",
+            "subheading": "STEP 02",
+            "title": "Snow Mushroom Day Glass Glow Mask",
+            "content": "<p>Morning glow and brightening boost. Use 2–3 times per week before makeup or as a standalone treatment.</p>",
+            "link_text": "View Product",
+            "link_url": "shopify://collections/all",
+            "link_style": "link"
+          }
+        },
+        "step-3": {
+          "type": "image_with_text",
+          "settings": {
+            "image": "shopify://shop_images/Night_pouch.png",
+            "subheading": "STEP 03",
+            "title": "Snow Mushroom Night Glass Glow Mask",
+            "content": "<p>Overnight repair and glass skin hydration. Apply 45–60 minutes before bed, 2–3 nights per week.</p>",
+            "link_text": "View Product",
+            "link_url": "shopify://collections/all",
+            "link_style": "link"
+          }
+        },
+        "step-4": {
+          "type": "image_with_text",
+          "settings": {
+            "image": "shopify://shop_images/ListingImages-01_6de9cfbd-1bd6-4400-84ed-592a080b45e1.jpg",
+            "subheading": "STEP 04",
+            "title": "HydroClear™ Blemish Shield 36ct",
+            "content": "<p>Target breakouts and calm redness. Apply directly over blemishes and wear 6–8 hours day or night.</p>",
+            "link_text": "View Product",
+            "link_url": "shopify://collections/all",
+            "link_style": "link"
+          }
+        },
+        "step-5": {
+          "type": "image_with_text",
+          "settings": {
+            "image": "shopify://shop_images/ListingImages-02.jpg",
+            "subheading": "STEP 05",
+            "title": "HydroClear™ Blemish Shield 72ct",
+            "content": "<p>Daily blemish protection and recovery — best value. Same formula, 2x the patches, save 40%.</p>",
+            "link_text": "View Product",
+            "link_url": "shopify://collections/all",
+            "link_style": "link"
+          }
+        }
+      },
+      "block_order": [
+        "step-1",
+        "step-2",
+        "step-3",
+        "step-4",
+        "step-5"
+      ],
+      "disabled": true,
+      "settings": {
+        "color_scheme": "scheme-2",
+        "image_position": "start",
+        "text_alignment": "start",
+        "heading_tag": "h3",
+        "overlay_color": "#000000",
+        "overlay_opacity": 10
+      }
+    },
+    "nb_routine_Ffaate": {
+      "type": "nb-routine",
+      "blocks": {
+        "step_AJVJMd": {
+          "type": "step",
+          "settings": {
+            "name": "Advanced Snail Repair Essential",
+            "desc": "Barrier Repair and deep hydration"
+          }
+        },
+        "step_EnPREA": {
+          "type": "step",
+          "settings": {
+            "name": "Snow Mushroom Day Glass Glow Hydrogel Mask",
+            "desc": "Morning glow and brightening boost"
+          }
+        },
+        "step_hFNBth": {
+          "type": "step",
+          "settings": {
+            "name": "Snow Mushroom Night Glass Glow Hydrogel Mask",
+            "desc": "Overnight Barrier Repair and glass skin"
+          }
+        },
+        "step_HwNg39": {
+          "type": "step",
+          "settings": {
+            "name": "HydroClear™ Blemish Shield 36ct",
+            "desc": "Target breakouts and calm redness"
+          }
+        },
+        "step_RYQUzq": {
+          "type": "step",
+          "settings": {
+            "name": "HydroClear™ Blemish Shield 72ct",
+            "desc": "Daily protection — best value"
+          }
+        }
+      },
+      "block_order": [
+        "step_AJVJMd",
+        "step_EnPREA",
+        "step_hFNBth",
+        "step_HwNg39",
+        "step_RYQUzq"
+      ],
+      "name": "NB Glow Routine",
+      "settings": {
+        "title": "Build Your Glow Routine",
+        "subtitle": "Discover the NexaBeauty routine designed to hydrate, repair, and brighten your skin."
+      }
+    },
+    "wholesale-cta": {
+      "type": "image-with-text-overlay",
+      "blocks": {
+        "eyebrow-1": {
+          "type": "subheading",
+          "settings": {
+            "text": "WHOLESALE & DISTRIBUTION"
+          }
+        },
+        "heading-1": {
+          "type": "heading",
+          "settings": {
+            "text": "Wholesale Partnerships",
+            "heading_tag": "h2"
+          }
+        },
+        "richtext-1": {
+          "type": "richtext",
+          "settings": {
+            "content": "<p>We work with retailers, distributors, and global partners interested in bringing next-generation beauty brands to market.</p>"
+          }
+        },
+        "button-1": {
+          "type": "button",
+          "settings": {
+            "style": "outline",
+            "text": "Wholesale Inquiry",
+            "url": "shopify://pages/wholesale",
+            "background": "",
+            "text_color": "#4aacbf"
+          }
+        }
+      },
+      "block_order": [
+        "eyebrow-1",
+        "heading-1",
+        "richtext-1",
+        "button-1"
+      ],
+      "settings": {
+        "color_scheme": "scheme-1",
+        "image_size": "fill",
+        "image": "shopify://shop_images/Final_2.png",
+        "mobile_image": "shopify://shop_images/1-04.png",
+        "allow_transparent_header": true,
+        "reveal_on_scroll": true,
+        "remove_vertical_spacing": true,
+        "content_width": "lg",
+        "mobile_text_position": "place-self-start-center text-center",
+        "desktop_text_position": "sm:place-self-center sm:text-center",
+        "overlay_color": "#1a3a42",
+        "overlay_opacity": 11
+      }
+    },
+    "reviews": {
+      "type": "testimonials",
+      "blocks": {
+        "review-1": {
+          "type": "testimonial",
+          "settings": {
+            "content": "<p>\"My skin has never glowed like this. The Snail Repair serum completely transformed my skin barrier in just 2 weeks.\"</p>",
+            "logo_max_width": 140,
+            "logo_mobile_max_width": 100,
+            "author": "Sarah M. — Verified Buyer ⭐⭐⭐⭐⭐"
+          }
+        },
+        "review-2": {
+          "type": "testimonial",
+          "settings": {
+            "content": "<p>\"The Night Mask is unreal. Glass skin by morning — I wake up and my skin is so plump and hydrated.\"</p>",
+            "logo_max_width": 140,
+            "logo_mobile_max_width": 100,
+            "author": "Jessica L. — Verified Buyer ⭐⭐⭐⭐⭐"
+          }
+        },
+        "review-3": {
+          "type": "testimonial",
+          "settings": {
+            "content": "<p>\"HydroClear patches are completely invisible under makeup. Redness gone by morning. Best acne patch I've ever used.\"</p>",
+            "logo_max_width": 140,
+            "logo_mobile_max_width": 100,
+            "author": "Rachel T. — Verified Buyer ⭐⭐⭐⭐⭐"
+          }
+        }
+      },
+      "block_order": [
+        "review-1",
+        "review-2",
+        "review-3"
+      ],
+      "settings": {
+        "color_scheme": "scheme-1",
+        "separate_section_with_border": true,
+        "auto_rotate_between_testimonials": true,
+        "cycle_speed": 5,
+        "font_size_factor": 1.1,
+        "subheading": "50,000+ Skincare Lovers · 200+ Verified Reviews · 4.8★ Rating",
+        "title": "What Our Community Says",
+        "content": ""
+      }
+    },
+    "social-media": {
+      "type": "rich-text",
+      "blocks": {
+        "heading-1": {
+          "type": "heading",
+          "settings": {
+            "text": "Follow NexaBeauty™",
+            "heading_tag": "h3"
+          }
+        },
+        "richtext-1": {
+          "type": "richtext",
+          "settings": {
+            "content": "<p>Stay connected for skincare tips, new products, and glow inspiration.</p>"
+          }
+        },
+        "link-fb": {
+          "type": "link",
+          "settings": {
+            "text": "Facebook",
+            "url": "https://www.facebook.com/nexabeauty"
+          }
+        },
+        "link-ig": {
+          "type": "link",
+          "settings": {
+            "text": "Instagram",
+            "url": "https://www.instagram.com/nexabeauty"
+          }
+        },
+        "link-tk": {
+          "type": "link",
+          "settings": {
+            "text": "TikTok",
+            "url": "https://www.tiktok.com/@nexabeauty"
+          }
+        },
+        "link-yt": {
+          "type": "link",
+          "settings": {
+            "text": "YouTube",
+            "url": "https://www.youtube.com/@nexabeauty"
+          }
+        }
+      },
+      "block_order": [
+        "heading-1",
+        "richtext-1",
+        "link-fb",
+        "link-ig",
+        "link-tk",
+        "link-yt"
+      ],
+      "settings": {
+        "color_scheme": "scheme-2",
+        "separate_section_with_border": true,
+        "content_width": "sm",
+        "text_position": "center",
+        "remove_vertical_spacing": false
+      }
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "settings": {
+        "color_scheme": "scheme-2",
+        "separate_section_with_border": false,
+        "image_size": "fill",
+        "image": "shopify://shop_images/Final1.png",
+        "mobile_image": "shopify://shop_images/new_M_Banner-01.png",
+        "subheading": "JOIN THE NEXABEAUTY™ COMMUNITY",
+        "title": "Get 10% Off Your First Order",
+        "content": "<p>Subscribe for exclusive skincare tips, early product access, and members-only offers.</p>",
+        "button_text": "Subscribe",
+        "overlay_color": "#1a3a42",
+        "overlay_opacity": 11
+      }
+    }
+  },
+  "order": [
+    "slideshow",
+    "nb_hero_zt8X6B",
+    "nb_trust_strip_t9DyWU",
+    "nb_prestige_hero_kQNXfC",
+    "multi_column_hdBkG8",
+    "nexabeauty-intro",
+    "nb_nexabeauty_intro_cgpDLB",
+    "product-preview",
+    "about-nexabrand",
+    "glow-routine",
+    "nb_routine_Ffaate",
+    "wholesale-cta",
+    "reviews",
+    "social-media",
+    "newsletter"
+  ]
+}

@@ -1,0 +1,434 @@
+{%- assign pillar_blocks = section.blocks | where: 'type', 'pillar' -%}
+{%- assign ing_blocks = section.blocks | where: 'type', 'ingredient' -%}
+
+<section class="nb-nbb" id="nbb-{{ section.id }}">
+  <div class="nb-nbb__hero">
+    <div class="nb-nbb__hero-orb nb-nbb__hero-orb--a" aria-hidden="true"></div>
+    <div class="nb-nbb__hero-orb nb-nbb__hero-orb--b" aria-hidden="true"></div>
+    <div class="nb-nbb__hero-inner">
+      {%- if section.settings.hero_badge != blank -%}
+        <span class="nb-nbb__hero-badge">{{ section.settings.hero_badge }}</span>
+      {%- endif -%}
+      {%- if section.settings.hero_title != blank -%}
+        <h1 class="nb-nbb__hero-title">{{ section.settings.hero_title }}</h1>
+      {%- endif -%}
+      {%- if section.settings.hero_sub != blank -%}
+        <p class="nb-nbb__hero-sub">{{ section.settings.hero_sub }}</p>
+      {%- endif -%}
+      {%- if section.settings.hero_cta_text != blank -%}
+        <a href="{{ section.settings.hero_cta_link | default: '#' }}" class="nb-nbb__cta">{{ section.settings.hero_cta_text }} &rarr;</a>
+      {%- endif -%}
+    </div>
+  </div>
+
+  <div class="nb-nbb__body">
+
+    <div class="nb-nbb__philosophy">
+      <span class="nb-nbb__kicker">{{ section.settings.philosophy_kicker | default: 'Our Philosophy' }}</span>
+      <h2 class="nb-nbb__h2">{{ section.settings.philosophy_title | default: 'Skincare that delivers visible results, without compromise.' }}</h2>
+      {%- if section.settings.philosophy_text != blank -%}
+        <div class="nb-nbb__lede">{{ section.settings.philosophy_text }}</div>
+      {%- else -%}
+        <div class="nb-nbb__lede">
+          <p>NexaBeauty™ was built on one belief: skincare should deliver real, visible results. Inspired by Korean beauty innovation, every formula is designed to hydrate, repair, and reveal your skin's natural glow.</p>
+          <p>We believe great skin should not cost a fortune. Salon-quality hydration, clinical-grade ingredients, and K-beauty inspired formulas — all crafted for everyday use, morning and night, without the luxury price tag.</p>
+          <p><strong>🌅 Hydration By Day. 🌙 Repair By Night.</strong></p>
+          <p>Every NexaBeauty™ product is designed with purpose. Our Day formulas brighten, energize and protect. Our Night formulas repair, restore and rebuild. Together they create a complete 24-hour skincare system inspired by the best of Korean beauty science.</p>
+          <p><strong>Our Promise To You:</strong></p>
+          <p>Every NexaBeauty™ product is manufactured in a GMP-Certified Facility to the highest quality standards. Every formula is carefully developed with proven active ingredients. Every product is cruelty free. Every purchase is backed by our satisfaction guarantee.</p>
+          <p><strong>Developed in the USA 🇺🇸 · Inspired by Korea · Formulated for you.</strong></p>
+          <p><strong>✨ Live Better, Shop Nexa.</strong></p>
+        </div>
+      {%- endif -%}
+    </div>
+
+    {%- if pillar_blocks.size > 0 -%}
+      <div class="nb-nbb__pillars-wrap">
+        {%- if section.settings.pillars_kicker != blank -%}
+          <span class="nb-nbb__kicker">{{ section.settings.pillars_kicker }}</span>
+        {%- endif -%}
+        <div class="nb-nbb__pillars">
+          {%- for block in pillar_blocks -%}
+            <div class="nb-nbb__pillar" {{ block.shopify_attributes }}>
+              <span class="nb-nbb__pillar-num">
+                {%- if forloop.index < 10 -%}0{{ forloop.index }}{%- else -%}{{ forloop.index }}{%- endif -%}
+              </span>
+              <span class="nb-nbb__pillar-text">{{ block.settings.text }}</span>
+            </div>
+          {%- endfor -%}
+        </div>
+      </div>
+    {%- endif -%}
+
+    {%- if ing_blocks.size > 0 -%}
+      <div class="nb-nbb__ingredients-wrap">
+        {%- if section.settings.ingredients_kicker != blank -%}
+          <span class="nb-nbb__kicker">{{ section.settings.ingredients_kicker }}</span>
+        {%- endif -%}
+        {%- if section.settings.ingredients_title != blank -%}
+          <h2 class="nb-nbb__h2 nb-nbb__h2--center">{{ section.settings.ingredients_title }}</h2>
+        {%- endif -%}
+
+        <div class="nb-nbb__ing-grid">
+          {%- for block in ing_blocks -%}
+            <div class="nb-nbb__ing" {{ block.shopify_attributes }}>
+              {%- if block.settings.image != blank -%}
+                <span class="nb-nbb__ing-dot nb-nbb__ing-dot--img" aria-hidden="true">
+                  <img src="{{ block.settings.image | image_url: width: 150 }}" alt="" loading="lazy" width="75" height="75">
+                </span>
+              {%- elsif block.settings.image_asset != blank -%}
+                <span class="nb-nbb__ing-dot nb-nbb__ing-dot--img" aria-hidden="true">
+                  <img src="{{ block.settings.image_asset | asset_url }}" alt="" loading="lazy" width="75" height="75">
+                </span>
+              {%- else -%}
+                <span class="nb-nbb__ing-dot" aria-hidden="true"></span>
+              {%- endif -%}
+              <span class="nb-nbb__ing-name">{{ block.settings.name }}</span>
+              <span class="nb-nbb__ing-desc">{{ block.settings.desc }}</span>
+            </div>
+          {%- endfor -%}
+        </div>
+      </div>
+    {%- endif -%}
+
+    {%- if section.settings.bottom_cta_text != blank -%}
+      <div class="nb-nbb__bottom-cta">
+        <a href="{{ section.settings.bottom_cta_link | default: '#' }}" class="nb-nbb__cta nb-nbb__cta--lg">{{ section.settings.bottom_cta_text }} &rarr;</a>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% stylesheet %}
+  .nb-nbb {
+    background: linear-gradient(180deg, #F0F9FB 0%, #FBF8F2 60%, #FFFFFF 100%);
+    font-family: 'Inter', system-ui, sans-serif;
+    color: #1F2A2E;
+  }
+  .nb-nbb__hero {
+    position: relative;
+    background: linear-gradient(135deg, #0E2F36 0%, #1A3A42 50%, #2F8FA3 100%);
+    color: #FFFFFF;
+    padding: 96px 24px 80px;
+    text-align: center;
+    overflow: hidden;
+  }
+  .nb-nbb__hero-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    pointer-events: none;
+  }
+  .nb-nbb__hero-orb--a { width: 360px; height: 360px; top: -100px; left: -80px; background: rgba(74,172,191,0.5); }
+  .nb-nbb__hero-orb--b { width: 320px; height: 320px; bottom: -120px; right: -60px; background: rgba(141,211,227,0.4); }
+  .nb-nbb__hero-inner {
+    position: relative;
+    z-index: 1;
+    max-width: 720px;
+    margin: 0 auto;
+  }
+  .nb-nbb__hero-badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.4em;
+    color: #B9E8F5;
+    padding: 7px 18px;
+    border: 1px solid rgba(185,232,245,0.4);
+    border-radius: 999px;
+    margin-bottom: 22px;
+  }
+  .nb-nbb__hero-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(32px, 5vw, 52px);
+    line-height: 1.1;
+    font-weight: 700;
+    margin: 0 0 16px;
+    letter-spacing: -0.015em;
+  }
+  .nb-nbb__hero-sub {
+    font-size: 17px;
+    color: #8DD3E3;
+    margin: 0 0 32px;
+    line-height: 1.6;
+  }
+
+  .nb-nbb__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 30px;
+    background: #FFFFFF;
+    color: #1A3A42;
+    border-radius: 999px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 13px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    box-shadow: 0 10px 26px rgba(141,211,227,0.3);
+    transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
+  }
+  .nb-nbb__cta:hover {
+    transform: translateY(-2px);
+    background: #B9E8F5;
+    box-shadow: 0 14px 32px rgba(141,211,227,0.45);
+  }
+  .nb-nbb__cta--lg {
+    padding: 16px 36px;
+    background: linear-gradient(135deg, #1A3A42 0%, #2F8FA3 100%);
+    color: #FFFFFF;
+    box-shadow: 0 12px 30px rgba(26,58,66,0.28);
+  }
+  .nb-nbb__cta--lg:hover {
+    background: linear-gradient(135deg, #2F8FA3 0%, #4AACBF 100%);
+    color: #FFFFFF;
+  }
+
+  .nb-nbb__body {
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 80px 24px 90px;
+  }
+  .nb-nbb__kicker {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.3em;
+    color: #2F8FA3;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  .nb-nbb__h2 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(24px, 3.4vw, 32px);
+    line-height: 1.2;
+    color: #0E2F36;
+    margin: 0 0 16px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+  .nb-nbb__h2--center { text-align: center; }
+  .nb-nbb__lede {
+    font-size: 16px;
+    color: #4B5A60;
+    line-height: 1.75;
+    margin: 0;
+    max-width: 720px;
+  }
+  .nb-nbb__lede p { margin: 0 0 14px; }
+  .nb-nbb__lede p:last-child { margin-bottom: 0; }
+  .nb-nbb__lede strong { color: #1A3A42; font-weight: 700; }
+
+  .nb-nbb__philosophy {
+    background: #FFFFFF;
+    border-radius: 18px;
+    padding: 40px 36px;
+    border: 1px solid rgba(74,172,191,0.18);
+    box-shadow: 0 10px 30px rgba(26,58,66,0.05);
+    position: relative;
+    margin-bottom: 56px;
+  }
+  .nb-nbb__philosophy::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 30px; bottom: 30px;
+    width: 3px;
+    background: linear-gradient(180deg, #4AACBF 0%, #8DD3E3 100%);
+    border-radius: 0 3px 3px 0;
+  }
+
+  .nb-nbb__pillars-wrap {
+    margin-bottom: 60px;
+    text-align: center;
+  }
+  .nb-nbb__pillars {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-top: 24px;
+  }
+  .nb-nbb__pillar {
+    background: #FFFFFF;
+    padding: 26px 22px;
+    border-radius: 14px;
+    border: 1px solid rgba(26,58,66,0.06);
+    text-align: left;
+    transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .nb-nbb__pillar::after {
+    content: '';
+    position: absolute;
+    width: 80px; height: 80px;
+    right: -20px; bottom: -20px;
+    background: radial-gradient(circle, rgba(74,172,191,0.14), transparent 70%);
+    border-radius: 50%;
+  }
+  .nb-nbb__pillar:hover {
+    transform: translateY(-4px);
+    border-color: rgba(74,172,191,0.4);
+    box-shadow: 0 14px 30px rgba(26,58,66,0.08);
+  }
+  .nb-nbb__pillar-num {
+    display: block;
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 22px;
+    color: #4AACBF;
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+  .nb-nbb__pillar-text {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    color: #1A3A42;
+    line-height: 1.45;
+    position: relative;
+    z-index: 1;
+  }
+
+  .nb-nbb__ingredients-wrap {
+    text-align: center;
+    margin-bottom: 50px;
+  }
+
+  /* Ingredient grid */
+  .nb-nbb__ing-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 14px;
+    margin-top: 28px;
+  }
+  .nb-nbb__ing {
+    position: relative;
+    padding: 24px 18px;
+    background: linear-gradient(180deg, #F7FBFC 0%, #FFFFFF 100%);
+    border: 1px solid rgba(74,172,191,0.18);
+    border-radius: 14px;
+    text-align: center;
+    transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+  }
+  .nb-nbb__ing:hover {
+    transform: translateY(-3px);
+    border-color: #4AACBF;
+    box-shadow: 0 12px 24px rgba(74,172,191,0.18);
+  }
+  .nb-nbb__ing-dot {
+    display: block;
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, #B9E8F5, #4AACBF 70%, #2F8FA3);
+    margin: 0 auto 10px;
+    box-shadow: 0 4px 12px rgba(74,172,191,0.4);
+  }
+  .nb-nbb__ing-dot--img {
+    width: 75px; height: 75px;
+    background: #FFFFFF;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(74,172,191,0.25);
+  }
+  .nb-nbb__ing-dot--img img { width: 100%; height: 100%; object-fit: cover; }
+  .nb-nbb__ing-name {
+    display: block;
+    font-size: 14px;
+    font-weight: 700;
+    color: #1A3A42;
+    margin-bottom: 2px;
+  }
+  .nb-nbb__ing-desc {
+    display: block;
+    font-size: 12px;
+    color: #6B7A80;
+    letter-spacing: 0.02em;
+  }
+
+  .nb-nbb__bottom-cta {
+    text-align: center;
+    margin-top: 40px;
+  }
+
+  @media (max-width: 760px) {
+    .nb-nbb__hero { padding: 70px 18px 60px; }
+    .nb-nbb__body { padding: 56px 18px 70px; }
+    .nb-nbb__philosophy { padding: 28px 22px; }
+    .nb-nbb__pillars { grid-template-columns: 1fr; }
+    .nb-nbb__ing-grid { gap: 12px; }
+  }
+  @media (max-width: 420px) {
+    .nb-nbb__ing-grid { grid-template-columns: repeat(2, 1fr); }
+    .nb-nbb__ing { padding: 18px 12px; }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "NB NexaBeauty Brand",
+  "tag": "section",
+  "max_blocks": 50,
+  "settings": [
+    { "type": "header", "content": "Hero" },
+    { "type": "text", "id": "hero_badge", "label": "Badge", "default": "NEXABEAUTY™" },
+    { "type": "text", "id": "hero_title", "label": "Title", "default": "Next-Generation K-Beauty Skincare." },
+    { "type": "text", "id": "hero_sub", "label": "Subtitle", "default": "Glow-forward skincare. Minimal design. Real performance." },
+    { "type": "text", "id": "hero_cta_text", "label": "Button text", "default": "Shop NexaBeauty™ Products" },
+    { "type": "url", "id": "hero_cta_link", "label": "Button link" },
+
+    { "type": "header", "content": "Philosophy" },
+    { "type": "text", "id": "philosophy_kicker", "label": "Kicker", "default": "Our Philosophy" },
+    { "type": "text", "id": "philosophy_title", "label": "Title", "default": "Skincare that delivers visible results, without compromise." },
+    { "type": "richtext", "id": "philosophy_text", "label": "Text", "default": "<p>NexaBeauty™ was built on one belief: skincare should deliver real, visible results. Inspired by Korean beauty innovation, every formula is designed to hydrate, repair, and reveal your skin's natural glow.</p><p>We believe great skin should not cost a fortune. Salon-quality hydration, clinical-grade ingredients, and K-beauty inspired formulas — all crafted for everyday use, morning and night, without the luxury price tag.</p><p><strong>🌅 Hydration By Day. 🌙 Repair By Night.</strong></p><p>Every NexaBeauty™ product is designed with purpose. Our Day formulas brighten, energize and protect. Our Night formulas repair, restore and rebuild. Together they create a complete 24-hour skincare system inspired by the best of Korean beauty science.</p><p><strong>Our Promise To You:</strong></p><p>Every NexaBeauty™ product is manufactured in a GMP-Certified Facility to the highest quality standards. Every formula is carefully developed with proven active ingredients. Every product is cruelty free. Every purchase is backed by our satisfaction guarantee.</p><p><strong>Developed in the USA 🇺🇸 · Inspired by Korea · Formulated for you.</strong></p><p><strong>✨ Live Better, Shop Nexa.</strong></p>" },
+
+    { "type": "header", "content": "Brand Pillars" },
+    { "type": "text", "id": "pillars_kicker", "label": "Kicker", "default": "3 Brand Pillars" },
+
+    { "type": "header", "content": "Hero Ingredients" },
+    { "type": "text", "id": "ingredients_kicker", "label": "Kicker", "default": "Hero Ingredients" },
+    { "type": "text", "id": "ingredients_title", "label": "Title", "default": "The actives behind every formula" },
+
+    { "type": "header", "content": "Bottom CTA" },
+    { "type": "text", "id": "bottom_cta_text", "label": "Button text", "default": "Shop All NexaBeauty™ Products" },
+    { "type": "url", "id": "bottom_cta_link", "label": "Button link" }
+  ],
+  "blocks": [
+    {
+      "type": "pillar",
+      "name": "Brand Pillar",
+      "settings": [
+        { "type": "text", "id": "text", "label": "Pillar text", "default": "Science-Backed K-Beauty Formulation" }
+      ]
+    },
+    {
+      "type": "ingredient",
+      "name": "Ingredient",
+      "settings": [
+        { "type": "text", "id": "name", "label": "Name", "default": "Niacinamide" },
+        { "type": "text", "id": "desc", "label": "Short description", "default": "Brighten + refine" },
+        { "type": "image_picker", "id": "image", "label": "Image (optional)", "info": "Overrides the bundled asset image below." },
+        { "type": "text", "id": "image_asset", "label": "Bundled image filename", "info": "Asset filename, e.g. nb-ing-01.png. Used when no image is picked above." }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "NB NexaBeauty Brand",
+      "category": "NexaBrand",
+      "blocks": [
+        { "type": "pillar", "settings": { "text": "Science-Backed K-Beauty Formulation" } },
+        { "type": "pillar", "settings": { "text": "GMP Certified Manufacturing Standards" } },
+        { "type": "pillar", "settings": { "text": "Visible Results You Can Trust" } },
+        { "type": "ingredient", "settings": { "name": "Poly-Helixan™", "desc": "Snail repair technology" } },
+        { "type": "ingredient", "settings": { "name": "Snow Mushroom", "desc": "Deep hydration" } },
+        { "type": "ingredient", "settings": { "name": "Niacinamide", "desc": "Brighten + refine" } },
+        { "type": "ingredient", "settings": { "name": "Peptides", "desc": "Anti-aging renewal" } },
+        { "type": "ingredient", "settings": { "name": "Centella", "desc": "Soothe + calm" } },
+        { "type": "ingredient", "settings": { "name": "Ceramides", "desc": "Barrier protection" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

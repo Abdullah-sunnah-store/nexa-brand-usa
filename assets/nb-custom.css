@@ -1,0 +1,84 @@
+/* ================================================================
+   NexaBrand USA™ — Custom Styles
+   File: assets/nb-custom.css
+
+   HOW TO INCLUDE:
+   Add this line inside the <head> in layout/theme.liquid:
+     {{ 'nb-custom.css' | asset_url | stylesheet_tag }}
+   ================================================================ */
+
+/* ----------------------------------------------------------------
+   PAGE 3: SHOP / COLLECTION PAGE
+   ---------------------------------------------------------------- */
+.collection-hero,
+.collection__title-wrapper {
+  background: linear-gradient(to bottom, #8DD3E3 0%, #B9E8F5 45%, #F0F9FB 80%, #FFFFFF 100%) !important;
+  padding: 60px 20px !important;
+  text-align: center;
+}
+
+.collection__title {
+  color: #1A3A42 !important;
+  font-weight: 700 !important;
+}
+
+.collection__description {
+  color: #2F8FA3 !important;
+}
+
+/* Product grid cards */
+.product-card__title {
+  color: #1F2A2E !important;
+  font-weight: 700 !important;
+}
+
+.product-card__price {
+  color: #1F2A2E !important;
+  font-weight: 700 !important;
+}
+
+.product-card {
+  border-radius: 12px !important;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+}
+
+.product-card:hover {
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.10) !important;
+}
+
+.button--add-to-cart {
+  background: #1A3A42 !important;
+  color: #fff !important;
+  border-radius: 999px !important;
+  border: none !important;
+}
+
+/* ----------------------------------------------------------------
+   HEADER OVERRIDES
+   ---------------------------------------------------------------- */
+.header {
+  background: #FFFFFF !important;
+  border-bottom: 0.5px solid #f0f0f0;
+}
+.header__heading-link .h2,
+.header__heading-link,
+.header__heading {
+  color: #1F2A2E !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.02em;
+}
+.header__nav-item a,
+.header__menu-item {
+  color: #1F2A2E !important;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  transition: color 0.2s;
+}
+.header__nav-item a:hover,
+.header__menu-item:hover {
+  color: #4AACBF !important;
+}
+.header__icon svg { color: #1F2A2E !important; }
+.header__icon:hover svg { color: #4AACBF !important; }

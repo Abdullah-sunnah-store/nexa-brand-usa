@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 720" width="1440" height="720">
+  <defs>
+    <linearGradient id="heroGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%"   stop-color="#8DD3E3"/>
+      <stop offset="45%"  stop-color="#B9E8F5"/>
+      <stop offset="80%"  stop-color="#F0F9FB"/>
+      <stop offset="100%" stop-color="#ffffff"/>
+    </linearGradient>
+    <radialGradient id="circleGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%"   stop-color="#ffffff" stop-opacity="0.30"/>
+      <stop offset="100%" stop-color="#4AACBF"  stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="productGlow" cx="35%" cy="30%" r="60%">
+      <stop offset="0%"   stop-color="#ffffff" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="#B9E8F5"  stop-opacity="0.05"/>
+    </radialGradient>
+    <filter id="softShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="14" stdDeviation="26" flood-color="#1A3A42" flood-opacity="0.15"/>
+    </filter>
+  </defs>
+
+  <!-- Background gradient -->
+  <rect width="1440" height="720" fill="url(#heroGrad)"/>
+
+  <!-- Right side glow rings -->
+  <circle cx="1060" cy="360" r="310" fill="url(#circleGlow)" opacity="0.65"/>
+  <circle cx="1060" cy="360" r="295" fill="none" stroke="#ffffff" stroke-width="1.2" opacity="0.20"/>
+  <circle cx="1060" cy="360" r="340" fill="none" stroke="#4AACBF"  stroke-width="0.8" opacity="0.16"/>
+  <circle cx="1060" cy="360" r="385" fill="none" stroke="#B9E8F5"  stroke-width="0.6" opacity="0.12"/>
+
+  <!-- Floating decorative particles -->
+  <circle cx="180" cy="100" r="5"   fill="#4AACBF" opacity="0.35"/>
+  <circle cx="310" cy="62"  r="3"   fill="#1A3A42" opacity="0.18"/>
+  <circle cx="110" cy="590" r="4"   fill="#4AACBF" opacity="0.22"/>
+  <circle cx="560" cy="670" r="3"   fill="#1A3A42" opacity="0.15"/>
+  <circle cx="890" cy="75"  r="5"   fill="#B9E8F5" opacity="0.40"/>
+  <circle cx="1390" cy="110" r="4"  fill="#4AACBF" opacity="0.28"/>
+  <circle cx="1410" cy="630" r="3"  fill="#1A3A42" opacity="0.18"/>
+  <circle cx="750" cy="45"  r="2.5" fill="#4AACBF" opacity="0.28"/>
+  <circle cx="870" cy="260" r="18"  fill="#B9E8F5" opacity="0.55"/>
+  <circle cx="870" cy="260" r="9"   fill="#ffffff"  opacity="0.7"/>
+  <circle cx="1255" cy="275" r="13" fill="#4AACBF" opacity="0.28"/>
+  <circle cx="1245" cy="458" r="10" fill="#B9E8F5" opacity="0.50"/>
+  <circle cx="885"  cy="460" r="15" fill="#4AACBF" opacity="0.20"/>
+
+  <!-- Thin accent line left side -->
+  <line x1="80" y1="545" x2="540" y2="545" stroke="#1A3A42" stroke-width="1" opacity="0.10"/>
+
+  <!-- Product circle card -->
+  <circle cx="1060" cy="360" r="268" fill="#ffffff" opacity="0.92" filter="url(#softShadow)"/>
+  <circle cx="1060" cy="360" r="268" fill="url(#productGlow)"/>
+
+  <!-- Skincare jar body -->
+  <rect x="942" y="285" width="236" height="166" rx="26" ry="26" fill="#1A3A42"/>
+  <!-- Jar lid -->
+  <rect x="932" y="259" width="256" height="42" rx="17" ry="17" fill="#2d6b7a"/>
+  <!-- Lid highlight band -->
+  <rect x="932" y="259" width="256" height="15" rx="17" ry="17" fill="#4AACBF" opacity="0.42"/>
+  <!-- Label background -->
+  <rect x="962" y="304" width="196" height="116" rx="13" ry="13" fill="#F0F9FB" opacity="0.96"/>
+  <!-- Snail icon (stylized oval + spiral) -->
+  <ellipse cx="1060" cy="338" rx="28" ry="18" fill="none" stroke="#4AACBF" stroke-width="2.4"/>
+  <path d="M1042 338 Q1060 320 1078 338" fill="none" stroke="#4AACBF" stroke-width="2" stroke-linecap="round"/>
+  <path d="M1078 338 Q1098 333 1093 352 Q1086 368 1064 363 Q1041 358 1043 338" fill="none" stroke="#2d6b7a" stroke-width="1.5" stroke-linecap="round" opacity="0.65"/>
+  <!-- Label text lines -->
+  <text x="1060" y="375" font-family="Georgia, serif" font-size="10.5" fill="#1A3A42" text-anchor="middle" letter-spacing="1.4" font-weight="700">ADVANCED SNAIL</text>
+  <text x="1060" y="390" font-family="Georgia, serif" font-size="9" fill="#2d6b7a" text-anchor="middle" letter-spacing="0.8">REPAIR ESSENTIAL</text>
+  <!-- Leaf accents -->
+  <path d="M976 356 Q981 346 991 353 Q986 363 976 356Z" fill="#4AACBF" opacity="0.50"/>
+  <path d="M1128 356 Q1123 346 1113 353 Q1118 163 1128 156Z" fill="#4AACBF" opacity="0"/>
+  <path d="M1124 356 Q1119 346 1109 353 Q1114 363 1124 356Z" fill="#4AACBF" opacity="0.50"/>
+  <!-- Jar shine -->
+  <ellipse cx="973" cy="307" rx="13" ry="5.5" fill="#ffffff" opacity="0.25" transform="rotate(-16,973,307)"/>
+
+  <!-- Teal bottom accent stripe -->
+  <rect x="0" y="712" width="1440" height="8" fill="#4AACBF" opacity="0.50"/>
+</svg>

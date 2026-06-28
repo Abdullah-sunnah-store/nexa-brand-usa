@@ -1,0 +1,231 @@
+<section class="nb-routine">
+  <div class="nb-routine__inner">
+    <div class="nb-routine__header">
+      <span class="nb-routine__eyebrow">RITUAL</span>
+      <h2 class="nb-routine__title">{{ section.settings.title }}</h2>
+      <p class="nb-routine__sub">{{ section.settings.subtitle }}</p>
+    </div>
+
+    <ol class="nb-routine__steps">
+      {% for block in section.blocks %}
+        <li class="nb-routine__step" {{ block.shopify_attributes }}>
+          <div class="nb-routine__step-marker" aria-hidden="true">
+            <span class="nb-routine__step-num">{{ forloop.index }}</span>
+          </div>
+          <div class="nb-routine__step-body">
+            <div class="nb-routine__step-name">{{ block.settings.name }}</div>
+            <div class="nb-routine__step-desc">{{ block.settings.desc }}</div>
+          </div>
+        </li>
+      {% endfor %}
+    </ol>
+  </div>
+</section>
+
+{% stylesheet %}
+  .nb-routine {
+    background:
+      radial-gradient(60% 60% at 50% 0%, rgba(141, 211, 227, 0.18) 0%, rgba(141, 211, 227, 0) 70%),
+      linear-gradient(180deg, #F7F3EC 0%, #FBF8F2 60%, #F7F3EC 100%);
+    padding: 80px 20px;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    color: #1F2A2E;
+  }
+
+  .nb-routine__inner {
+    max-width: 760px;
+    margin: 0 auto;
+  }
+
+  .nb-routine__header {
+    text-align: center;
+    margin-bottom: 56px;
+  }
+
+  .nb-routine__eyebrow {
+    display: inline-block;
+    font-size: 12px;
+    letter-spacing: 0.28em;
+    font-weight: 600;
+    color: #2F8FA3;
+    padding: 6px 14px;
+    border: 1px solid rgba(47, 143, 163, 0.35);
+    border-radius: 999px;
+    margin-bottom: 18px;
+    text-transform: uppercase;
+  }
+
+  .nb-routine__title {
+    font-size: clamp(28px, 4vw, 40px);
+    font-weight: 700;
+    color: #1A3A42;
+    margin: 0 0 14px;
+    letter-spacing: -0.01em;
+  }
+
+  .nb-routine__sub {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #4B5A60;
+    max-width: 520px;
+    margin: 0 auto;
+  }
+
+  /* Vertical timeline */
+  .nb-routine__steps {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    position: relative;
+  }
+
+  .nb-routine__steps::before {
+    content: '';
+    position: absolute;
+    top: 28px;
+    bottom: 28px;
+    left: 27px;
+    width: 2px;
+    background: linear-gradient(180deg,
+      rgba(47, 143, 163, 0.0) 0%,
+      rgba(47, 143, 163, 0.35) 10%,
+      rgba(47, 143, 163, 0.35) 90%,
+      rgba(47, 143, 163, 0.0) 100%);
+  }
+
+  .nb-routine__step {
+    position: relative;
+    display: flex;
+    align-items: stretch;
+    gap: 22px;
+    padding: 14px 0;
+  }
+
+  .nb-routine__step-marker {
+    flex: 0 0 56px;
+    height: 56px;
+    width: 56px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 25%, #4AACBF 0%, #1F7A8C 60%, #155F6E 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 1;
+    box-shadow:
+      0 0 0 6px #FBF8F2,
+      0 0 0 7px rgba(47, 143, 163, 0.18),
+      0 8px 22px rgba(31, 122, 140, 0.28);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .nb-routine__step-num {
+    color: #FFFFFF;
+    font-weight: 700;
+    font-size: 18px;
+    font-family: 'Georgia', serif;
+    letter-spacing: 0.02em;
+  }
+
+  .nb-routine__step-body {
+    flex: 1;
+    background: #FFFFFF;
+    border-radius: 14px;
+    padding: 18px 22px;
+    border: 1px solid rgba(26, 58, 66, 0.06);
+    box-shadow: 0 2px 14px rgba(26, 58, 66, 0.05);
+    position: relative;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  }
+
+  .nb-routine__step-body::before {
+    content: '';
+    position: absolute;
+    top: 22px;
+    left: -8px;
+    width: 14px;
+    height: 14px;
+    background: #FFFFFF;
+    border-left: 1px solid rgba(26, 58, 66, 0.06);
+    border-bottom: 1px solid rgba(26, 58, 66, 0.06);
+    transform: rotate(45deg);
+  }
+
+  .nb-routine__step:hover .nb-routine__step-marker {
+    transform: scale(1.06);
+    box-shadow:
+      0 0 0 6px #FBF8F2,
+      0 0 0 8px rgba(47, 143, 163, 0.35),
+      0 10px 28px rgba(31, 122, 140, 0.38);
+  }
+
+  .nb-routine__step:hover .nb-routine__step-body {
+    transform: translateX(4px);
+    border-color: rgba(47, 143, 163, 0.25);
+    box-shadow: 0 6px 22px rgba(26, 58, 66, 0.09);
+  }
+
+  .nb-routine__step-name {
+    font-size: 16px;
+    font-weight: 700;
+    color: #1A3A42;
+    margin-bottom: 4px;
+    letter-spacing: 0.005em;
+  }
+
+  .nb-routine__step-desc {
+    font-size: 14px;
+    line-height: 1.5;
+    color: #6B7A80;
+  }
+
+  @media (max-width: 560px) {
+    .nb-routine { padding: 60px 16px; }
+    .nb-routine__header { margin-bottom: 40px; }
+    .nb-routine__step { gap: 16px; }
+    .nb-routine__step-marker {
+      flex-basis: 46px;
+      width: 46px;
+      height: 46px;
+    }
+    .nb-routine__step-num { font-size: 16px; }
+    .nb-routine__steps::before { left: 22px; }
+    .nb-routine__step-body { padding: 14px 16px; }
+    .nb-routine__step-body::before { top: 18px; }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "NB Glow Routine",
+  "tag": "section",
+  "settings": [
+    {"type": "text", "id": "title", "label": "Title", "default": "Build Your Glow Routine"},
+    {"type": "text", "id": "subtitle", "label": "Subtitle", "default": "Discover the NexaBeauty routine designed to hydrate, repair, and brighten your skin."}
+  ],
+  "max_blocks": 5,
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Routine Step",
+      "settings": [
+        {"type": "text", "id": "name", "label": "Product name"},
+        {"type": "text", "id": "desc", "label": "Step description"}
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "NB Glow Routine",
+      "category": "NexaBrand",
+      "blocks": [
+        {"type": "step", "settings": {"name": "Advanced Snail Repair Essential", "desc": "Barrier Repair and deep hydration"}},
+        {"type": "step", "settings": {"name": "Snow Mushroom Day Glass Glow Hydrogel Mask", "desc": "Morning glow and brightening boost"}},
+        {"type": "step", "settings": {"name": "Snow Mushroom Night Glass Glow Hydrogel Mask", "desc": "Overnight Barrier Repair and glass skin"}},
+        {"type": "step", "settings": {"name": "HydroClear™ Blemish Shield 36ct", "desc": "Target breakouts and calm redness"}},
+        {"type": "step", "settings": {"name": "HydroClear™ Blemish Shield 72ct", "desc": "Daily protection — best value"}}
+      ]
+    }
+  ]
+}
+{% endschema %}

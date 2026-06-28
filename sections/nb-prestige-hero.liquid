@@ -1,0 +1,461 @@
+{%- liquid
+  assign bg_type = section.settings.bg_type
+  assign has_image = false
+  assign has_video = false
+  assign use_scheme = false
+  if bg_type == 'image' and section.settings.bg_image != blank
+    assign has_image = true
+  endif
+  if bg_type == 'video' and section.settings.bg_video != blank
+    assign has_video = true
+  endif
+  if bg_type == 'scheme'
+    assign use_scheme = true
+  endif
+
+  assign opacity = section.settings.overlay_opacity | divided_by: 100.0
+  assign opacity_mid = opacity | minus: 0.15 | at_least: 0.25
+
+  assign show_btn_1 = section.settings.show_btn_1
+  if show_btn_1 and section.settings.btn1_text == blank
+    assign show_btn_1 = false
+  endif
+
+  assign show_btn_2 = section.settings.show_btn_2
+  if show_btn_2 and section.settings.btn2_text == blank
+    assign show_btn_2 = false
+  endif
+
+  assign scheme = section.settings.color_scheme
+  assign scheme_id = scheme.id | default: 'scheme-1'
+
+  assign btn_radius_map = '{"pill":"999px","rounded":"12px","slight":"4px","square":"0px"}'
+  assign btn_shape = section.settings.btn_shape | default: 'pill'
+  case btn_shape
+    when 'square'
+      assign btn_radius = '0px'
+    when 'slight'
+      assign btn_radius = '4px'
+    when 'rounded'
+      assign btn_radius = '12px'
+    else
+      assign btn_radius = '999px'
+  endcase
+-%}
+
+<section
+  class="nb-prestige nb-prestige--shape-{{ btn_shape }}{% if has_image %} nb-prestige--has-image{% endif %}{% if has_video %} nb-prestige--has-video{% endif %}{% if use_scheme %} nb-prestige--bg-scheme{% endif %} nb-prestige--scheme-active color-scheme color-scheme--{{ scheme_id }}"
+  style="--nb-btn-radius: {{ btn_radius }};
+  {%- if has_image %}
+    background-image:
+      linear-gradient(135deg, rgba(14,47,54,{{ opacity }}) 0%, rgba(26,58,66,{{ opacity }}) 60%, rgba(47,143,163,{{ opacity_mid }}) 100%),
+      url({{ section.settings.bg_image | image_url: width: 2200 }});
+  {%- elsif use_scheme -%}
+    {% render 'surface', background: scheme.settings.background, text_color: scheme.settings.text %}
+  {%- endif -%}
+  "
+>
+  {%- if has_video -%}
+    <video
+      class="nb-prestige__video"
+      autoplay
+      loop
+      muted
+      playsinline
+      preload="metadata"
+      {% if section.settings.bg_image != blank %}poster="{{ section.settings.bg_image | image_url: width: 1600 }}"{% endif %}
+    >
+      {%- for source in section.settings.bg_video.sources -%}
+        <source src="{{ source.url }}" type="video/{{ source.format }}">
+      {%- endfor -%}
+    </video>
+    <div
+      class="nb-prestige__video-overlay"
+      style="background: linear-gradient(135deg, rgba(14,47,54,{{ opacity }}) 0%, rgba(26,58,66,{{ opacity }}) 60%, rgba(47,143,163,{{ opacity_mid }}) 100%);"
+      aria-hidden="true"
+    ></div>
+  {%- endif -%}
+
+  <div class="nb-prestige__decor" aria-hidden="true">
+    <span class="nb-prestige__line nb-prestige__line--left"></span>
+    <span class="nb-prestige__line nb-prestige__line--right"></span>
+  </div>
+
+  <div class="nb-prestige__inner">
+    {% if section.settings.show_eyebrow and section.settings.eyebrow != blank %}
+      <span class="nb-prestige__eyebrow">{{ section.settings.eyebrow }}</span>
+    {% endif %}
+
+    {% if section.settings.headline != blank %}
+      <h1 class="nb-prestige__title">{{ section.settings.headline }}</h1>
+    {% endif %}
+
+    {% if section.settings.show_subtext and section.settings.subtext != blank %}
+      <p class="nb-prestige__sub">{{ section.settings.subtext }}</p>
+    {% endif %}
+
+    {% if show_btn_1 or show_btn_2 %}
+      <div class="nb-prestige__buttons">
+        {% if show_btn_1 %}
+          <a href="{{ section.settings.btn1_url | default: '#' }}" class="nb-prestige__btn nb-prestige__btn--primary">
+            {{ section.settings.btn1_text }}
+          </a>
+        {% endif %}
+        {% if show_btn_2 %}
+          <a href="{{ section.settings.btn2_url | default: '#' }}" class="nb-prestige__btn nb-prestige__btn--ghost">
+            {{ section.settings.btn2_text }}
+          </a>
+        {% endif %}
+      </div>
+    {% endif %}
+
+    {% if section.settings.show_fineprint and section.settings.fineprint != blank %}
+      <p class="nb-prestige__fineprint">{{ section.settings.fineprint }}</p>
+    {% endif %}
+  </div>
+
+  {% if section.settings.show_scroll %}
+    <a href="#nb-prestige-next" class="nb-prestige__scroll" aria-label="Scroll down">
+      <span class="nb-prestige__scroll-line"></span>
+    </a>
+  {% endif %}
+</section>
+
+{% stylesheet %}
+  .nb-prestige {
+    position: relative;
+    min-height: clamp(420px, 70vh, 640px);
+    padding: 100px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    overflow: hidden;
+    isolation: isolate;
+    background-color: #0E2F36;
+    background-image:
+      radial-gradient(circle at 18% 30%, rgba(74,172,191,0.32), transparent 45%),
+      radial-gradient(circle at 82% 70%, rgba(141,211,227,0.22), transparent 50%),
+      linear-gradient(135deg, #0E2F36 0%, #1A3A42 55%, #2F8FA3 100%);
+    background-size: cover;
+    background-position: center;
+    color: #FFFFFF;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  }
+  .nb-prestige--has-image { background-color: #0E2F36; }
+  .nb-prestige--has-video { background-image: none; background-color: #0E2F36; }
+  /* When the user picks "Theme color scheme" as the background, drop the brand gradient */
+  .nb-prestige--bg-scheme { background-image: none !important; }
+
+  /*
+   * Color-scheme overrides — apply ALWAYS (text + buttons inherit from the scheme),
+   * regardless of background type (gradient / image / video / scheme). This way the
+   * picked scheme colors text + CTAs even when a video is playing behind.
+   */
+  .nb-prestige--scheme-active {
+    color: rgb(var(--text-color));
+  }
+  .nb-prestige--scheme-active .nb-prestige__eyebrow {
+    color: rgb(var(--text-color));
+    opacity: 0.85;
+  }
+  .nb-prestige--scheme-active .nb-prestige__title {
+    color: rgb(var(--heading-color, var(--text-color)));
+  }
+  .nb-prestige--scheme-active .nb-prestige__sub {
+    color: rgb(var(--text-color));
+    opacity: 0.85;
+  }
+  .nb-prestige--scheme-active .nb-prestige__btn--primary {
+    background: rgb(var(--button-background));
+    color: rgb(var(--button-text-color));
+    border-color: rgb(var(--button-background));
+    box-shadow: none;
+  }
+  .nb-prestige--scheme-active .nb-prestige__btn--primary:hover {
+    background: rgb(var(--button-background));
+    border-color: rgb(var(--button-background));
+    opacity: 0.88;
+    transform: translateY(-2px);
+  }
+  .nb-prestige--scheme-active .nb-prestige__btn--ghost {
+    color: rgb(var(--text-color));
+    border-color: rgba(var(--text-color), 0.55);
+    background: transparent;
+  }
+  .nb-prestige--scheme-active .nb-prestige__btn--ghost:hover {
+    border-color: rgb(var(--text-color));
+    background: rgba(var(--text-color), 0.1);
+  }
+  .nb-prestige--scheme-active .nb-prestige__line {
+    background: linear-gradient(90deg, transparent, rgba(var(--text-color), 0.35));
+  }
+  .nb-prestige--scheme-active .nb-prestige__line--right {
+    background: linear-gradient(270deg, transparent, rgba(var(--text-color), 0.35));
+  }
+  .nb-prestige--scheme-active .nb-prestige__scroll {
+    border-color: rgba(var(--text-color), 0.55);
+  }
+  .nb-prestige--scheme-active .nb-prestige__scroll-line {
+    background: rgb(var(--text-color));
+  }
+  .nb-prestige--scheme-active .nb-prestige__fineprint {
+    color: rgba(var(--text-color), 0.6);
+  }
+
+  /* For image/video backgrounds, keep the soft text-shadow on the title for legibility */
+  .nb-prestige--has-image.nb-prestige--scheme-active .nb-prestige__title,
+  .nb-prestige--has-video.nb-prestige--scheme-active .nb-prestige__title {
+    text-shadow: 0 4px 24px rgba(0,0,0,0.35);
+  }
+
+  .nb-prestige__video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+    pointer-events: none;
+  }
+  .nb-prestige__video-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  .nb-prestige__decor {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .nb-prestige__line {
+    position: absolute;
+    top: 50%;
+    height: 1px;
+    width: 14vw;
+    max-width: 160px;
+    background: linear-gradient(90deg, rgba(141,211,227,0), rgba(141,211,227,0.55));
+    transform: translateY(-50%);
+  }
+  .nb-prestige__line--right {
+    right: 6%;
+    background: linear-gradient(270deg, rgba(141,211,227,0), rgba(141,211,227,0.55));
+  }
+  .nb-prestige__line--left {
+    left: 6%;
+  }
+
+  .nb-prestige__inner {
+    position: relative;
+    z-index: 1;
+    max-width: 760px;
+    width: 100%;
+  }
+  .nb-prestige__eyebrow {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.4em;
+    color: #4AACBF;
+    text-transform: uppercase;
+    margin-bottom: 22px;
+  }
+  .nb-prestige--has-image .nb-prestige__eyebrow,
+  .nb-prestige--has-video .nb-prestige__eyebrow { color: #B9E8F5; }
+
+  .nb-prestige__title {
+    font-family: 'Playfair Display', 'Cormorant Garamond', Georgia, serif;
+    font-size: clamp(40px, 6vw, 68px);
+    line-height: 1.05;
+    font-weight: 700;
+    margin: 0 0 18px;
+    letter-spacing: -0.02em;
+    color: #FFFFFF;
+    text-shadow: 0 4px 24px rgba(0,0,0,0.18);
+  }
+  .nb-prestige__sub {
+    font-size: clamp(15px, 1.5vw, 17px);
+    color: #8DD3E3;
+    line-height: 1.6;
+    margin: 0 auto 32px;
+    max-width: 540px;
+    letter-spacing: 0.01em;
+  }
+  .nb-prestige--has-image .nb-prestige__sub,
+  .nb-prestige--has-video .nb-prestige__sub { color: #E8F6FA; }
+
+  .nb-prestige__buttons {
+    display: flex;
+    gap: 14px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 18px;
+  }
+  .nb-prestige__btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 30px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-decoration: none;
+    border-radius: 0;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+  }
+  /* Square / slight-rounded variants get tighter letter-spacing + uppercase for a more architectural look */
+  .nb-prestige--shape-square .nb-prestige__btn,
+  .nb-prestige--shape-slight .nb-prestige__btn {
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    padding: 15px 34px;
+  }
+  .nb-prestige__btn--primary {
+    background: #FFFFFF;
+    color: #1A3A42;
+    border: 1.5px solid #FFFFFF;
+    box-shadow: 0 8px 24px rgba(141,211,227,0.25);
+  }
+  .nb-prestige__btn--primary:hover {
+    background: #B9E8F5;
+    border-color: #B9E8F5;
+    transform: translateY(-2px);
+    box-shadow: 0 12px 30px rgba(141,211,227,0.4);
+  }
+  .nb-prestige__btn--ghost {
+    background: transparent;
+    color: #FFFFFF;
+    border: 1.5px solid rgba(255,255,255,0.55);
+  }
+  .nb-prestige__btn--ghost:hover {
+    border-color: #FFFFFF;
+    background: rgba(255,255,255,0.08);
+  }
+
+  .nb-prestige__fineprint {
+    font-size: 12px;
+    color: rgba(185,232,245,0.55);
+    margin: 12px 0 0;
+    letter-spacing: 0.04em;
+  }
+
+  .nb-prestige__scroll {
+    position: absolute;
+    bottom: 26px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 22px;
+    height: 36px;
+    border: 1.5px solid rgba(185,232,245,0.5);
+    border-radius: 999px;
+    z-index: 1;
+  }
+  .nb-prestige__scroll-line {
+    position: absolute;
+    top: 6px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 2px;
+    height: 8px;
+    background: #B9E8F5;
+    border-radius: 2px;
+    animation: nbPrestigeScroll 1.8s ease-in-out infinite;
+  }
+  @keyframes nbPrestigeScroll {
+    0%,100% { transform: translate(-50%, 0); opacity: 1; }
+    50% { transform: translate(-50%, 12px); opacity: 0.3; }
+  }
+
+  @media (max-width: 600px) {
+    .nb-prestige { padding: 80px 18px; min-height: 480px; }
+    .nb-prestige__line { display: none; }
+    .nb-prestige__eyebrow { letter-spacing: 0.3em; margin-bottom: 16px; }
+    .nb-prestige__buttons { gap: 10px; }
+    .nb-prestige__btn { padding: 12px 24px; font-size: 12px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .nb-prestige__video { display: none; }
+    .nb-prestige__scroll-line { animation: none; }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "NB Prestige Hero",
+  "tag": "section",
+  "settings": [
+    {"type": "header", "content": "Content"},
+    {"type": "checkbox", "id": "show_eyebrow", "label": "Show eyebrow", "default": true},
+    {"type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "NEXABEAUTY™"},
+
+    {"type": "text", "id": "headline", "label": "Headline", "default": "Glow Starts Here.", "info": "Leave blank to hide"},
+
+    {"type": "checkbox", "id": "show_subtext", "label": "Show subtext", "default": true},
+    {"type": "textarea", "id": "subtext", "label": "Subtext", "default": "K-beauty inspired skincare for real, visible results"},
+
+    {"type": "checkbox", "id": "show_fineprint", "label": "Show fine print", "default": false},
+    {"type": "text", "id": "fineprint", "label": "Fine print", "default": "Upload lifestyle photo or brand video in Shopify customizer"},
+
+    {"type": "header", "content": "Primary CTA"},
+    {"type": "checkbox", "id": "show_btn_1", "label": "Show primary button", "default": true},
+    {"type": "text", "id": "btn1_text", "label": "Primary button text", "default": "Shop NexaBeauty™"},
+    {"type": "url", "id": "btn1_url", "label": "Primary button link"},
+
+    {"type": "header", "content": "Secondary CTA"},
+    {"type": "checkbox", "id": "show_btn_2", "label": "Show secondary button", "default": true},
+    {"type": "text", "id": "btn2_text", "label": "Secondary button text", "default": "Our Story"},
+    {"type": "url", "id": "btn2_url", "label": "Secondary button link"},
+
+    {"type": "header", "content": "Button style"},
+    {
+      "type": "select",
+      "id": "btn_shape",
+      "label": "Button shape",
+      "options": [
+        {"value": "pill", "label": "Pill (rounded fully)"},
+        {"value": "rounded", "label": "Rounded (12 px)"},
+        {"value": "slight", "label": "Slight (4 px)"},
+        {"value": "square", "label": "Square (sharp corners)"}
+      ],
+      "default": "pill"
+    },
+
+    {"type": "header", "content": "Background"},
+    {
+      "type": "select",
+      "id": "bg_type",
+      "label": "Background type",
+      "options": [
+        {"value": "gradient", "label": "Brand gradient (default)"},
+        {"value": "scheme", "label": "Theme color scheme"},
+        {"value": "image", "label": "Image"},
+        {"value": "video", "label": "Video"}
+      ],
+      "default": "gradient",
+      "info": "Image / Video only render when their media is uploaded below. Theme color scheme uses the picker below."
+    },
+    {"type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1", "info": "Used when Background type is set to Theme color scheme"},
+    {"type": "image_picker", "id": "bg_image", "label": "Background image", "info": "Used when background type is Image. Also acts as the video poster."},
+    {"type": "video", "id": "bg_video", "label": "Background video (MP4)", "info": "Used when background type is Video. Autoplays muted on loop."},
+    {"type": "range", "id": "overlay_opacity", "label": "Overlay darkness", "min": 0, "max": 90, "step": 5, "unit": "%", "default": 65, "info": "Applies to image and video backgrounds"},
+
+    {"type": "header", "content": "Extras"},
+    {"type": "checkbox", "id": "show_scroll", "label": "Show scroll indicator", "default": true}
+  ],
+  "presets": [
+    {
+      "name": "NB Prestige Hero",
+      "category": "NexaBrand",
+      "settings": {
+        "eyebrow": "NEXABEAUTY™",
+        "headline": "Glow Starts Here.",
+        "subtext": "K-beauty inspired skincare for real, visible results"
+      }
+    }
+  ]
+}
+{% endschema %}

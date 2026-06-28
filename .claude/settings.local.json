@@ -1,0 +1,24 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm --version)",
+      "Bash(npm ls *)",
+      "Bash(npm install *)",
+      "Bash(shopify version *)",
+      "Bash(shopify login *)",
+      "Bash(shopify auth *)",
+      "Bash(shopify theme *)",
+      "Bash(git config *)",
+      "Bash(echo \"name: $\\(git config --global user.name\\)\")",
+      "Bash(echo \"email: $\\(git config --global user.email\\)\")",
+      "Bash(git ls-remote *)",
+      "Bash(git init *)",
+      "Bash(git remote *)",
+      "Bash(git fetch *)",
+      "Bash(git ls-tree *)",
+      "Bash(printf \"node_modules/\\\\n.DS_Store\\\\n*.log\\\\n\")",
+      "Bash(git add *)",
+      "Bash(git commit *)"
+    ]
+  }
+}

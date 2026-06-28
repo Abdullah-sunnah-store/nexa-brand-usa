@@ -1,0 +1,102 @@
+<section class="nb-trust-strip">
+  <div class="nb-trust-strip__inner">
+    {% for block in section.blocks %}
+      <div class="nb-trust-strip__item" {{ block.shopify_attributes }}>
+        <span class="nb-trust-strip__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="16" height="16"><path fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" d="M4 12l5 5L20 6"/></svg>
+        </span>
+        <span class="nb-trust-strip__label">{{ block.settings.label }}</span>
+      </div>
+    {% endfor %}
+  </div>
+</section>
+
+{% stylesheet %}
+  .nb-trust-strip {
+    background: #1A3A42;
+    background-image:
+      radial-gradient(circle at 0% 50%, rgba(74,172,191,0.25) 0%, transparent 40%),
+      radial-gradient(circle at 100% 50%, rgba(141,211,227,0.18) 0%, transparent 40%);
+    padding: 22px 16px;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+  .nb-trust-strip__inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+  }
+  .nb-trust-strip__item {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 24px;
+    position: relative;
+    color: #FFFFFF;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+  }
+  .nb-trust-strip__item + .nb-trust-strip__item::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 18px;
+    width: 1px;
+    background: linear-gradient(180deg, transparent, rgba(255,255,255,0.35), transparent);
+  }
+  .nb-trust-strip__icon {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #4AACBF 0%, #2F8FA3 100%);
+    color: #FFFFFF;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 0 3px rgba(74,172,191,0.18);
+    flex-shrink: 0;
+  }
+  .nb-trust-strip__label { white-space: nowrap; }
+  @media (max-width: 720px) {
+    .nb-trust-strip { padding: 18px 12px; }
+    .nb-trust-strip__item { padding: 6px 14px; font-size: 12px; }
+    .nb-trust-strip__item + .nb-trust-strip__item::before { display: none; }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "NB Trust Strip",
+  "tag": "section",
+  "max_blocks": 4,
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Trust Item",
+      "settings": [
+        {"type": "text", "id": "label", "label": "Label"}
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "NB Trust Strip",
+      "category": "NexaBrand",
+      "blocks": [
+        {"type": "item", "settings": {"label": "GMP Certified Manufacturing"}},
+        {"type": "item", "settings": {"label": "ISO 13485 Medical-Grade"}},
+        {"type": "item", "settings": {"label": "K-Beauty Inspired"}},
+        {"type": "item", "settings": {"label": "Premium Quality"}}
+      ]
+    }
+  ]
+}
+{% endschema %}

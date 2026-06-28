@@ -1,0 +1,1572 @@
+{% comment %}
+================================================================
+NEXABRAND USA™ — PRODUCT PAGE TEMPLATE
+File: templates/product.liquid  (applies to all 5 products)
+   OR create specific templates:
+      templates/product.essential.liquid
+      templates/product.day-mask.liquid
+      templates/product.night-mask.liquid  ← DARK HERO ONLY
+      templates/product.hydroclear-36.liquid
+      templates/product.hydroclear-72.liquid
+
+SECTION ORDER (all 5 products):
+  1.  Product hero — two column layout
+  2.  Full description + benefits + ingredients + how to use
+  3.  Before / After slider
+  4.  UGC Video
+  5.  Text Reviews (Loox)
+  6.  Key Ingredients illustration grid
+  7.  Why NexaBeauty vs Others — comparison table
+  8.  Subscribe & Save — Coming Soon
+  9.  FAQ
+  10. Sticky add-to-cart bar
+
+NIGHT MASK DIFFERENCE:
+  — Hero uses dark gradient: linear-gradient(155deg, #1A3A42 0%, #2d6b7a 50%, #4AACBF 100%)
+  — Product name color: #F0F9FB
+  — Tagline color: #B9E8F5
+  — Price color: #FFFFFF
+  — All other sections are identical
+================================================================
+{% endcomment %}
+
+{% comment %} ---- PRODUCT HERO SECTION ---- {% endcomment %}
+<div class="nb-product-hero {% if product.tags contains 'night-mask' %}nb-product-hero--night{% endif %}">
+
+  <!-- LEFT: Images 44% -->
+  <div class="nb-product-hero__images">
+    <div class="nb-product-hero__main-image">
+      {{ product.featured_image | image_url: width: 600 | image_tag: loading: 'eager' }}
+    </div>
+    <div class="nb-product-hero__thumbs">
+      {% for image in product.images limit: 4 %}
+        <div class="nb-product-hero__thumb">
+          {{ image | image_url: width: 200 | image_tag }}
+        </div>
+      {% endfor %}
+    </div>
+    <div style="font-size:11px;color:{% if product.tags contains 'night-mask' %}#B9E8F5{% else %}#888{% endif %};margin-top:8px;text-align:center">
+      3D Box · Close-up · On-Skin · Lifestyle
+    </div>
+  </div>
+
+  <!-- RIGHT: Details 56% -->
+  <div class="nb-product-hero__details">
+
+    {% comment %} Value badge for 72ct only {% endcomment %}
+    {% if product.tags contains '72ct' %}
+      <div class="nb-value-badge">Best Value — Save 40% vs 36ct</div>
+    {% endif %}
+
+    <h1 class="nb-product-hero__name">{{ product.title }}</h1>
+
+    {% comment %} Tagline from metafield or product tag {% endcomment %}
+    <div class="nb-product-hero__tagline">{{ product.metafields.custom.tagline }}</div>
+
+    {% comment %} Subtitle for masks only {% endcomment %}
+    {% if product.tags contains 'day-mask' %}
+      <div class="nb-product-hero__subtitle">Infused with Marine Collagen for Brightening Glow</div>
+    {% elsif product.tags contains 'night-mask' %}
+      <div class="nb-product-hero__subtitle">Infused with Marine Collagen for Plumping Glow</div>
+    {% endif %}
+
+    {% comment %} Price {% endcomment %}
+    <div class="nb-product-hero__price">
+      {% if product.tags contains '72ct' %}
+        {{ product.price | money }} <span style="font-size:16px;color:#888;text-decoration:line-through;font-weight:400">$25.98</span>
+      {% else %}
+        {{ product.price | money }}
+      {% endif %}
+    </div>
+
+    {% comment %} Trust badges {% endcomment %}
+    <div class="nb-product-hero__badges">
+      {% if product.tags contains 'patch' %}
+        <span class="nb-product-hero__badge">✓ ISO 13485 Medical-Grade</span>
+        <span class="nb-product-hero__badge">✓ Vegan Formula</span>
+        <span class="nb-product-hero__badge">✓ Suitable for Sensitive Skin</span>
+      {% else %}
+        <span class="nb-product-hero__badge">✓ GMP Certified Manufacturing</span>
+        <span class="nb-product-hero__badge">✓ K-Beauty Inspired Formula</span>
+      {% endif %}
+    </div>
+
+    {% comment %} Buy buttons {% endcomment %}
+    <div class="nb-product-hero__buttons">
+      {% if product.metafields.custom.amazon_url != blank %}
+        <a href="{{ product.metafields.custom.amazon_url }}" class="nb-product-hero__amazon" target="_blank" rel="noopener">
+          Buy on Amazon
+        </a>
+      {% endif %}
+      {% form 'product', product %}
+        <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+        <button type="submit" class="nb-product-hero__cart">Add to Cart</button>
+      {% endform %}
+    </div>
+
+    {% if product.tags contains '72ct' %}
+      <p class="nb-product-hero__supply-note">1–2 month supply · Most popular choice</p>
+    {% endif %}
+
+  </div>
+</div>
+
+
+{% comment %} ---- DESCRIPTION SECTION ---- {% endcomment %}
+<div class="nb-product-desc">
+  {{ product.description }}
+  <div class="nb-product-desc__brand">K-Beauty Inspired · Developed by NexaBrand USA™</div>
+</div>
+
+
+{% comment %}
+NOTE: Product descriptions should be entered in Shopify admin
+with this HTML structure:
+
+<p>[Opening paragraph about the product]</p>
+<p>[Second paragraph about formulation]</p>
+<p>[Skin type / suitability paragraph]</p>
+
+<div class="nb-product-desc__section-title">Key Benefits</div>
+<ul>
+  <li>[Benefit 1]</li>
+  <li>[Benefit 2]</li>
+  <li>[Benefit 3]</li>
+  <li>[Benefit 4]</li>
+</ul>
+
+<div class="nb-product-desc__section-title">Hero Ingredients</div>
+<ul>
+  <li>[Ingredient] — [benefit]</li>
+</ul>
+
+<div class="nb-product-desc__section-title">How to Use</div>
+
+ALL 5 PRODUCTS use ✦ sparkle symbol — no bullets, no numbers:
+
+FOR SERUM:
+<div class="nb-product-desc__steps">
+  <p>✦ Apply 2–3 drops to cleansed skin</p>
+  <p>✦ Gently pat until fully absorbed</p>
+  <p>✦ Use morning and evening</p>
+</div>
+
+FOR MASKS:
+<div class="nb-product-desc__steps">
+  <p>✦ Cleanse and tone your face</p>
+  <p>✦ Remove mask from pouch and unfold carefully</p>
+  <p>✦ Apply evenly to face, adjusting around eyes and nose</p>
+  <p>✦ Leave on for 45–60 minutes or until the mask becomes transparent</p>
+  <p>✦ For best results, apply the mask and relax in a reclined position to allow full adherence and absorption</p>
+  <p>✦ Remove mask and gently massage remaining essence into skin</p>
+  <p>✦ Apply remaining essence to face, neck, and body — no rinsing needed</p>
+</div>
+
+FOR PATCHES:
+<div class="nb-product-desc__steps">
+  <p>✦ Cleanse and dry the affected area completely</p>
+  <p>✦ Peel and apply patch directly over the blemish</p>
+  <p>✦ Remove after 6–8 hours or when the patch turns white</p>
+</div>
+
+{% endcomment %}
+
+
+{% comment %} ---- BEFORE / AFTER SECTION ---- {% endcomment %}
+<div class="nb-before-after">
+  <h2 class="nb-before-after__title">Before & After Results</h2>
+  <p class="nb-before-after__sub">
+    {% if product.tags contains 'patch' %}Real blemish results — slide to compare
+    {% elsif product.tags contains 'mask' %}Real overnight skin transformation
+    {% else %}Real customer skin transformation — 4 weeks of daily use{% endif %}
+  </p>
+  <div class="nb-before-after__cols">
+    <div class="nb-before-after__col">
+      <div class="nb-before-after__img">
+        {% comment %}Replace with real before image{% endcomment %}
+        <img src="{{ 'before-placeholder.jpg' | asset_url }}" alt="Before" loading="lazy">
+      </div>
+      <span class="nb-before-after__label">Before</span>
+    </div>
+    <div class="nb-before-after__divider"></div>
+    <div class="nb-before-after__col">
+      <div class="nb-before-after__img">
+        {% comment %}Replace with real mid image{% endcomment %}
+        <img src="{{ 'mid-placeholder.jpg' | asset_url }}" alt="During" loading="lazy">
+      </div>
+      <span class="nb-before-after__label">
+        {% if product.tags contains 'patch' %}6 Hours
+        {% elsif product.tags contains 'mask' %}45 Min
+        {% else %}2 Weeks{% endif %}
+      </span>
+    </div>
+    <div class="nb-before-after__divider"></div>
+    <div class="nb-before-after__col">
+      <div class="nb-before-after__img">
+        {% comment %}Replace with real after image{% endcomment %}
+        <img src="{{ 'after-placeholder.jpg' | asset_url }}" alt="After" loading="lazy">
+      </div>
+      <span class="nb-before-after__label">
+        {% if product.tags contains 'serum' %}4 Weeks
+        {% else %}Next Morning{% endif %}
+      </span>
+    </div>
+  </div>
+  <p class="nb-before-after__note">Replace placeholders with real customer before/after photos</p>
+</div>
+
+
+{% comment %} ---- UGC VIDEO SECTION ---- {% endcomment %}
+<div class="nb-ugc">
+  <h2 class="nb-ugc__title">See It in Action</h2>
+  <div class="nb-ugc__frame">
+    {% if product.metafields.custom.ugc_video_url != blank %}
+      <iframe
+        src="{{ product.metafields.custom.ugc_video_url }}"
+        class="nb-ugc__video"
+        height="400"
+        frameborder="0"
+        allowfullscreen
+        loading="lazy">
+      </iframe>
+    {% else %}
+      <p style="color:#888;font-size:14px">Real person using product · TikTok / Instagram / YouTube · 10–20 sec · Upload via product metafield: custom.ugc_video_url</p>
+    {% endif %}
+  </div>
+</div>
+
+
+{% comment %} ---- REVIEWS SECTION (LOOX) ---- {% endcomment %}
+<div class="nb-reviews">
+  <h2 class="nb-reviews__title">Customer Reviews</h2>
+  {% comment %}
+  LOOX WIDGET: Add Loox review widget here after installing Loox app
+  Example: {{ loox_reviews_widget }}
+  OR add the Loox section via Shopify theme editor
+  {% endcomment %}
+  <div id="looxReviews" data-product-id="{{ product.id }}"></div>
+  <a href="#" class="nb-reviews__upload-link">+ Upload your photo review · Powered by Loox</a>
+</div>
+
+
+{% comment %} ---- KEY INGREDIENTS SECTION ---- {% endcomment %}
+<div class="nb-ingredients">
+  <h2 class="nb-ingredients__title">Key Ingredients — What's Inside</h2>
+  <p class="nb-ingredients__sub">Science-backed ingredients for visible results</p>
+  <div class="nb-ingredients__grid">
+
+    {% if product.tags contains 'essential' %}
+            {% comment %} ESSENTIAL SERUM INGREDIENTS {% endcomment %}
+      <div class="nb-ingredients__cell">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <!-- Trail glow -->
+  <ellipse cx="30" cy="72" rx="28" ry="6" fill="#8DD3E3" opacity="0.25"/>
+  <!-- Snail body -->
+  <ellipse cx="38" cy="68" rx="22" ry="10" fill="#B9E8F5"/>
+  <ellipse cx="38" cy="68" rx="20" ry="8.5" fill="#d4f0f8"/>
+  <!-- Shell spiral -->
+  <circle cx="52" cy="52" r="22" fill="#4AACBF" opacity="0.15"/>
+  <circle cx="52" cy="52" r="22" fill="none" stroke="#2F8FA3" stroke-width="2"/>
+  <path d="M52 52 m0,-16 a16,16 0 1,1 -0.1,0" fill="none" stroke="#2F8FA3" stroke-width="1.8" stroke-linecap="round"/>
+  <path d="M52 52 m0,-9 a9,9 0 1,1 -0.1,0" fill="none" stroke="#2F8FA3" stroke-width="1.5" stroke-linecap="round"/>
+  <circle cx="52" cy="43" r="3" fill="#1A3A42" opacity="0.3"/>
+  <circle cx="52" cy="52" r="2" fill="#2F8FA3"/>
+  <!-- Shell highlight -->
+  <path d="M40 38 Q44 34 50 36" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="1.5" stroke-linecap="round"/>
+  <!-- Head -->
+  <ellipse cx="22" cy="66" rx="10" ry="6" fill="#B9E8F5"/>
+  <ellipse cx="22" cy="66" rx="9" ry="5" fill="#d4f0f8"/>
+  <!-- Eye stalks -->
+  <line x1="18" y1="62" x2="14" y2="55" stroke="#2F8FA3" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="24" y1="61" x2="22" y2="54" stroke="#2F8FA3" stroke-width="1.5" stroke-linecap="round"/>
+  <circle cx="14" cy="54" r="2.5" fill="#1A3A42"/>
+  <circle cx="22" cy="53" r="2.5" fill="#1A3A42"/>
+  <circle cx="14.8" cy="53.2" r="0.8" fill="#fff"/>
+  <circle cx="22.8" cy="52.2" r="0.8" fill="#fff"/>
+  <!-- Mouth smile -->
+  <path d="M17 68 Q22 71 27 68" fill="none" stroke="#2F8FA3" stroke-width="1" stroke-linecap="round"/>
+  <!-- Slime trail -->
+  <path d="M48 72 Q60 75 72 73 Q80 72 85 74" fill="none" stroke="#8DD3E3" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+  <path d="M48 75 Q62 78 74 76 Q82 75 87 77" fill="none" stroke="#8DD3E3" stroke-width="1.5" stroke-linecap="round" opacity="0.4"/>
+  <!-- Sparkle dots on trail -->
+  <circle cx="62" cy="73" r="1.5" fill="#4AACBF" opacity="0.7"/>
+  <circle cx="72" cy="75" r="1" fill="#4AACBF" opacity="0.5"/>
+  <circle cx="55" cy="76" r="1" fill="#4AACBF" opacity="0.5"/>
+</svg>
+        <div class="nb-ingredients__name">Poly-Helixan™</div>
+        <div class="nb-ingredients__desc">Concentrated snail repair complex</div>
+      </div>
+      <div class="nb-ingredients__cell">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <!-- Glow -->
+  <circle cx="50" cy="50" r="38" fill="#F0F9FB"/>
+  <!-- Hexagon ring (pyridine ring of niacin) -->
+  <polygon points="50,18 73,31 73,57 50,70 27,57 27,31" fill="none" stroke="#2F8FA3" stroke-width="2.5"/>
+  <!-- Double bond lines (inner) -->
+  <line x1="50" y1="22" x2="69" y2="33" stroke="#4AACBF" stroke-width="1.2" opacity="0.6"/>
+  <line x1="70" y1="35" x2="70" y2="55" stroke="#4AACBF" stroke-width="1.2" opacity="0.6"/>
+  <line x1="50" y1="66" x2="30" y2="55" stroke="#4AACBF" stroke-width="1.2" opacity="0.6"/>
+  <!-- N atom at top -->
+  <circle cx="50" cy="18" r="8" fill="#1A3A42"/>
+  <text x="50" y="22" text-anchor="middle" font-size="8" fill="#fff" font-weight="bold">N</text>
+  <!-- C atoms at corners -->
+  <circle cx="73" cy="31" r="7" fill="#4AACBF"/>
+  <text x="73" y="35" text-anchor="middle" font-size="8" fill="#fff" font-weight="bold">C</text>
+  <circle cx="73" cy="57" r="7" fill="#4AACBF"/>
+  <text x="73" y="61" text-anchor="middle" font-size="8" fill="#fff" font-weight="bold">C</text>
+  <circle cx="50" cy="70" r="7" fill="#2F8FA3"/>
+  <text x="50" y="74" text-anchor="middle" font-size="8" fill="#fff" font-weight="bold">C</text>
+  <circle cx="27" cy="57" r="7" fill="#4AACBF"/>
+  <text x="27" y="61" text-anchor="middle" font-size="8" fill="#fff" font-weight="bold">C</text>
+  <circle cx="27" cy="31" r="7" fill="#4AACBF"/>
+  <text x="27" y="35" text-anchor="middle" font-size="8" fill="#fff" font-weight="bold">C</text>
+  <!-- CONH2 amide group hanging off C at right -->
+  <line x1="80" y1="31" x2="90" y2="25" stroke="#1A3A42" stroke-width="1.5"/>
+  <circle cx="90" cy="24" r="6" fill="#1A3A42"/>
+  <text x="90" y="28" text-anchor="middle" font-size="6.5" fill="#fff" font-weight="bold">NH₂</text>
+  <!-- O double bond -->
+  <line x1="80" y1="57" x2="90" y2="63" stroke="#2F8FA3" stroke-width="1.5"/>
+  <circle cx="90" cy="64" r="5" fill="#2F8FA3"/>
+  <text x="90" y="68" text-anchor="middle" font-size="7" fill="#fff" font-weight="bold">O</text>
+  <!-- B3 label center -->
+  <text x="50" y="46" text-anchor="middle" font-size="9" fill="#1A3A42" font-weight="bold">B3</text>
+  <!-- Small sparkles -->
+  <circle cx="15" cy="20" r="2" fill="#4AACBF" opacity="0.5"/>
+  <circle cx="85" cy="80" r="1.5" fill="#4AACBF" opacity="0.4"/>
+</svg>
+        <div class="nb-ingredients__name">Niacinamide</div>
+        <div class="nb-ingredients__desc">Brightening and pore refining</div>
+      </div>
+      <div class="nb-ingredients__cell">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background water ripples -->
+  <circle cx="50" cy="75" r="28" fill="#8DD3E3" opacity="0.12"/>
+  <circle cx="50" cy="75" r="20" fill="#8DD3E3" opacity="0.12"/>
+  <!-- Large water droplet -->
+  <path d="M50 20 Q65 38 65 55 Q65 70 50 75 Q35 70 35 55 Q35 38 50 20Z" fill="#B9E8F5"/>
+  <path d="M50 20 Q65 38 65 55 Q65 70 50 75 Q35 70 35 55 Q35 38 50 20Z" fill="none" stroke="#4AACBF" stroke-width="1.5"/>
+  <!-- Inner droplet shine -->
+  <path d="M50 24 Q61 40 61 54 Q61 67 50 72 Q39 67 39 54 Q39 40 50 24Z" fill="#d4f0f8" opacity="0.6"/>
+  <!-- HA label inside -->
+  <text x="50" y="53" text-anchor="middle" font-size="13" fill="#1A3A42" font-weight="bold">HA</text>
+  <text x="50" y="64" text-anchor="middle" font-size="7" fill="#2F8FA3" font-family="Arial">×1000</text>
+  <!-- Shine on droplet -->
+  <ellipse cx="42" cy="34" rx="4" ry="7" fill="rgba(255,255,255,0.6)" transform="rotate(-15 42 34)"/>
+  <circle cx="44" cy="30" r="2" fill="rgba(255,255,255,0.5)"/>
+  <!-- Small satellite droplets -->
+  <path d="M22 45 Q26 38 26 43 Q26 49 22 47Z" fill="#8DD3E3" opacity="0.8"/>
+  <path d="M78 52 Q82 44 82 50 Q82 57 78 55Z" fill="#8DD3E3" opacity="0.8"/>
+  <path d="M30 72 Q33 66 33 70 Q33 75 30 73Z" fill="#B9E8F5" opacity="0.9"/>
+  <!-- Water text -->
+  <text x="50" y="88" text-anchor="middle" font-size="8" fill="#4AACBF" font-family="Arial">Deep Hydration</text>
+</svg>
+        <div class="nb-ingredients__name">Hyaluronic Acid</div>
+        <div class="nb-ingredients__desc">Deep hydration and plumping</div>
+      </div>
+      <div class="nb-ingredients__cell">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <!-- Chain background glow -->
+  <path d="M15 50 Q25 35 35 50 Q45 65 55 50 Q65 35 75 50 Q80 57 85 50" fill="none" stroke="#8DD3E3" stroke-width="8" stroke-linecap="round" opacity="0.3"/>
+  <!-- Peptide chain wave -->
+  <path d="M15 50 Q25 35 35 50 Q45 65 55 50 Q65 35 75 50 Q80 57 85 50" fill="none" stroke="#4AACBF" stroke-width="2.5" stroke-linecap="round"/>
+  <!-- Amino acid nodes on chain -->
+  <circle cx="15" cy="50" r="9" fill="#1A3A42"/>
+  <text x="15" y="54" text-anchor="middle" font-size="7" fill="#B9E8F5" font-weight="bold">AA</text>
+  <circle cx="35" cy="50" r="9" fill="#2F8FA3"/>
+  <text x="35" y="54" text-anchor="middle" font-size="7" fill="#fff" font-weight="bold">AA</text>
+  <circle cx="55" cy="50" r="9" fill="#1A3A42"/>
+  <text x="55" y="54" text-anchor="middle" font-size="7" fill="#B9E8F5" font-weight="bold">AA</text>
+  <circle cx="75" cy="50" r="9" fill="#2F8FA3"/>
+  <text x="75" y="54" text-anchor="middle" font-size="7" fill="#fff" font-weight="bold">AA</text>
+  <!-- Peptide bond marks -->
+  <line x1="24" y1="43" x2="26" y2="43" stroke="#4AACBF" stroke-width="1.5"/>
+  <line x1="44" y1="57" x2="46" y2="57" stroke="#4AACBF" stroke-width="1.5"/>
+  <line x1="64" y1="43" x2="66" y2="43" stroke="#4AACBF" stroke-width="1.5"/>
+  <!-- Side chains -->
+  <line x1="15" y1="41" x2="15" y2="28" stroke="#4AACBF" stroke-width="1.2" stroke-dasharray="2,2"/>
+  <circle cx="15" cy="26" r="4" fill="#4AACBF" opacity="0.7"/>
+  <line x1="55" y1="41" x2="55" y2="28" stroke="#4AACBF" stroke-width="1.2" stroke-dasharray="2,2"/>
+  <circle cx="55" cy="26" r="4" fill="#4AACBF" opacity="0.7"/>
+  <line x1="35" y1="59" x2="35" y2="74" stroke="#8DD3E3" stroke-width="1.2" stroke-dasharray="2,2"/>
+  <circle cx="35" cy="76" r="4" fill="#8DD3E3" opacity="0.7"/>
+  <line x1="75" y1="59" x2="75" y2="74" stroke="#8DD3E3" stroke-width="1.2" stroke-dasharray="2,2"/>
+  <circle cx="75" cy="76" r="4" fill="#8DD3E3" opacity="0.7"/>
+  <!-- Labels -->
+  <text x="50" y="92" text-anchor="middle" font-size="8" fill="#2F8FA3" font-family="Arial">Palmitoyl Tripeptide-1</text>
+</svg>
+        <div class="nb-ingredients__name">Peptide Complex</div>
+        <div class="nb-ingredients__desc">Anti-aging and skin renewal</div>
+      </div>
+      <div class="nb-ingredients__cell">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <!-- Soil/ground -->
+  <ellipse cx="50" cy="88" rx="20" ry="5" fill="#8DD3E3" opacity="0.3"/>
+  <!-- Main stem -->
+  <path d="M50 88 Q50 70 50 55" fill="none" stroke="#2d6b7a" stroke-width="2" stroke-linecap="round"/>
+  <!-- Leaf 1 — left large -->
+  <path d="M50 65 Q30 55 22 42 Q28 38 35 44 Q40 50 50 65Z" fill="#4AACBF" opacity="0.8"/>
+  <path d="M50 65 Q30 55 22 42" fill="none" stroke="#1A3A42" stroke-width="0.8"/>
+  <!-- Leaf veins left -->
+  <path d="M48 62 Q37 53 30 45" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="0.8" stroke-linecap="round"/>
+  <path d="M48 60 Q38 56 34 50" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="0.6" stroke-linecap="round"/>
+  <!-- Leaf 2 — right large -->
+  <path d="M50 60 Q70 50 78 37 Q72 33 65 39 Q60 45 50 60Z" fill="#4AACBF" opacity="0.85"/>
+  <path d="M50 60 Q70 50 78 37" fill="none" stroke="#1A3A42" stroke-width="0.8"/>
+  <!-- Leaf veins right -->
+  <path d="M52 57 Q63 49 70 41" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="0.8" stroke-linecap="round"/>
+  <path d="M52 55 Q62 51 66 45" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="0.6" stroke-linecap="round"/>
+  <!-- Leaf 3 — top center -->
+  <path d="M50 55 Q44 38 48 22 Q54 22 56 38 Q54 45 50 55Z" fill="#2F8FA3" opacity="0.9"/>
+  <!-- Top leaf veins -->
+  <path d="M50 52 Q50 38 50 26" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="0.8" stroke-linecap="round"/>
+  <path d="M49 45 Q46 38 47 30" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="0.6" stroke-linecap="round"/>
+  <path d="M51 45 Q54 38 53 30" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="0.6" stroke-linecap="round"/>
+  <!-- Small flower clusters at leaf junctions -->
+  <circle cx="50" cy="55" r="3.5" fill="#1A3A42"/>
+  <circle cx="50" cy="65" r="3" fill="#1A3A42"/>
+  <circle cx="50" cy="55" r="1.5" fill="#4AACBF"/>
+  <!-- Small leaves / sprouts -->
+  <path d="M50 75 Q42 68 38 62" fill="none" stroke="#4AACBF" stroke-width="1.5" stroke-linecap="round"/>
+  <path d="M50 75 Q58 68 62 62" fill="none" stroke="#4AACBF" stroke-width="1.5" stroke-linecap="round"/>
+  <!-- Tiny round leaves at sprout ends -->
+  <ellipse cx="37" cy="61" rx="5" ry="3.5" fill="#4AACBF" opacity="0.7" transform="rotate(-30 37 61)"/>
+  <ellipse cx="63" cy="61" rx="5" ry="3.5" fill="#4AACBF" opacity="0.7" transform="rotate(30 63 61)"/>
+  <!-- Highlight on leaves -->
+  <path d="M30 46 Q34 42 38 44" fill="none" stroke="rgba(255,255,255,0.6)" stroke-width="1" stroke-linecap="round"/>
+</svg>
+        <div class="nb-ingredients__name">Centella Asiatica</div>
+        <div class="nb-ingredients__desc">Post-acne soothing</div>
+      </div>
+      <div class="nb-ingredients__cell">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <!-- Glow base -->
+  <ellipse cx="50" cy="78" rx="26" ry="7" fill="#B9E8F5" opacity="0.4"/>
+  <!-- Crystal body -->
+  <polygon points="50,15 74,30 74,65 50,80 26,65 26,30" fill="#F0F9FB" stroke="#4AACBF" stroke-width="1.5"/>
+  <!-- Inner crystal facets -->
+  <polygon points="50,22 68,33 68,62 50,73 32,62 32,33" fill="#B9E8F5" opacity="0.5"/>
+  <polygon points="50,29 62,37 62,58 50,66 38,58 38,37" fill="#8DD3E3" opacity="0.4"/>
+  <!-- Facet lines -->
+  <line x1="50" y1="15" x2="50" y2="80" stroke="rgba(255,255,255,0.6)" stroke-width="1"/>
+  <line x1="26" y1="30" x2="74" y2="65" stroke="rgba(255,255,255,0.4)" stroke-width="0.8"/>
+  <line x1="74" y1="30" x2="26" y2="65" stroke="rgba(255,255,255,0.4)" stroke-width="0.8"/>
+  <!-- Shine facets -->
+  <polygon points="50,15 74,30 50,29" fill="rgba(255,255,255,0.5)"/>
+  <polygon points="26,30 50,22 50,29 38,37" fill="rgba(255,255,255,0.3)"/>
+  <!-- Sparkle stars -->
+  <path d="M20 20 L22 16 L24 20 L28 22 L24 24 L22 28 L20 24 L16 22Z" fill="#4AACBF" opacity="0.7"/>
+  <path d="M78 55 L79.5 52 L81 55 L84 56.5 L81 58 L79.5 61 L78 58 L75 56.5Z" fill="#4AACBF" opacity="0.5"/>
+  <!-- Center label -->
+  <text x="50" y="48" text-anchor="middle" font-size="8" fill="#1A3A42" font-weight="bold">Allantoin</text>
+  <text x="50" y="58" text-anchor="middle" font-size="7" fill="#2F8FA3">Soothing</text>
+</svg>
+        <div class="nb-ingredients__name">Allantoin</div>
+        <div class="nb-ingredients__desc">Skin soothing and recovery</div>
+      </div>
+
+      {% elsif product.tags contains 'day-mask' %}
+            {% comment %} DAY MASK INGREDIENTS {% endcomment %}
+      <div class="nb-ingredients__cell">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <!-- Glow base -->
+  <ellipse cx="50" cy="82" rx="30" ry="7" fill="#B9E8F5" opacity="0.4"/>
+  <!-- Stem -->
+  <rect x="46" y="62" width="8" height="20" rx="4" fill="#d4f0f8" stroke="#8DD3E3" stroke-width="0.5"/>
+  <!-- Ruffled wavy cap layers - bottom layer -->
+  <path d="M15 62 Q20 55 28 58 Q33 52 40 56 Q46 48 50 54 Q54 48 60 56 Q67 52 72 58 Q80 55 85 62 Q78 68 70 65 Q63 70 55 64 Q52 68 50 65 Q48 68 45 64 Q37 70 30 65 Q22 68 15 62Z" fill="#F0F9FB" stroke="#8DD3E3" stroke-width="1"/>
+  <!-- Middle layer -->
+  <path d="M22 57 Q28 49 36 53 Q42 45 50 50 Q58 45 64 53 Q72 49 78 57 Q70 63 62 59 Q56 64 50 60 Q44 64 38 59 Q30 63 22 57Z" fill="#e8f7fa" stroke="#8DD3E3" stroke-width="1"/>
+  <!-- Top layer -->
+  <path d="M28 52 Q34 43 42 48 Q46 41 50 45 Q54 41 58 48 Q66 43 72 52 Q64 57 56 53 Q53 57 50 54 Q47 57 44 53 Q36 57 28 52Z" fill="#B9E8F5" stroke="#4AACBF" stroke-width="1"/>
+  <!-- Inner top -->
+  <path d="M34 47 Q40 39 48 44 Q50 39 52 44 Q60 39 66 47 Q58 52 52 48 Q50 51 50 49 Q50 51 48 48 Q42 52 34 47Z" fill="#8DD3E3" stroke="#4AACBF" stroke-width="0.8"/>
+  <!-- Center crown -->
+  <ellipse cx="50" cy="43" rx="7" ry="5" fill="#4AACBF" opacity="0.7"/>
+  <ellipse cx="50" cy="43" rx="4" ry="3" fill="#2F8FA3"/>
+  <!-- Water droplets — moisture retention -->
+  <circle cx="25" cy="52" r="2.5" fill="#8DD3E3" opacity="0.8"/>
+  <path d="M25 49 Q27 51 25 54" fill="#8DD3E3" stroke="none" opacity="0.6"/>
+  <circle cx="75" cy="54" r="2" fill="#8DD3E3" opacity="0.8"/>
+  <circle cx="30" cy="65" r="1.5" fill="#B9E8F5" opacity="0.7"/>
+  <!-- Highlight on cap -->
+  <path d="M36 45 Q42 40 48 43" fill="none" stroke="rgba(255,255,255,0.8)" stroke-width="1.5" stroke-linecap="round"/>
+</svg>
+        <div class="nb-ingredients__name">Snow Mushroom</div>
+        <div class="nb-ingredients__desc">500x water retention, glass glow</div>
+      </div>
+      <div class="nb-ingredients__cell">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <!-- Glow rings -->
+  <circle cx="50" cy="50" r="36" fill="#fff9e6" opacity="0.8"/>
+  <circle cx="50" cy="50" r="28" fill="#FFE066" opacity="0.3"/>
+  <!-- Sun rays -->
+  <line x1="50" y1="14" x2="50" y2="8" stroke="#FFB800" stroke-width="2" stroke-linecap="round"/>
+  <line x1="68" y1="19" x2="72" y2="14" stroke="#FFB800" stroke-width="2" stroke-linecap="round"/>
+  <line x1="80" y1="32" x2="86" y2="28" stroke="#FFB800" stroke-width="2" stroke-linecap="round"/>
+  <line x1="86" y1="50" x2="92" y2="50" stroke="#FFB800" stroke-width="2" stroke-linecap="round"/>
+  <line x1="80" y1="68" x2="86" y2="72" stroke="#FFB800" stroke-width="2" stroke-linecap="round"/>
+  <line x1="68" y1="81" x2="72" y2="86" stroke="#FFB800" stroke-width="2" stroke-linecap="round"/>
+  <line x1="50" y1="86" x2="50" y2="92" stroke="#FFB800" stroke-width="2" stroke-linecap="round"/>
+  <line x1="32" y1="81" x2="28" y2="86" stroke="#FFB800" stroke-width="2" stroke-linecap="round"/>
+  <line x1="20" y1="68" x2="14" y2="72" stroke="#FFB800" stroke-width="2" stroke-linecap="round"/>
+  <line x1="14" y1="50" x2="8" y2="50" stroke="#FFB800" stroke-width="2" stroke-linecap="round"/>
+  <line x1="20" y1="32" x2="14" y2="28" stroke="#FFB800" stroke-width="2" stroke-linecap="round"/>
+  <line x1="32" y1="19" x2="28" y2="14" stroke="#FFB800" stroke-width="2" stroke-linecap="round"/>
+  <!-- Center diamond -->
+  <polygon points="50,26 64,50 50,74 36,50" fill="#FFB800" opacity="0.4"/>
+  <circle cx="50" cy="50" r="16" fill="#FF9900"/>
+  <circle cx="50" cy="50" r="12" fill="#FFB800"/>
+  <!-- TA label -->
+  <text x="50" y="47" text-anchor="middle" font-size="8" fill="#fff" font-weight="bold">TA</text>
+  <text x="50" y="57" text-anchor="middle" font-size="6" fill="#fff">Brightening</text>
+</svg>
+        <div class="nb-ingredients__name">Tranexamic Acid</div>
+        <div class="nb-ingredients__desc">Brightening and tone-evening</div>
+      </div>
+      <div class="nb-ingredients__cell">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <!-- Shadow -->
+  <ellipse cx="50" cy="85" rx="28" ry="6" fill="#FF9900" opacity="0.15"/>
+  <!-- Outer orange ring -->
+  <circle cx="50" cy="50" r="36" fill="#FF9900" opacity="0.9"/>
+  <circle cx="50" cy="50" r="33" fill="#FFB800"/>
+  <!-- White pith ring -->
+  <circle cx="50" cy="50" r="30" fill="#fff"/>
+  <!-- Segments - orange slice interior -->
+  <circle cx="50" cy="50" r="26" fill="#FF9900" opacity="0.3"/>
+  <!-- Segment lines radiating from center -->
+  <line x1="50" y1="50" x2="50" y2="24" stroke="#fff" stroke-width="1.5"/>
+  <line x1="50" y1="50" x2="72" y2="37" stroke="#fff" stroke-width="1.5"/>
+  <line x1="50" y1="50" x2="72" y2="63" stroke="#fff" stroke-width="1.5"/>
+  <line x1="50" y1="50" x2="50" y2="76" stroke="#fff" stroke-width="1.5"/>
+  <line x1="50" y1="50" x2="28" y2="63" stroke="#fff" stroke-width="1.5"/>
+  <line x1="50" y1="50" x2="28" y2="37" stroke="#fff" stroke-width="1.5"/>
+  <!-- Juice sacs in each segment -->
+  <circle cx="50" cy="36" r="4" fill="#FF9900" opacity="0.6"/>
+  <circle cx="62" cy="43" r="4" fill="#FF9900" opacity="0.6"/>
+  <circle cx="62" cy="57" r="4" fill="#FF9900" opacity="0.6"/>
+  <circle cx="50" cy="64" r="4" fill="#FF9900" opacity="0.6"/>
+  <circle cx="38" cy="57" r="4" fill="#FF9900" opacity="0.6"/>
+  <circle cx="38" cy="43" r="4" fill="#FF9900" opacity="0.6"/>
+  <!-- Center -->
+  <circle cx="50" cy="50" r="6" fill="#FF9900"/>
+  <circle cx="50" cy="50" r="4" fill="#FFB800"/>
+  <!-- C label -->
+  <text x="50" y="54" text-anchor="middle" font-size="7" fill="#fff" font-weight="bold">C</text>
+  <!-- Shine on outer ring -->
+  <path d="M30 28 Q38 22 46 26" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="2" stroke-linecap="round"/>
+</svg>
+        <div class="nb-ingredients__name">Vitamin C</div>
+        <div class="nb-ingredients__desc">Radiance and antioxidant</div>
+      </div>
+      <div class="nb-ingredients__cell">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <!-- Glow -->
+  <circle cx="50" cy="50" r="38" fill="#F0F9FB"/>
+  <!-- Hexagon ring (pyridine ring of niacin) -->
+  <polygon points="50,18 73,31 73,57 50,70 27,57 27,31" fill="none" stroke="#2F8FA3" stroke-width="2.5"/>
+  <!-- Double bond lines (inner) -->
+  <line x1="50" y1="22" x2="69" y2="33" stroke="#4AACBF" stroke-width="1.2" opacity="0.6"/>
+  <line x1="70" y1="35" x2="70" y2="55" stroke="#4AACBF" stroke-width="1.2" opacity="0.6"/>
+  <line x1="50" y1="66" x2="30" y2="55" stroke="#4AACBF" stroke-width="1.2" opacity="0.6"/>
+  <!-- N atom at top -->
+  <circle cx="50" cy="18" r="8" fill="#1A3A42"/>
+  <text x="50" y="22" text-anchor="middle" font-size="8" fill="#fff" font-weight="bold">N</text>
+  <!-- C atoms at corners -->
+  <circle cx="73" cy="31" r="7" fill="#4AACBF"/>
+  <text x="73" y="35" text-anchor="middle" font-size="8" fill="#fff" font-weight="bold">C</text>
+  <circle cx="73" cy="57" r="7" fill="#4AACBF"/>
+  <text x="73" y="61" text-anchor="middle" font-size="8" fill="#fff" font-weight="bold">C</text>
+  <circle cx="50" cy="70" r="7" fill="#2F8FA3"/>
+  <text x="50" y="74" text-anchor="middle" font-size="8" fill="#fff" font-weight="bold">C</text>
+  <circle cx="27" cy="57" r="7" fill="#4AACBF"/>
+  <text x="27" y="61" text-anchor="middle" font-size="8" fill="#fff" font-weight="bold">C</text>
+  <circle cx="27" cy="31" r="7" fill="#4AACBF"/>
+  <text x="27" y="35" text-anchor="middle" font-size="8" fill="#fff" font-weight="bold">C</text>
+  <!-- CONH2 amide group hanging off C at right -->
+  <line x1="80" y1="31" x2="90" y2="25" stroke="#1A3A42" stroke-width="1.5"/>
+  <circle cx="90" cy="24" r="6" fill="#1A3A42"/>
+  <text x="90" y="28" text-anchor="middle" font-size="6.5" fill="#fff" font-weight="bold">NH₂</text>
+  <!-- O double bond -->
+  <line x1="80" y1="57" x2="90" y2="63" stroke="#2F8FA3" stroke-width="1.5"/>
+  <circle cx="90" cy="64" r="5" fill="#2F8FA3"/>
+  <text x="90" y="68" text-anchor="middle" font-size="7" fill="#fff" font-weight="bold">O</text>
+  <!-- B3 label center -->
+  <text x="50" y="46" text-anchor="middle" font-size="9" fill="#1A3A42" font-weight="bold">B3</text>
+  <!-- Small sparkles -->
+  <circle cx="15" cy="20" r="2" fill="#4AACBF" opacity="0.5"/>
+  <circle cx="85" cy="80" r="1.5" fill="#4AACBF" opacity="0.4"/>
+</svg>
+        <div class="nb-ingredients__name">Niacinamide</div>
+        <div class="nb-ingredients__desc">Brightening and pore refining</div>
+      </div>
+      <div class="nb-ingredients__cell">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <!-- Bean shadow -->
+  <ellipse cx="50" cy="82" rx="22" ry="6" fill="#1A3A42" opacity="0.15"/>
+  <!-- Bean body -->
+  <ellipse cx="50" cy="52" rx="24" ry="30" fill="#2d6b7a"/>
+  <ellipse cx="50" cy="52" rx="22" ry="28" fill="#1A3A42"/>
+  <!-- Bean center crease -->
+  <path d="M50 24 Q46 38 50 52 Q54 66 50 80" fill="none" stroke="#2d6b7a" stroke-width="2.5" stroke-linecap="round"/>
+  <!-- Bean shine -->
+  <ellipse cx="40" cy="36" rx="6" ry="10" fill="rgba(255,255,255,0.08)" transform="rotate(-10 40 36)"/>
+  <!-- Steam lines -->
+  <path d="M35 18 Q32 12 35 6" fill="none" stroke="#B9E8F5" stroke-width="1.5" stroke-linecap="round" opacity="0.7"/>
+  <path d="M50 15 Q47 8 50 2" fill="none" stroke="#B9E8F5" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/>
+  <path d="M65 18 Q68 12 65 6" fill="none" stroke="#B9E8F5" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
+  <!-- CAF label -->
+  <text x="50" y="56" text-anchor="middle" font-size="11" fill="#B9E8F5" font-weight="bold" font-family="Arial">CAF</text>
+  <!-- Molecule structure overlay -->
+  <text x="50" y="68" text-anchor="middle" font-size="7" fill="#4AACBF" font-family="Arial">C₈H₁₀N₄O₂</text>
+  <!-- Energy sparks -->
+  <line x1="20" y1="45" x2="14" y2="40" stroke="#FF9900" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="14" y1="40" x2="18" y2="35" stroke="#FF9900" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="80" y1="48" x2="86" y2="43" stroke="#FF9900" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="86" y1="43" x2="82" y2="38" stroke="#FF9900" stroke-width="1.5" stroke-linecap="round"/>
+</svg>
+        <div class="nb-ingredients__name">Caffeine</div>
+        <div class="nb-ingredients__desc">Revitalizing and de-puffing</div>
+      </div>
+      <div class="nb-ingredients__cell">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <!-- Soil/ground -->
+  <ellipse cx="50" cy="88" rx="20" ry="5" fill="#8DD3E3" opacity="0.3"/>
+  <!-- Main stem -->
+  <path d="M50 88 Q50 70 50 55" fill="none" stroke="#2d6b7a" stroke-width="2" stroke-linecap="round"/>
+  <!-- Leaf 1 — left large -->
+  <path d="M50 65 Q30 55 22 42 Q28 38 35 44 Q40 50 50 65Z" fill="#4AACBF" opacity="0.8"/>
+  <path d="M50 65 Q30 55 22 42" fill="none" stroke="#1A3A42" stroke-width="0.8"/>
+  <!-- Leaf veins left -->
+  <path d="M48 62 Q37 53 30 45" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="0.8" stroke-linecap="round"/>
+  <path d="M48 60 Q38 56 34 50" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="0.6" stroke-linecap="round"/>
+  <!-- Leaf 2 — right large -->
+  <path d="M50 60 Q70 50 78 37 Q72 33 65 39 Q60 45 50 60Z" fill="#4AACBF" opacity="0.85"/>
+  <path d="M50 60 Q70 50 78 37" fill="none" stroke="#1A3A42" stroke-width="0.8"/>
+  <!-- Leaf veins right -->
+  <path d="M52 57 Q63 49 70 41" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="0.8" stroke-linecap="round"/>
+  <path d="M52 55 Q62 51 66 45" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="0.6" stroke-linecap="round"/>
+  <!-- Leaf 3 — top center -->
+  <path d="M50 55 Q44 38 48 22 Q54 22 56 38 Q54 45 50 55Z" fill="#2F8FA3" opacity="0.9"/>
+  <!-- Top leaf veins -->
+  <path d="M50 52 Q50 38 50 26" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="0.8" stroke-linecap="round"/>
+  <path d="M49 45 Q46 38 47 30" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="0.6" stroke-linecap="round"/>
+  <path d="M51 45 Q54 38 53 30" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="0.6" stroke-linecap="round"/>
+  <!-- Small flower clusters at leaf junctions -->
+  <circle cx="50" cy="55" r="3.5" fill="#1A3A42"/>
+  <circle cx="50" cy="65" r="3" fill="#1A3A42"/>
+  <circle cx="50" cy="55" r="1.5" fill="#4AACBF"/>
+  <!-- Small leaves / sprouts -->
+  <path d="M50 75 Q42 68 38 62" fill="none" stroke="#4AACBF" stroke-width="1.5" stroke-linecap="round"/>
+  <path d="M50 75 Q58 68 62 62" fill="none" stroke="#4AACBF" stroke-width="1.5" stroke-linecap="round"/>
+  <!-- Tiny round leaves at sprout ends -->
+  <ellipse cx="37" cy="61" rx="5" ry="3.5" fill="#4AACBF" opacity="0.7" transform="rotate(-30 37 61)"/>
+  <ellipse cx="63" cy="61" rx="5" ry="3.5" fill="#4AACBF" opacity="0.7" transform="rotate(30 63 61)"/>
+  <!-- Highlight on leaves -->
+  <path d="M30 46 Q34 42 38 44" fill="none" stroke="rgba(255,255,255,0.6)" stroke-width="1" stroke-linecap="round"/>
+</svg>
+        <div class="nb-ingredients__name">Centella Asiatica</div>
+        <div class="nb-ingredients__desc">Soothing and calming</div>
+      </div>
+
+      {% elsif product.tags contains 'night-mask' %}
+      <div class="nb-product-hero__subtitle">Infused with Marine Collagen for Plumping Glow</div>
+    {% endif %}
+
+    {% comment %} Price {% endcomment %}
+    <div class="nb-product-hero__price">
+      {% if product.tags contains '72ct' %}
+        {{ product.price | money }} <span style="font-size:16px;color:#888;text-decoration:line-through;font-weight:400">$25.98</span>
+      {% else %}
+        {{ product.price | money }}
+      {% endif %}
+    </div>
+
+    {% comment %} Trust badges {% endcomment %}
+    <div class="nb-product-hero__badges">
+      {% if product.tags contains 'patch' %}
+        <span class="nb-product-hero__badge">✓ ISO 13485 Medical-Grade</span>
+        <span class="nb-product-hero__badge">✓ Vegan Formula</span>
+        <span class="nb-product-hero__badge">✓ Suitable for Sensitive Skin</span>
+      {% else %}
+        <span class="nb-product-hero__badge">✓ GMP Certified Manufacturing</span>
+        <span class="nb-product-hero__badge">✓ K-Beauty Inspired Formula</span>
+      {% endif %}
+    </div>
+
+    {% comment %} Buy buttons {% endcomment %}
+    <div class="nb-product-hero__buttons">
+      {% if product.metafields.custom.amazon_url != blank %}
+        <a href="{{ product.metafields.custom.amazon_url }}" class="nb-product-hero__amazon" target="_blank" rel="noopener">
+          Buy on Amazon
+        </a>
+      {% endif %}
+      {% form 'product', product %}
+        <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+        <button type="submit" class="nb-product-hero__cart">Add to Cart</button>
+      {% endform %}
+    </div>
+
+    {% if product.tags contains '72ct' %}
+      <p class="nb-product-hero__supply-note">1–2 month supply · Most popular choice</p>
+    {% endif %}
+
+  </div>
+</div>
+
+
+{% comment %} ---- DESCRIPTION SECTION ---- {% endcomment %}
+<div class="nb-product-desc">
+  {{ product.description }}
+  <div class="nb-product-desc__brand">K-Beauty Inspired · Developed by NexaBrand USA™</div>
+</div>
+
+
+{% comment %}
+NOTE: Product descriptions should be entered in Shopify admin
+with this HTML structure:
+
+<p>[Opening paragraph about the product]</p>
+<p>[Second paragraph about formulation]</p>
+<p>[Skin type / suitability paragraph]</p>
+
+<div class="nb-product-desc__section-title">Key Benefits</div>
+<ul>
+  <li>[Benefit 1]</li>
+  <li>[Benefit 2]</li>
+  <li>[Benefit 3]</li>
+  <li>[Benefit 4]</li>
+</ul>
+
+<div class="nb-product-desc__section-title">Hero Ingredients</div>
+<ul>
+  <li>[Ingredient] — [benefit]</li>
+</ul>
+
+<div class="nb-product-desc__section-title">How to Use</div>
+
+ALL 5 PRODUCTS use ✦ sparkle symbol — no bullets, no numbers:
+
+FOR SERUM:
+<div class="nb-product-desc__steps">
+  <p>✦ Apply 2–3 drops to cleansed skin</p>
+  <p>✦ Gently pat until fully absorbed</p>
+  <p>✦ Use morning and evening</p>
+</div>
+
+FOR MASKS:
+<div class="nb-product-desc__steps">
+  <p>✦ Cleanse and tone your face</p>
+  <p>✦ Remove mask from pouch and unfold carefully</p>
+  <p>✦ Apply evenly to face, adjusting around eyes and nose</p>
+  <p>✦ Leave on for 45–60 minutes or until the mask becomes transparent</p>
+  <p>✦ For best results, apply the mask and relax in a reclined position to allow full adherence and absorption</p>
+  <p>✦ Remove mask and gently massage remaining essence into skin</p>
+  <p>✦ Apply remaining essence to face, neck, and body — no rinsing needed</p>
+</div>
+
+FOR PATCHES:
+<div class="nb-product-desc__steps">
+  <p>✦ Cleanse and dry the affected area completely</p>
+  <p>✦ Peel and apply patch directly over the blemish</p>
+  <p>✦ Remove after 6–8 hours or when the patch turns white</p>
+</div>
+
+{% endcomment %}
+
+
+{% comment %} ---- BEFORE / AFTER SECTION ---- {% endcomment %}
+<div class="nb-before-after">
+  <h2 class="nb-before-after__title">Before & After Results</h2>
+  <p class="nb-before-after__sub">
+    {% if product.tags contains 'patch' %}Real blemish results — slide to compare
+    {% elsif product.tags contains 'mask' %}Real overnight skin transformation
+    {% else %}Real customer skin transformation — 4 weeks of daily use{% endif %}
+  </p>
+  <div class="nb-before-after__cols">
+    <div class="nb-before-after__col">
+      <div class="nb-before-after__img">
+        {% comment %}Replace with real before image{% endcomment %}
+        <img src="{{ 'before-placeholder.jpg' | asset_url }}" alt="Before" loading="lazy">
+      </div>
+      <span class="nb-before-after__label">Before</span>
+    </div>
+    <div class="nb-before-after__divider"></div>
+    <div class="nb-before-after__col">
+      <div class="nb-before-after__img">
+        {% comment %}Replace with real mid image{% endcomment %}
+        <img src="{{ 'mid-placeholder.jpg' | asset_url }}" alt="During" loading="lazy">
+      </div>
+      <span class="nb-before-after__label">
+        {% if product.tags contains 'patch' %}6 Hours
+        {% elsif product.tags contains 'mask' %}45 Min
+        {% else %}2 Weeks{% endif %}
+      </span>
+    </div>
+    <div class="nb-before-after__divider"></div>
+    <div class="nb-before-after__col">
+      <div class="nb-before-after__img">
+        {% comment %}Replace with real after image{% endcomment %}
+        <img src="{{ 'after-placeholder.jpg' | asset_url }}" alt="After" loading="lazy">
+      </div>
+      <span class="nb-before-after__label">
+        {% if product.tags contains 'serum' %}4 Weeks
+        {% else %}Next Morning{% endif %}
+      </span>
+    </div>
+  </div>
+  <p class="nb-before-after__note">Replace placeholders with real customer before/after photos</p>
+</div>
+
+
+{% comment %} ---- UGC VIDEO SECTION ---- {% endcomment %}
+<div class="nb-ugc">
+  <h2 class="nb-ugc__title">See It in Action</h2>
+  <div class="nb-ugc__frame">
+    {% if product.metafields.custom.ugc_video_url != blank %}
+      <iframe
+        src="{{ product.metafields.custom.ugc_video_url }}"
+        class="nb-ugc__video"
+        height="400"
+        frameborder="0"
+        allowfullscreen
+        loading="lazy">
+      </iframe>
+    {% else %}
+      <p style="color:#888;font-size:14px">Real person using product · TikTok / Instagram / YouTube · 10–20 sec · Upload via product metafield: custom.ugc_video_url</p>
+    {% endif %}
+  </div>
+</div>
+
+
+{% comment %} ---- REVIEWS SECTION (LOOX) ---- {% endcomment %}
+<div class="nb-reviews">
+  <h2 class="nb-reviews__title">Customer Reviews</h2>
+  {% comment %}
+  LOOX WIDGET: Add Loox review widget here after installing Loox app
+  Example: {{ loox_reviews_widget }}
+  OR add the Loox section via Shopify theme editor
+  {% endcomment %}
+  <div id="looxReviews" data-product-id="{{ product.id }}"></div>
+  <a href="#" class="nb-reviews__upload-link">+ Upload your photo review · Powered by Loox</a>
+</div>
+
+
+{% comment %} ---- KEY INGREDIENTS SECTION ---- {% endcomment %}
+<div class="nb-ingredients">
+  <h2 class="nb-ingredients__title">Key Ingredients — What's Inside</h2>
+  <p class="nb-ingredients__sub">Science-backed ingredients for visible results</p>
+  <div class="nb-ingredients__grid">
+
+    {% if product.tags contains 'essential' %}
+            {% comment %} ESSENTIAL SERUM INGREDIENTS {% endcomment %}
+      <div class="nb-ingredients__cell">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <!-- Trail glow -->
+  <ellipse cx="30" cy="72" rx="28" ry="6" fill="#8DD3E3" opacity="0.25"/>
+  <!-- Snail body -->
+  <ellipse cx="38" cy="68" rx="22" ry="10" fill="#B9E8F5"/>
+  <ellipse cx="38" cy="68" rx="20" ry="8.5" fill="#d4f0f8"/>
+  <!-- Shell spiral -->
+  <circle cx="52" cy="52" r="22" fill="#4AACBF" opacity="0.15"/>
+  <circle cx="52" cy="52" r="22" fill="none" stroke="#2F8FA3" stroke-width="2"/>
+  <path d="M52 52 m0,-16 a16,16 0 1,1 -0.1,0" fill="none" stroke="#2F8FA3" stroke-width="1.8" stroke-linecap="round"/>
+  <path d="M52 52 m0,-9 a9,9 0 1,1 -0.1,0" fill="none" stroke="#2F8FA3" stroke-width="1.5" stroke-linecap="round"/>
+  <circle cx="52" cy="43" r="3" fill="#1A3A42" opacity="0.3"/>
+  <circle cx="52" cy="52" r="2" fill="#2F8FA3"/>
+  <!-- Shell highlight -->
+  <path d="M40 38 Q44 34 50 36" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="1.5" stroke-linecap="round"/>
+  <!-- Head -->
+  <ellipse cx="22" cy="66" rx="10" ry="6" fill="#B9E8F5"/>
+  <ellipse cx="22" cy="66" rx="9" ry="5" fill="#d4f0f8"/>
+  <!-- Eye stalks -->
+  <line x1="18" y1="62" x2="14" y2="55" stroke="#2F8FA3" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="24" y1="61" x2="22" y2="54" stroke="#2F8FA3" stroke-width="1.5" stroke-linecap="round"/>
+  <circle cx="14" cy="54" r="2.5" fill="#1A3A42"/>
+  <circle cx="22" cy="53" r="2.5" fill="#1A3A42"/>
+  <circle cx="14.8" cy="53.2" r="0.8" fill="#fff"/>
+  <circle cx="22.8" cy="52.2" r="0.8" fill="#fff"/>
+  <!-- Mouth smile -->
+  <path d="M17 68 Q22 71 27 68" fill="none" stroke="#2F8FA3" stroke-width="1" stroke-linecap="round"/>
+  <!-- Slime trail -->
+  <path d="M48 72 Q60 75 72 73 Q80 72 85 74" fill="none" stroke="#8DD3E3" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+  <path d="M48 75 Q62 78 74 76 Q82 75 87 77" fill="none" stroke="#8DD3E3" stroke-width="1.5" stroke-linecap="round" opacity="0.4"/>
+  <!-- Sparkle dots on trail -->
+  <circle cx="62" cy="73" r="1.5" fill="#4AACBF" opacity="0.7"/>
+  <circle cx="72" cy="75" r="1" fill="#4AACBF" opacity="0.5"/>
+  <circle cx="55" cy="76" r="1" fill="#4AACBF" opacity="0.5"/>
+</svg>
+        <div class="nb-ingredients__name">Poly-Helixan™</div>
+        <div class="nb-ingredients__desc">Concentrated snail repair complex</div>
+      </div>
+      <div class="nb-ingredients__cell">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <!-- Glow -->
+  <circle cx="50" cy="50" r="38" fill="#F0F9FB"/>
+  <!-- Hexagon ring (pyridine ring of niacin) -->
+  <polygon points="50,18 73,31 73,57 50,70 27,57 27,31" fill="none" stroke="#2F8FA3" stroke-width="2.5"/>
+  <!-- Double bond lines (inner) -->
+  <line x1="50" y1="22" x2="69" y2="33" stroke="#4AACBF" stroke-width="1.2" opacity="0.6"/>
+  <line x1="70" y1="35" x2="70" y2="55" stroke="#4AACBF" stroke-width="1.2" opacity="0.6"/>
+  <line x1="50" y1="66" x2="30" y2="55" stroke="#4AACBF" stroke-width="1.2" opacity="0.6"/>
+  <!-- N atom at top -->
+  <circle cx="50" cy="18" r="8" fill="#1A3A42"/>
+  <text x="50" y="22" text-anchor="middle" font-size="8" fill="#fff" font-weight="bold">N</text>
+  <!-- C atoms at corners -->
+  <circle cx="73" cy="31" r="7" fill="#4AACBF"/>
+  <text x="73" y="35" text-anchor="middle" font-size="8" fill="#fff" font-weight="bold">C</text>
+  <circle cx="73" cy="57" r="7" fill="#4AACBF"/>
+  <text x="73" y="61" text-anchor="middle" font-size="8" fill="#fff" font-weight="bold">C</text>
+  <circle cx="50" cy="70" r="7" fill="#2F8FA3"/>
+  <text x="50" y="74" text-anchor="middle" font-size="8" fill="#fff" font-weight="bold">C</text>
+  <circle cx="27" cy="57" r="7" fill="#4AACBF"/>
+  <text x="27" y="61" text-anchor="middle" font-size="8" fill="#fff" font-weight="bold">C</text>
+  <circle cx="27" cy="31" r="7" fill="#4AACBF"/>
+  <text x="27" y="35" text-anchor="middle" font-size="8" fill="#fff" font-weight="bold">C</text>
+  <!-- CONH2 amide group hanging off C at right -->
+  <line x1="80" y1="31" x2="90" y2="25" stroke="#1A3A42" stroke-width="1.5"/>
+  <circle cx="90" cy="24" r="6" fill="#1A3A42"/>
+  <text x="90" y="28" text-anchor="middle" font-size="6.5" fill="#fff" font-weight="bold">NH₂</text>
+  <!-- O double bond -->
+  <line x1="80" y1="57" x2="90" y2="63" stroke="#2F8FA3" stroke-width="1.5"/>
+  <circle cx="90" cy="64" r="5" fill="#2F8FA3"/>
+  <text x="90" y="68" text-anchor="middle" font-size="7" fill="#fff" font-weight="bold">O</text>
+  <!-- B3 label center -->
+  <text x="50" y="46" text-anchor="middle" font-size="9" fill="#1A3A42" font-weight="bold">B3</text>
+  <!-- Small sparkles -->
+  <circle cx="15" cy="20" r="2" fill="#4AACBF" opacity="0.5"/>
+  <circle cx="85" cy="80" r="1.5" fill="#4AACBF" opacity="0.4"/>
+</svg>
+        <div class="nb-ingredients__name">Niacinamide</div>
+        <div class="nb-ingredients__desc">Brightening and pore refining</div>
+      </div>
+      <div class="nb-ingredients__cell">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background water ripples -->
+  <circle cx="50" cy="75" r="28" fill="#8DD3E3" opacity="0.12"/>
+  <circle cx="50" cy="75" r="20" fill="#8DD3E3" opacity="0.12"/>
+  <!-- Large water droplet -->
+  <path d="M50 20 Q65 38 65 55 Q65 70 50 75 Q35 70 35 55 Q35 38 50 20Z" fill="#B9E8F5"/>
+  <path d="M50 20 Q65 38 65 55 Q65 70 50 75 Q35 70 35 55 Q35 38 50 20Z" fill="none" stroke="#4AACBF" stroke-width="1.5"/>
+  <!-- Inner droplet shine -->
+  <path d="M50 24 Q61 40 61 54 Q61 67 50 72 Q39 67 39 54 Q39 40 50 24Z" fill="#d4f0f8" opacity="0.6"/>
+  <!-- HA label inside -->
+  <text x="50" y="53" text-anchor="middle" font-size="13" fill="#1A3A42" font-weight="bold">HA</text>
+  <text x="50" y="64" text-anchor="middle" font-size="7" fill="#2F8FA3" font-family="Arial">×1000</text>
+  <!-- Shine on droplet -->
+  <ellipse cx="42" cy="34" rx="4" ry="7" fill="rgba(255,255,255,0.6)" transform="rotate(-15 42 34)"/>
+  <circle cx="44" cy="30" r="2" fill="rgba(255,255,255,0.5)"/>
+  <!-- Small satellite droplets -->
+  <path d="M22 45 Q26 38 26 43 Q26 49 22 47Z" fill="#8DD3E3" opacity="0.8"/>
+  <path d="M78 52 Q82 44 82 50 Q82 57 78 55Z" fill="#8DD3E3" opacity="0.8"/>
+  <path d="M30 72 Q33 66 33 70 Q33 75 30 73Z" fill="#B9E8F5" opacity="0.9"/>
+  <!-- Water text -->
+  <text x="50" y="88" text-anchor="middle" font-size="8" fill="#4AACBF" font-family="Arial">Deep Hydration</text>
+</svg>
+        <div class="nb-ingredients__name">Hyaluronic Acid</div>
+        <div class="nb-ingredients__desc">Deep hydration and plumping</div>
+      </div>
+      <div class="nb-ingredients__cell">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <!-- Chain background glow -->
+  <path d="M15 50 Q25 35 35 50 Q45 65 55 50 Q65 35 75 50 Q80 57 85 50" fill="none" stroke="#8DD3E3" stroke-width="8" stroke-linecap="round" opacity="0.3"/>
+  <!-- Peptide chain wave -->
+  <path d="M15 50 Q25 35 35 50 Q45 65 55 50 Q65 35 75 50 Q80 57 85 50" fill="none" stroke="#4AACBF" stroke-width="2.5" stroke-linecap="round"/>
+  <!-- Amino acid nodes on chain -->
+  <circle cx="15" cy="50" r="9" fill="#1A3A42"/>
+  <text x="15" y="54" text-anchor="middle" font-size="7" fill="#B9E8F5" font-weight="bold">AA</text>
+  <circle cx="35" cy="50" r="9" fill="#2F8FA3"/>
+  <text x="35" y="54" text-anchor="middle" font-size="7" fill="#fff" font-weight="bold">AA</text>
+  <circle cx="55" cy="50" r="9" fill="#1A3A42"/>
+  <text x="55" y="54" text-anchor="middle" font-size="7" fill="#B9E8F5" font-weight="bold">AA</text>
+  <circle cx="75" cy="50" r="9" fill="#2F8FA3"/>
+  <text x="75" y="54" text-anchor="middle" font-size="7" fill="#fff" font-weight="bold">AA</text>
+  <!-- Peptide bond marks -->
+  <line x1="24" y1="43" x2="26" y2="43" stroke="#4AACBF" stroke-width="1.5"/>
+  <line x1="44" y1="57" x2="46" y2="57" stroke="#4AACBF" stroke-width="1.5"/>
+  <line x1="64" y1="43" x2="66" y2="43" stroke="#4AACBF" stroke-width="1.5"/>
+  <!-- Side chains -->
+  <line x1="15" y1="41" x2="15" y2="28" stroke="#4AACBF" stroke-width="1.2" stroke-dasharray="2,2"/>
+  <circle cx="15" cy="26" r="4" fill="#4AACBF" opacity="0.7"/>
+  <line x1="55" y1="41" x2="55" y2="28" stroke="#4AACBF" stroke-width="1.2" stroke-dasharray="2,2"/>
+  <circle cx="55" cy="26" r="4" fill="#4AACBF" opacity="0.7"/>
+  <line x1="35" y1="59" x2="35" y2="74" stroke="#8DD3E3" stroke-width="1.2" stroke-dasharray="2,2"/>
+  <circle cx="35" cy="76" r="4" fill="#8DD3E3" opacity="0.7"/>
+  <line x1="75" y1="59" x2="75" y2="74" stroke="#8DD3E3" stroke-width="1.2" stroke-dasharray="2,2"/>
+  <circle cx="75" cy="76" r="4" fill="#8DD3E3" opacity="0.7"/>
+  <!-- Labels -->
+  <text x="50" y="92" text-anchor="middle" font-size="8" fill="#2F8FA3" font-family="Arial">Palmitoyl Tripeptide-1</text>
+</svg>
+        <div class="nb-ingredients__name">Peptide Complex</div>
+        <div class="nb-ingredients__desc">Anti-aging and skin renewal</div>
+      </div>
+      <div class="nb-ingredients__cell">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <!-- Soil/ground -->
+  <ellipse cx="50" cy="88" rx="20" ry="5" fill="#8DD3E3" opacity="0.3"/>
+  <!-- Main stem -->
+  <path d="M50 88 Q50 70 50 55" fill="none" stroke="#2d6b7a" stroke-width="2" stroke-linecap="round"/>
+  <!-- Leaf 1 — left large -->
+  <path d="M50 65 Q30 55 22 42 Q28 38 35 44 Q40 50 50 65Z" fill="#4AACBF" opacity="0.8"/>
+  <path d="M50 65 Q30 55 22 42" fill="none" stroke="#1A3A42" stroke-width="0.8"/>
+  <!-- Leaf veins left -->
+  <path d="M48 62 Q37 53 30 45" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="0.8" stroke-linecap="round"/>
+  <path d="M48 60 Q38 56 34 50" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="0.6" stroke-linecap="round"/>
+  <!-- Leaf 2 — right large -->
+  <path d="M50 60 Q70 50 78 37 Q72 33 65 39 Q60 45 50 60Z" fill="#4AACBF" opacity="0.85"/>
+  <path d="M50 60 Q70 50 78 37" fill="none" stroke="#1A3A42" stroke-width="0.8"/>
+  <!-- Leaf veins right -->
+  <path d="M52 57 Q63 49 70 41" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="0.8" stroke-linecap="round"/>
+  <path d="M52 55 Q62 51 66 45" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="0.6" stroke-linecap="round"/>
+  <!-- Leaf 3 — top center -->
+  <path d="M50 55 Q44 38 48 22 Q54 22 56 38 Q54 45 50 55Z" fill="#2F8FA3" opacity="0.9"/>
+  <!-- Top leaf veins -->
+  <path d="M50 52 Q50 38 50 26" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="0.8" stroke-linecap="round"/>
+  <path d="M49 45 Q46 38 47 30" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="0.6" stroke-linecap="round"/>
+  <path d="M51 45 Q54 38 53 30" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="0.6" stroke-linecap="round"/>
+  <!-- Small flower clusters at leaf junctions -->
+  <circle cx="50" cy="55" r="3.5" fill="#1A3A42"/>
+  <circle cx="50" cy="65" r="3" fill="#1A3A42"/>
+  <circle cx="50" cy="55" r="1.5" fill="#4AACBF"/>
+  <!-- Small leaves / sprouts -->
+  <path d="M50 75 Q42 68 38 62" fill="none" stroke="#4AACBF" stroke-width="1.5" stroke-linecap="round"/>
+  <path d="M50 75 Q58 68 62 62" fill="none" stroke="#4AACBF" stroke-width="1.5" stroke-linecap="round"/>
+  <!-- Tiny round leaves at sprout ends -->
+  <ellipse cx="37" cy="61" rx="5" ry="3.5" fill="#4AACBF" opacity="0.7" transform="rotate(-30 37 61)"/>
+  <ellipse cx="63" cy="61" rx="5" ry="3.5" fill="#4AACBF" opacity="0.7" transform="rotate(30 63 61)"/>
+  <!-- Highlight on leaves -->
+  <path d="M30 46 Q34 42 38 44" fill="none" stroke="rgba(255,255,255,0.6)" stroke-width="1" stroke-linecap="round"/>
+</svg>
+        <div class="nb-ingredients__name">Centella Asiatica</div>
+        <div class="nb-ingredients__desc">Post-acne soothing</div>
+      </div>
+      <div class="nb-ingredients__cell">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <!-- Glow base -->
+  <ellipse cx="50" cy="78" rx="26" ry="7" fill="#B9E8F5" opacity="0.4"/>
+  <!-- Crystal body -->
+  <polygon points="50,15 74,30 74,65 50,80 26,65 26,30" fill="#F0F9FB" stroke="#4AACBF" stroke-width="1.5"/>
+  <!-- Inner crystal facets -->
+  <polygon points="50,22 68,33 68,62 50,73 32,62 32,33" fill="#B9E8F5" opacity="0.5"/>
+  <polygon points="50,29 62,37 62,58 50,66 38,58 38,37" fill="#8DD3E3" opacity="0.4"/>
+  <!-- Facet lines -->
+  <line x1="50" y1="15" x2="50" y2="80" stroke="rgba(255,255,255,0.6)" stroke-width="1"/>
+  <line x1="26" y1="30" x2="74" y2="65" stroke="rgba(255,255,255,0.4)" stroke-width="0.8"/>
+  <line x1="74" y1="30" x2="26" y2="65" stroke="rgba(255,255,255,0.4)" stroke-width="0.8"/>
+  <!-- Shine facets -->
+  <polygon points="50,15 74,30 50,29" fill="rgba(255,255,255,0.5)"/>
+  <polygon points="26,30 50,22 50,29 38,37" fill="rgba(255,255,255,0.3)"/>
+  <!-- Sparkle stars -->
+  <path d="M20 20 L22 16 L24 20 L28 22 L24 24 L22 28 L20 24 L16 22Z" fill="#4AACBF" opacity="0.7"/>
+  <path d="M78 55 L79.5 52 L81 55 L84 56.5 L81 58 L79.5 61 L78 58 L75 56.5Z" fill="#4AACBF" opacity="0.5"/>
+  <!-- Center label -->
+  <text x="50" y="48" text-anchor="middle" font-size="8" fill="#1A3A42" font-weight="bold">Allantoin</text>
+  <text x="50" y="58" text-anchor="middle" font-size="7" fill="#2F8FA3">Soothing</text>
+</svg>
+        <div class="nb-ingredients__name">Allantoin</div>
+        <div class="nb-ingredients__desc">Skin soothing and recovery</div>
+      </div>
+
+      {% elsif product.tags contains 'day-mask' %}
+      {% comment %} DAY MASK INGREDIENTS {% endcomment %}
+      <div class="nb-ingredients__cell">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><ellipse cx="50" cy="48" rx="34" ry="20" fill="#F0F9FB" stroke="#B9E8F5" stroke-width="1.5"/><path d="M28 48 Q33 28 50 24 Q67 28 72 48" fill="#fff" stroke="#8DD3E3" stroke-width="1.5"/><path d="M38 48 Q42 36 50 33 Q58 36 62 48" fill="#fff" stroke="#B9E8F5" stroke-width="1"/><rect x="46" y="48" width="8" height="18" rx="4" fill="#8DD3E3"/><ellipse cx="50" cy="67" rx="11" ry="4" fill="#4AACBF" opacity="0.4"/><circle cx="34" cy="44" r="3.5" fill="#fff" stroke="#8DD3E3" stroke-width="1"/><circle cx="66" cy="44" r="3.5" fill="#fff" stroke="#8DD3E3" stroke-width="1"/></svg>
+        <div class="nb-ingredients__name">Snow Mushroom</div>
+        <div class="nb-ingredients__desc">500x water retention, glass glow</div>
+      </div>
+      <div class="nb-ingredients__cell">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="9" fill="#fff9e6" stroke="#FFB800" stroke-width="1.5"/><circle cx="20" cy="50" r="7" fill="#fff9e6" stroke="#FFB800" stroke-width="1.5"/><circle cx="80" cy="50" r="7" fill="#fff9e6" stroke="#FFB800" stroke-width="1.5"/><circle cx="35" cy="26" r="7" fill="#fff9e6" stroke="#FFB800" stroke-width="1.5"/><circle cx="65" cy="26" r="7" fill="#fff9e6" stroke="#FFB800" stroke-width="1.5"/><circle cx="35" cy="74" r="7" fill="#fff9e6" stroke="#FFB800" stroke-width="1.5"/><circle cx="65" cy="74" r="7" fill="#fff9e6" stroke="#FFB800" stroke-width="1.5"/><line x1="41" y1="50" x2="27" y2="50" stroke="#FFB800" stroke-width="1.5"/><line x1="59" y1="50" x2="73" y2="50" stroke="#FFB800" stroke-width="1.5"/><line x1="45" y1="43" x2="39" y2="31" stroke="#FFB800" stroke-width="1.5"/><line x1="55" y1="43" x2="61" y2="31" stroke="#FFB800" stroke-width="1.5"/><line x1="45" y1="57" x2="39" y2="69" stroke="#FFB800" stroke-width="1.5"/><line x1="55" y1="57" x2="61" y2="69" stroke="#FFB800" stroke-width="1.5"/><text x="50" y="54" text-anchor="middle" font-size="7" fill="#1A3A42" font-weight="bold">TA</text></svg>
+        <div class="nb-ingredients__name">Tranexamic Acid</div>
+        <div class="nb-ingredients__desc">Brightening and tone-evening</div>
+      </div>
+      <div class="nb-ingredients__cell">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="32" fill="#fff9e6" stroke="#FFB800" stroke-width="2"/><circle cx="50" cy="50" r="22" fill="#FFE066" opacity="0.4"/><path d="M50 18 L54 32 L68 32 L57 41 L62 55 L50 46 L38 55 L43 41 L32 32 L46 32Z" fill="#FFB800" opacity="0.6"/><circle cx="50" cy="50" r="9" fill="#FF9900" opacity="0.9"/><text x="50" y="54" text-anchor="middle" font-size="9" fill="#fff" font-weight="bold">C</text></svg>
+        <div class="nb-ingredients__name">Vitamin C</div>
+        <div class="nb-ingredients__desc">Radiance and antioxidant support</div>
+      </div>
+      <div class="nb-ingredients__cell">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="18" fill="none" stroke="#4AACBF" stroke-width="2"/><circle cx="50" cy="32" r="5.5" fill="#1A3A42"/><circle cx="65" cy="41" r="5.5" fill="#1A3A42"/><circle cx="65" cy="59" r="5.5" fill="#1A3A42"/><circle cx="50" cy="68" r="5.5" fill="#1A3A42"/><circle cx="35" cy="59" r="5.5" fill="#1A3A42"/><circle cx="35" cy="41" r="5.5" fill="#1A3A42"/><line x1="50" y1="37" x2="61" y2="44" stroke="#4AACBF" stroke-width="1.5"/><line x1="65" y1="47" x2="65" y2="54" stroke="#4AACBF" stroke-width="1.5"/><line x1="61" y1="57" x2="54" y2="63" stroke="#4AACBF" stroke-width="1.5"/><line x1="46" y1="63" x2="39" y2="57" stroke="#4AACBF" stroke-width="1.5"/><line x1="35" y1="54" x2="35" y2="47" stroke="#4AACBF" stroke-width="1.5"/><line x1="39" y1="44" x2="45" y2="37" stroke="#4AACBF" stroke-width="1.5"/><text x="50" y="55" text-anchor="middle" font-size="10" fill="#fff" font-weight="bold">B3</text></svg>
+        <div class="nb-ingredients__name">Niacinamide</div>
+        <div class="nb-ingredients__desc">Brightening and pore refining</div>
+      </div>
+      <div class="nb-ingredients__cell">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><ellipse cx="50" cy="68" rx="22" ry="8" fill="#2d6b7a" opacity="0.3"/><rect x="30" y="34" width="40" height="30" rx="8" fill="#1A3A42"/><rect x="33" y="37" width="34" height="24" rx="6" fill="#2d6b7a"/><path d="M70 44 Q80 44 80 52 Q80 60 70 60" stroke="#1A3A42" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M40 30 Q42 22 46 19" stroke="#4AACBF" stroke-width="1.5" fill="none" stroke-linecap="round"/><path d="M60 30 Q62 22 64 20" stroke="#4AACBF" stroke-width="1.5" fill="none" stroke-linecap="round"/><text x="50" y="53" text-anchor="middle" font-size="9" fill="#B9E8F5" font-weight="bold">CAF</text></svg>
+        <div class="nb-ingredients__name">Caffeine</div>
+        <div class="nb-ingredients__desc">Revitalizing and de-puffing</div>
+      </div>
+      <div class="nb-ingredients__cell">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><ellipse cx="50" cy="36" rx="19" ry="14" fill="#4AACBF" opacity="0.2" transform="rotate(-15 50 36)"/><ellipse cx="50" cy="36" rx="19" ry="14" fill="none" stroke="#2d6b7a" stroke-width="1.5" transform="rotate(-15 50 36)"/><ellipse cx="67" cy="44" rx="17" ry="12" fill="#4AACBF" opacity="0.25" transform="rotate(20 67 44)"/><ellipse cx="67" cy="44" rx="17" ry="12" fill="none" stroke="#2d6b7a" stroke-width="1.5" transform="rotate(20 67 44)"/><ellipse cx="33" cy="54" rx="15" ry="11" fill="#4AACBF" opacity="0.2"/><ellipse cx="33" cy="54" rx="15" ry="11" fill="none" stroke="#2d6b7a" stroke-width="1.5"/><line x1="50" y1="50" x2="50" y2="74" stroke="#1A3A42" stroke-width="2.5" stroke-linecap="round"/><circle cx="50" cy="74" r="3" fill="#1A3A42"/></svg>
+        <div class="nb-ingredients__name">Centella Asiatica</div>
+        <div class="nb-ingredients__desc">Soothing and calming</div>
+      </div>
+
+    {% elsif product.tags contains 'night-mask' %}
+            {% comment %} NIGHT MASK INGREDIENTS {% endcomment %}
+      <div class="nb-ingredients__cell">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <!-- Glow base -->
+  <ellipse cx="50" cy="82" rx="30" ry="7" fill="#B9E8F5" opacity="0.4"/>
+  <!-- Stem -->
+  <rect x="46" y="62" width="8" height="20" rx="4" fill="#d4f0f8" stroke="#8DD3E3" stroke-width="0.5"/>
+  <!-- Ruffled wavy cap layers - bottom layer -->
+  <path d="M15 62 Q20 55 28 58 Q33 52 40 56 Q46 48 50 54 Q54 48 60 56 Q67 52 72 58 Q80 55 85 62 Q78 68 70 65 Q63 70 55 64 Q52 68 50 65 Q48 68 45 64 Q37 70 30 65 Q22 68 15 62Z" fill="#F0F9FB" stroke="#8DD3E3" stroke-width="1"/>
+  <!-- Middle layer -->
+  <path d="M22 57 Q28 49 36 53 Q42 45 50 50 Q58 45 64 53 Q72 49 78 57 Q70 63 62 59 Q56 64 50 60 Q44 64 38 59 Q30 63 22 57Z" fill="#e8f7fa" stroke="#8DD3E3" stroke-width="1"/>
+  <!-- Top layer -->
+  <path d="M28 52 Q34 43 42 48 Q46 41 50 45 Q54 41 58 48 Q66 43 72 52 Q64 57 56 53 Q53 57 50 54 Q47 57 44 53 Q36 57 28 52Z" fill="#B9E8F5" stroke="#4AACBF" stroke-width="1"/>
+  <!-- Inner top -->
+  <path d="M34 47 Q40 39 48 44 Q50 39 52 44 Q60 39 66 47 Q58 52 52 48 Q50 51 50 49 Q50 51 48 48 Q42 52 34 47Z" fill="#8DD3E3" stroke="#4AACBF" stroke-width="0.8"/>
+  <!-- Center crown -->
+  <ellipse cx="50" cy="43" rx="7" ry="5" fill="#4AACBF" opacity="0.7"/>
+  <ellipse cx="50" cy="43" rx="4" ry="3" fill="#2F8FA3"/>
+  <!-- Water droplets — moisture retention -->
+  <circle cx="25" cy="52" r="2.5" fill="#8DD3E3" opacity="0.8"/>
+  <path d="M25 49 Q27 51 25 54" fill="#8DD3E3" stroke="none" opacity="0.6"/>
+  <circle cx="75" cy="54" r="2" fill="#8DD3E3" opacity="0.8"/>
+  <circle cx="30" cy="65" r="1.5" fill="#B9E8F5" opacity="0.7"/>
+  <!-- Highlight on cap -->
+  <path d="M36 45 Q42 40 48 43" fill="none" stroke="rgba(255,255,255,0.8)" stroke-width="1.5" stroke-linecap="round"/>
+</svg>
+        <div class="nb-ingredients__name">Snow Mushroom</div>
+        <div class="nb-ingredients__desc">Deep hydration and moisture lock</div>
+      </div>
+      <div class="nb-ingredients__cell">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <!-- Glow -->
+  <circle cx="50" cy="50" r="38" fill="#F0F9FB"/>
+  <!-- Hexagon ring (pyridine ring of niacin) -->
+  <polygon points="50,18 73,31 73,57 50,70 27,57 27,31" fill="none" stroke="#2F8FA3" stroke-width="2.5"/>
+  <!-- Double bond lines (inner) -->
+  <line x1="50" y1="22" x2="69" y2="33" stroke="#4AACBF" stroke-width="1.2" opacity="0.6"/>
+  <line x1="70" y1="35" x2="70" y2="55" stroke="#4AACBF" stroke-width="1.2" opacity="0.6"/>
+  <line x1="50" y1="66" x2="30" y2="55" stroke="#4AACBF" stroke-width="1.2" opacity="0.6"/>
+  <!-- N atom at top -->
+  <circle cx="50" cy="18" r="8" fill="#1A3A42"/>
+  <text x="50" y="22" text-anchor="middle" font-size="8" fill="#fff" font-weight="bold">N</text>
+  <!-- C atoms at corners -->
+  <circle cx="73" cy="31" r="7" fill="#4AACBF"/>
+  <text x="73" y="35" text-anchor="middle" font-size="8" fill="#fff" font-weight="bold">C</text>
+  <circle cx="73" cy="57" r="7" fill="#4AACBF"/>
+  <text x="73" y="61" text-anchor="middle" font-size="8" fill="#fff" font-weight="bold">C</text>
+  <circle cx="50" cy="70" r="7" fill="#2F8FA3"/>
+  <text x="50" y="74" text-anchor="middle" font-size="8" fill="#fff" font-weight="bold">C</text>
+  <circle cx="27" cy="57" r="7" fill="#4AACBF"/>
+  <text x="27" y="61" text-anchor="middle" font-size="8" fill="#fff" font-weight="bold">C</text>
+  <circle cx="27" cy="31" r="7" fill="#4AACBF"/>
+  <text x="27" y="35" text-anchor="middle" font-size="8" fill="#fff" font-weight="bold">C</text>
+  <!-- CONH2 amide group hanging off C at right -->
+  <line x1="80" y1="31" x2="90" y2="25" stroke="#1A3A42" stroke-width="1.5"/>
+  <circle cx="90" cy="24" r="6" fill="#1A3A42"/>
+  <text x="90" y="28" text-anchor="middle" font-size="6.5" fill="#fff" font-weight="bold">NH₂</text>
+  <!-- O double bond -->
+  <line x1="80" y1="57" x2="90" y2="63" stroke="#2F8FA3" stroke-width="1.5"/>
+  <circle cx="90" cy="64" r="5" fill="#2F8FA3"/>
+  <text x="90" y="68" text-anchor="middle" font-size="7" fill="#fff" font-weight="bold">O</text>
+  <!-- B3 label center -->
+  <text x="50" y="46" text-anchor="middle" font-size="9" fill="#1A3A42" font-weight="bold">B3</text>
+  <!-- Small sparkles -->
+  <circle cx="15" cy="20" r="2" fill="#4AACBF" opacity="0.5"/>
+  <circle cx="85" cy="80" r="1.5" fill="#4AACBF" opacity="0.4"/>
+</svg>
+        <div class="nb-ingredients__name">Niacinamide</div>
+        <div class="nb-ingredients__desc">Brightening and pore refining</div>
+      </div>
+      <div class="nb-ingredients__cell">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <!-- Barrier label -->
+  <text x="50" y="14" text-anchor="middle" font-size="8" fill="#1A3A42" font-weight="bold" font-family="Arial">SKIN BARRIER</text>
+  <!-- Layer 1 — stratum corneum cells -->
+  <rect x="8" y="20" width="24" height="14" rx="3" fill="#8DD3E3"/>
+  <rect x="34" y="20" width="24" height="14" rx="3" fill="#8DD3E3"/>
+  <rect x="60" y="20" width="24" height="14" rx="3" fill="#8DD3E3"/>
+  <text x="20" y="31" text-anchor="middle" font-size="7" fill="#1A3A42" font-weight="bold">NP</text>
+  <text x="46" y="31" text-anchor="middle" font-size="7" fill="#1A3A42" font-weight="bold">AP</text>
+  <text x="72" y="31" text-anchor="middle" font-size="7" fill="#1A3A42" font-weight="bold">EOP</text>
+  <!-- Lipid layer 1 -->
+  <rect x="8" y="36" width="76" height="7" rx="2" fill="#B9E8F5"/>
+  <text x="50" y="43" text-anchor="middle" font-size="6" fill="#1A3A42" font-family="Arial">Ceramide Lipid Layer</text>
+  <!-- Layer 2 -->
+  <rect x="20" y="45" width="24" height="13" rx="3" fill="#4AACBF" opacity="0.7"/>
+  <rect x="46" y="45" width="24" height="13" rx="3" fill="#4AACBF" opacity="0.7"/>
+  <text x="32" y="55" text-anchor="middle" font-size="7" fill="#fff" font-weight="bold">C</text>
+  <text x="58" y="55" text-anchor="middle" font-size="7" fill="#fff" font-weight="bold">C</text>
+  <!-- Lipid layer 2 -->
+  <rect x="8" y="60" width="76" height="7" rx="2" fill="#B9E8F5"/>
+  <!-- Layer 3 -->
+  <rect x="8" y="69" width="24" height="13" rx="3" fill="#2F8FA3" opacity="0.8"/>
+  <rect x="34" y="69" width="24" height="13" rx="3" fill="#2F8FA3" opacity="0.8"/>
+  <rect x="60" y="69" width="24" height="13" rx="3" fill="#2F8FA3" opacity="0.8"/>
+  <!-- Water droplet locked in -->
+  <path d="M85 47 Q88 42 88 46 Q88 51 85 49Z" fill="#8DD3E3"/>
+  <path d="M85 63 Q88 58 88 62 Q88 67 85 65Z" fill="#8DD3E3"/>
+  <!-- Shield icon -->
+  <text x="50" y="93" text-anchor="middle" font-size="8" fill="#4AACBF" font-family="Arial">Barrier Protection</text>
+</svg>
+        <div class="nb-ingredients__name">Triple Ceramide</div>
+        <div class="nb-ingredients__desc">Barrier Repair and protection</div>
+      </div>
+      <div class="nb-ingredients__cell">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <!-- Soil/ground -->
+  <ellipse cx="50" cy="88" rx="20" ry="5" fill="#8DD3E3" opacity="0.3"/>
+  <!-- Main stem -->
+  <path d="M50 88 Q50 70 50 55" fill="none" stroke="#2d6b7a" stroke-width="2" stroke-linecap="round"/>
+  <!-- Leaf 1 — left large -->
+  <path d="M50 65 Q30 55 22 42 Q28 38 35 44 Q40 50 50 65Z" fill="#4AACBF" opacity="0.8"/>
+  <path d="M50 65 Q30 55 22 42" fill="none" stroke="#1A3A42" stroke-width="0.8"/>
+  <!-- Leaf veins left -->
+  <path d="M48 62 Q37 53 30 45" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="0.8" stroke-linecap="round"/>
+  <path d="M48 60 Q38 56 34 50" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="0.6" stroke-linecap="round"/>
+  <!-- Leaf 2 — right large -->
+  <path d="M50 60 Q70 50 78 37 Q72 33 65 39 Q60 45 50 60Z" fill="#4AACBF" opacity="0.85"/>
+  <path d="M50 60 Q70 50 78 37" fill="none" stroke="#1A3A42" stroke-width="0.8"/>
+  <!-- Leaf veins right -->
+  <path d="M52 57 Q63 49 70 41" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="0.8" stroke-linecap="round"/>
+  <path d="M52 55 Q62 51 66 45" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="0.6" stroke-linecap="round"/>
+  <!-- Leaf 3 — top center -->
+  <path d="M50 55 Q44 38 48 22 Q54 22 56 38 Q54 45 50 55Z" fill="#2F8FA3" opacity="0.9"/>
+  <!-- Top leaf veins -->
+  <path d="M50 52 Q50 38 50 26" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="0.8" stroke-linecap="round"/>
+  <path d="M49 45 Q46 38 47 30" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="0.6" stroke-linecap="round"/>
+  <path d="M51 45 Q54 38 53 30" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="0.6" stroke-linecap="round"/>
+  <!-- Small flower clusters at leaf junctions -->
+  <circle cx="50" cy="55" r="3.5" fill="#1A3A42"/>
+  <circle cx="50" cy="65" r="3" fill="#1A3A42"/>
+  <circle cx="50" cy="55" r="1.5" fill="#4AACBF"/>
+  <!-- Small leaves / sprouts -->
+  <path d="M50 75 Q42 68 38 62" fill="none" stroke="#4AACBF" stroke-width="1.5" stroke-linecap="round"/>
+  <path d="M50 75 Q58 68 62 62" fill="none" stroke="#4AACBF" stroke-width="1.5" stroke-linecap="round"/>
+  <!-- Tiny round leaves at sprout ends -->
+  <ellipse cx="37" cy="61" rx="5" ry="3.5" fill="#4AACBF" opacity="0.7" transform="rotate(-30 37 61)"/>
+  <ellipse cx="63" cy="61" rx="5" ry="3.5" fill="#4AACBF" opacity="0.7" transform="rotate(30 63 61)"/>
+  <!-- Highlight on leaves -->
+  <path d="M30 46 Q34 42 38 44" fill="none" stroke="rgba(255,255,255,0.6)" stroke-width="1" stroke-linecap="round"/>
+</svg>
+        <div class="nb-ingredients__name">Centella Asiatica</div>
+        <div class="nb-ingredients__desc">Cica soothing and calming</div>
+      </div>
+      <div class="nb-ingredients__cell">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <!-- Chain background glow -->
+  <path d="M15 50 Q25 35 35 50 Q45 65 55 50 Q65 35 75 50 Q80 57 85 50" fill="none" stroke="#8DD3E3" stroke-width="8" stroke-linecap="round" opacity="0.3"/>
+  <!-- Peptide chain wave -->
+  <path d="M15 50 Q25 35 35 50 Q45 65 55 50 Q65 35 75 50 Q80 57 85 50" fill="none" stroke="#4AACBF" stroke-width="2.5" stroke-linecap="round"/>
+  <!-- Amino acid nodes on chain -->
+  <circle cx="15" cy="50" r="9" fill="#1A3A42"/>
+  <text x="15" y="54" text-anchor="middle" font-size="7" fill="#B9E8F5" font-weight="bold">AA</text>
+  <circle cx="35" cy="50" r="9" fill="#2F8FA3"/>
+  <text x="35" y="54" text-anchor="middle" font-size="7" fill="#fff" font-weight="bold">AA</text>
+  <circle cx="55" cy="50" r="9" fill="#1A3A42"/>
+  <text x="55" y="54" text-anchor="middle" font-size="7" fill="#B9E8F5" font-weight="bold">AA</text>
+  <circle cx="75" cy="50" r="9" fill="#2F8FA3"/>
+  <text x="75" y="54" text-anchor="middle" font-size="7" fill="#fff" font-weight="bold">AA</text>
+  <!-- Peptide bond marks -->
+  <line x1="24" y1="43" x2="26" y2="43" stroke="#4AACBF" stroke-width="1.5"/>
+  <line x1="44" y1="57" x2="46" y2="57" stroke="#4AACBF" stroke-width="1.5"/>
+  <line x1="64" y1="43" x2="66" y2="43" stroke="#4AACBF" stroke-width="1.5"/>
+  <!-- Side chains -->
+  <line x1="15" y1="41" x2="15" y2="28" stroke="#4AACBF" stroke-width="1.2" stroke-dasharray="2,2"/>
+  <circle cx="15" cy="26" r="4" fill="#4AACBF" opacity="0.7"/>
+  <line x1="55" y1="41" x2="55" y2="28" stroke="#4AACBF" stroke-width="1.2" stroke-dasharray="2,2"/>
+  <circle cx="55" cy="26" r="4" fill="#4AACBF" opacity="0.7"/>
+  <line x1="35" y1="59" x2="35" y2="74" stroke="#8DD3E3" stroke-width="1.2" stroke-dasharray="2,2"/>
+  <circle cx="35" cy="76" r="4" fill="#8DD3E3" opacity="0.7"/>
+  <line x1="75" y1="59" x2="75" y2="74" stroke="#8DD3E3" stroke-width="1.2" stroke-dasharray="2,2"/>
+  <circle cx="75" cy="76" r="4" fill="#8DD3E3" opacity="0.7"/>
+  <!-- Labels -->
+  <text x="50" y="92" text-anchor="middle" font-size="8" fill="#2F8FA3" font-family="Arial">Palmitoyl Tripeptide-1</text>
+</svg>
+        <div class="nb-ingredients__name">Dual Peptides</div>
+        <div class="nb-ingredients__desc">Anti-aging support</div>
+      </div>
+      <div class="nb-ingredients__cell">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background water ripples -->
+  <circle cx="50" cy="75" r="28" fill="#8DD3E3" opacity="0.12"/>
+  <circle cx="50" cy="75" r="20" fill="#8DD3E3" opacity="0.12"/>
+  <!-- Large water droplet -->
+  <path d="M50 20 Q65 38 65 55 Q65 70 50 75 Q35 70 35 55 Q35 38 50 20Z" fill="#B9E8F5"/>
+  <path d="M50 20 Q65 38 65 55 Q65 70 50 75 Q35 70 35 55 Q35 38 50 20Z" fill="none" stroke="#4AACBF" stroke-width="1.5"/>
+  <!-- Inner droplet shine -->
+  <path d="M50 24 Q61 40 61 54 Q61 67 50 72 Q39 67 39 54 Q39 40 50 24Z" fill="#d4f0f8" opacity="0.6"/>
+  <!-- HA label inside -->
+  <text x="50" y="53" text-anchor="middle" font-size="13" fill="#1A3A42" font-weight="bold">HA</text>
+  <text x="50" y="64" text-anchor="middle" font-size="7" fill="#2F8FA3" font-family="Arial">×1000</text>
+  <!-- Shine on droplet -->
+  <ellipse cx="42" cy="34" rx="4" ry="7" fill="rgba(255,255,255,0.6)" transform="rotate(-15 42 34)"/>
+  <circle cx="44" cy="30" r="2" fill="rgba(255,255,255,0.5)"/>
+  <!-- Small satellite droplets -->
+  <path d="M22 45 Q26 38 26 43 Q26 49 22 47Z" fill="#8DD3E3" opacity="0.8"/>
+  <path d="M78 52 Q82 44 82 50 Q82 57 78 55Z" fill="#8DD3E3" opacity="0.8"/>
+  <path d="M30 72 Q33 66 33 70 Q33 75 30 73Z" fill="#B9E8F5" opacity="0.9"/>
+  <!-- Water text -->
+  <text x="50" y="88" text-anchor="middle" font-size="8" fill="#4AACBF" font-family="Arial">Deep Hydration</text>
+</svg>
+        <div class="nb-ingredients__name">Sodium Hyaluronate</div>
+        <div class="nb-ingredients__desc">Deep overnight hydration</div>
+      </div>
+
+      {% elsif product.tags contains 'patch' %}
+            {% comment %} HYDROCLEAR PATCH INGREDIENTS {% endcomment %}
+      <div class="nb-ingredients__cell">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <!-- Soil/ground -->
+  <ellipse cx="50" cy="88" rx="20" ry="5" fill="#8DD3E3" opacity="0.3"/>
+  <!-- Main stem -->
+  <path d="M50 88 Q50 70 50 55" fill="none" stroke="#2d6b7a" stroke-width="2" stroke-linecap="round"/>
+  <!-- Leaf 1 — left large -->
+  <path d="M50 65 Q30 55 22 42 Q28 38 35 44 Q40 50 50 65Z" fill="#4AACBF" opacity="0.8"/>
+  <path d="M50 65 Q30 55 22 42" fill="none" stroke="#1A3A42" stroke-width="0.8"/>
+  <!-- Leaf veins left -->
+  <path d="M48 62 Q37 53 30 45" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="0.8" stroke-linecap="round"/>
+  <path d="M48 60 Q38 56 34 50" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="0.6" stroke-linecap="round"/>
+  <!-- Leaf 2 — right large -->
+  <path d="M50 60 Q70 50 78 37 Q72 33 65 39 Q60 45 50 60Z" fill="#4AACBF" opacity="0.85"/>
+  <path d="M50 60 Q70 50 78 37" fill="none" stroke="#1A3A42" stroke-width="0.8"/>
+  <!-- Leaf veins right -->
+  <path d="M52 57 Q63 49 70 41" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="0.8" stroke-linecap="round"/>
+  <path d="M52 55 Q62 51 66 45" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="0.6" stroke-linecap="round"/>
+  <!-- Leaf 3 — top center -->
+  <path d="M50 55 Q44 38 48 22 Q54 22 56 38 Q54 45 50 55Z" fill="#2F8FA3" opacity="0.9"/>
+  <!-- Top leaf veins -->
+  <path d="M50 52 Q50 38 50 26" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="0.8" stroke-linecap="round"/>
+  <path d="M49 45 Q46 38 47 30" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="0.6" stroke-linecap="round"/>
+  <path d="M51 45 Q54 38 53 30" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="0.6" stroke-linecap="round"/>
+  <!-- Small flower clusters at leaf junctions -->
+  <circle cx="50" cy="55" r="3.5" fill="#1A3A42"/>
+  <circle cx="50" cy="65" r="3" fill="#1A3A42"/>
+  <circle cx="50" cy="55" r="1.5" fill="#4AACBF"/>
+  <!-- Small leaves / sprouts -->
+  <path d="M50 75 Q42 68 38 62" fill="none" stroke="#4AACBF" stroke-width="1.5" stroke-linecap="round"/>
+  <path d="M50 75 Q58 68 62 62" fill="none" stroke="#4AACBF" stroke-width="1.5" stroke-linecap="round"/>
+  <!-- Tiny round leaves at sprout ends -->
+  <ellipse cx="37" cy="61" rx="5" ry="3.5" fill="#4AACBF" opacity="0.7" transform="rotate(-30 37 61)"/>
+  <ellipse cx="63" cy="61" rx="5" ry="3.5" fill="#4AACBF" opacity="0.7" transform="rotate(30 63 61)"/>
+  <!-- Highlight on leaves -->
+  <path d="M30 46 Q34 42 38 44" fill="none" stroke="rgba(255,255,255,0.6)" stroke-width="1" stroke-linecap="round"/>
+</svg>
+        <div class="nb-ingredients__name">Centella Asiatica</div>
+        <div class="nb-ingredients__desc">Root extract — soothing and calming</div>
+      </div>
+      <div class="nb-ingredients__cell">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background water ripples -->
+  <circle cx="50" cy="75" r="28" fill="#8DD3E3" opacity="0.12"/>
+  <circle cx="50" cy="75" r="20" fill="#8DD3E3" opacity="0.12"/>
+  <!-- Large water droplet -->
+  <path d="M50 20 Q65 38 65 55 Q65 70 50 75 Q35 70 35 55 Q35 38 50 20Z" fill="#B9E8F5"/>
+  <path d="M50 20 Q65 38 65 55 Q65 70 50 75 Q35 70 35 55 Q35 38 50 20Z" fill="none" stroke="#4AACBF" stroke-width="1.5"/>
+  <!-- Inner droplet shine -->
+  <path d="M50 24 Q61 40 61 54 Q61 67 50 72 Q39 67 39 54 Q39 40 50 24Z" fill="#d4f0f8" opacity="0.6"/>
+  <!-- HA label inside -->
+  <text x="50" y="53" text-anchor="middle" font-size="13" fill="#1A3A42" font-weight="bold">HA</text>
+  <text x="50" y="64" text-anchor="middle" font-size="7" fill="#2F8FA3" font-family="Arial">×1000</text>
+  <!-- Shine on droplet -->
+  <ellipse cx="42" cy="34" rx="4" ry="7" fill="rgba(255,255,255,0.6)" transform="rotate(-15 42 34)"/>
+  <circle cx="44" cy="30" r="2" fill="rgba(255,255,255,0.5)"/>
+  <!-- Small satellite droplets -->
+  <path d="M22 45 Q26 38 26 43 Q26 49 22 47Z" fill="#8DD3E3" opacity="0.8"/>
+  <path d="M78 52 Q82 44 82 50 Q82 57 78 55Z" fill="#8DD3E3" opacity="0.8"/>
+  <path d="M30 72 Q33 66 33 70 Q33 75 30 73Z" fill="#B9E8F5" opacity="0.9"/>
+  <!-- Water text -->
+  <text x="50" y="88" text-anchor="middle" font-size="8" fill="#4AACBF" font-family="Arial">Deep Hydration</text>
+</svg>
+        <div class="nb-ingredients__name">Butylene Glycol</div>
+        <div class="nb-ingredients__desc">Hydration and conditioning</div>
+      </div>
+      <div class="nb-ingredients__cell">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <!-- Glow base -->
+  <ellipse cx="50" cy="78" rx="26" ry="7" fill="#B9E8F5" opacity="0.4"/>
+  <!-- Crystal body -->
+  <polygon points="50,15 74,30 74,65 50,80 26,65 26,30" fill="#F0F9FB" stroke="#4AACBF" stroke-width="1.5"/>
+  <!-- Inner crystal facets -->
+  <polygon points="50,22 68,33 68,62 50,73 32,62 32,33" fill="#B9E8F5" opacity="0.5"/>
+  <polygon points="50,29 62,37 62,58 50,66 38,58 38,37" fill="#8DD3E3" opacity="0.4"/>
+  <!-- Facet lines -->
+  <line x1="50" y1="15" x2="50" y2="80" stroke="rgba(255,255,255,0.6)" stroke-width="1"/>
+  <line x1="26" y1="30" x2="74" y2="65" stroke="rgba(255,255,255,0.4)" stroke-width="0.8"/>
+  <line x1="74" y1="30" x2="26" y2="65" stroke="rgba(255,255,255,0.4)" stroke-width="0.8"/>
+  <!-- Shine facets -->
+  <polygon points="50,15 74,30 50,29" fill="rgba(255,255,255,0.5)"/>
+  <polygon points="26,30 50,22 50,29 38,37" fill="rgba(255,255,255,0.3)"/>
+  <!-- Sparkle stars -->
+  <path d="M20 20 L22 16 L24 20 L28 22 L24 24 L22 28 L20 24 L16 22Z" fill="#4AACBF" opacity="0.7"/>
+  <path d="M78 55 L79.5 52 L81 55 L84 56.5 L81 58 L79.5 61 L78 58 L75 56.5Z" fill="#4AACBF" opacity="0.5"/>
+  <!-- Center label -->
+  <text x="50" y="48" text-anchor="middle" font-size="8" fill="#1A3A42" font-weight="bold">Allantoin</text>
+  <text x="50" y="58" text-anchor="middle" font-size="7" fill="#2F8FA3">Soothing</text>
+</svg>
+        <div class="nb-ingredients__name">Cellulose Gum</div>
+        <div class="nb-ingredients__desc">Hydrocolloid base — absorbs impurities</div>
+      </div>
+
+      {% endif %}
+
+  </div>
+</div>
+
+
+{% comment %} ---- COMPARISON TABLE ---- {% endcomment %}
+<div class="nb-comparison">
+  <h2 class="nb-comparison__title">
+    {% if product.tags contains 'patch' %}Why HydroClear™ vs Other Patches
+    {% else %}Why NexaBeauty™ vs Others{% endif %}
+  </h2>
+  <table class="nb-comparison__table">
+    <thead>
+      <tr>
+        <th>Feature</th>
+        <th>
+          {% if product.tags contains 'patch' %}HydroClear™
+          {% else %}NexaBeauty™{% endif %}
+        </th>
+        <th>
+          {% if product.tags contains 'patch' %}Other Patches
+          {% else %}Standard Brands{% endif %}
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      {% if product.tags contains 'essential' %}
+        <tr><td>Snail Complex</td><td class="nb-comparison__yes">✓ Poly-Helixan™</td><td class="nb-comparison__no">Lower concentration</td></tr>
+        <tr><td>Peptide Complex</td><td class="nb-comparison__yes">✓ Dual Peptides</td><td class="nb-comparison__no">Often missing</td></tr>
+        <tr><td>Manufacturing</td><td class="nb-comparison__yes">✓ GMP Certified</td><td class="nb-comparison__no">Varies</td></tr>
+        <tr><td>Formula Origin</td><td class="nb-comparison__yes">✓ K-Beauty Science</td><td class="nb-comparison__no">Generic</td></tr>
+        <tr><td>Design Standard</td><td class="nb-comparison__yes">✓ Premium</td><td class="nb-comparison__no">Standard</td></tr>
+      {% elsif product.tags contains 'mask' %}
+        <tr><td>Snow Mushroom</td><td class="nb-comparison__yes">✓ Tremella Extract</td><td class="nb-comparison__no">Rarely included</td></tr>
+        <tr><td>Collagen Hydrogel</td><td class="nb-comparison__yes">✓ Marine Collagen</td><td class="nb-comparison__no">Standard sheet</td></tr>
+        <tr><td>Manufacturing</td><td class="nb-comparison__yes">✓ GMP Certified</td><td class="nb-comparison__no">Varies</td></tr>
+        <tr><td>Transparency</td><td class="nb-comparison__yes">✓ Becomes transparent</td><td class="nb-comparison__no">Opaque</td></tr>
+        <tr><td>Formula Origin</td><td class="nb-comparison__yes">✓ K-Beauty Science</td><td class="nb-comparison__no">Generic</td></tr>
+      {% elsif product.tags contains 'patch' %}
+        <tr><td>Thickness</td><td class="nb-comparison__yes">✓ Ultra-thin 12mm</td><td class="nb-comparison__no">Thicker, visible</td></tr>
+        <tr><td>Centella Asiatica</td><td class="nb-comparison__yes">✓ Infused</td><td class="nb-comparison__no">Often missing</td></tr>
+        <tr><td>Certification</td><td class="nb-comparison__yes">✓ ISO 13485 Medical-Grade</td><td class="nb-comparison__no">Cosmetic grade only</td></tr>
+        <tr><td>Vegan</td><td class="nb-comparison__yes">✓ 100% Vegan</td><td class="nb-comparison__no">Varies</td></tr>
+        <tr><td>Sensitive Skin Safe</td><td class="nb-comparison__yes">✓ Yes</td><td class="nb-comparison__no">Not always</td></tr>
+      {% endif %}
+    </tbody>
+  </table>
+</div>
+
+
+{% comment %} ---- SUBSCRIBE & SAVE ---- {% endcomment %}
+<div class="nb-subscribe">
+  <h2 class="nb-subscribe__title">Subscribe & Save — Coming Soon</h2>
+  <div class="nb-subscribe__box">
+    <div class="nb-subscribe__label">Choose your purchase option</div>
+    <div class="nb-subscribe__options">
+      <div class="nb-subscribe__option">
+        <div class="nb-subscribe__option-label">One-Time Purchase</div>
+        <div class="nb-subscribe__option-price">{{ product.price | money }}</div>
+      </div>
+      <div class="nb-subscribe__option--active">
+        <div class="nb-subscribe__option-label--w">Subscribe & Save</div>
+        <div class="nb-subscribe__option-price--w">{{ product.price | times: 0.9 | money }}</div>
+        <div class="nb-subscribe__option-save--w">Save 10% · Cancel anytime</div>
+      </div>
+    </div>
+    <p class="nb-subscribe__note">Free delivery · Cancel anytime</p>
+  </div>
+</div>
+
+
+{% comment %} ---- FAQ SECTION ---- {% endcomment %}
+<div class="nb-faq">
+  <h2 class="nb-faq__title">FAQ</h2>
+
+  {% if product.tags contains 'essential' %}
+    <div class="nb-faq__item">
+      <div class="nb-faq__question">Is this suitable for sensitive skin?</div>
+      <div class="nb-faq__answer">Yes, gentle and non-irritating. Suitable for all skin types including sensitive skin.</div>
+    </div>
+    <div class="nb-faq__item">
+      <div class="nb-faq__question">When will I see results?</div>
+      <div class="nb-faq__answer">Most customers notice improvement within 2–4 weeks of daily use morning and evening.</div>
+    </div>
+    <div class="nb-faq__item">
+      <div class="nb-faq__question">Can I use this with other serums?</div>
+      <div class="nb-faq__answer">Yes, apply before heavier creams and moisturizers in your routine.</div>
+    </div>
+    <div class="nb-faq__item">
+      <div class="nb-faq__question">How many drops should I use?</div>
+      <div class="nb-faq__answer">Apply 2–3 drops to cleansed skin and gently pat until fully absorbed.</div>
+    </div>
+
+  {% elsif product.tags contains 'mask' %}
+    <div class="nb-faq__item">
+      <div class="nb-faq__question">Can I sleep with this mask on?</div>
+      <div class="nb-faq__answer">No — wear for 45–60 minutes then remove. Do not sleep with the mask on.</div>
+    </div>
+    <div class="nb-faq__item">
+      <div class="nb-faq__question">How often should I use it?</div>
+      <div class="nb-faq__answer">2–3 times per week for best results. Can be used daily for intensive hydration.</div>
+    </div>
+    <div class="nb-faq__item">
+      <div class="nb-faq__question">What do I do with the remaining essence?</div>
+      <div class="nb-faq__answer">Gently massage into skin and apply any remaining essence to your face, neck, and body. No rinsing needed.</div>
+    </div>
+    <div class="nb-faq__item">
+      <div class="nb-faq__question">Does it contain collagen?</div>
+      <div class="nb-faq__answer">Yes, the hydrogel is infused with Marine Collagen which helps deliver active ingredients deeper into the skin.</div>
+    </div>
+
+  {% elsif product.tags contains 'patch' %}
+    <div class="nb-faq__item">
+      <div class="nb-faq__question">Can I wear this under makeup?</div>
+      <div class="nb-faq__answer">Yes, ultra-thin and nearly invisible under foundation.</div>
+    </div>
+    <div class="nb-faq__item">
+      <div class="nb-faq__question">How long should I wear it?</div>
+      <div class="nb-faq__answer">6–8 hours or remove when the patch turns white — that means it has absorbed the impurities.</div>
+    </div>
+    <div class="nb-faq__item">
+      <div class="nb-faq__question">Is it safe for sensitive skin?</div>
+      <div class="nb-faq__answer">Yes, gentle, breathable and non-drying for all skin types including sensitive.</div>
+    </div>
+    <div class="nb-faq__item">
+      <div class="nb-faq__question">Is this the same formula as the 36ct?</div>
+      <div class="nb-faq__answer">Yes, both the 36ct and 72ct contain the exact same formula and patch. The 72ct is simply a larger supply at a better price per patch.</div>
+    </div>
+  {% endif %}
+
+</div>
+
+
+{% comment %} ---- STICKY ADD TO CART BAR ---- {% endcomment %}
+<div class="nb-sticky-bar" id="nbStickyBar">
+  <span class="nb-sticky-bar__name">{{ product.title }}</span>
+  <span class="nb-sticky-bar__price">{{ product.price | money }}</span>
+  {% if product.metafields.custom.amazon_url != blank %}
+    <a href="{{ product.metafields.custom.amazon_url }}" class="nb-sticky-bar__amazon" target="_blank" rel="noopener">Amazon</a>
+  {% endif %}
+  {% form 'product', product, id: 'nb-sticky-form' %}
+    <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+    <button type="submit" class="nb-sticky-bar__cart">Add to Cart</button>
+  {% endform %}
+</div>
+
+<script>
+(function() {
+  var bar = document.getElementById('nbStickyBar');
+  var trigger = document.querySelector('.nb-product-hero__buttons');
+  if (!bar || !trigger) return;
+  var obs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      bar.classList.toggle('is-visible', !e.isIntersecting);
+    });
+  }, { threshold: 0 });
+  obs.observe(trigger);
+})();
+</script>
+
+{% schema %}
+{
+  "name": "NB Product Page",
+  "tag": "section",
+  "settings": [],
+  "presets": [{"name": "NB Product Page", "category": "NexaBrand"}]
+}
+{% endschema %}
